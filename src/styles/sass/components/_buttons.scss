@@ -1,0 +1,68 @@
+.arrow-up {
+    z-index: 99;
+    @include flexCenter;
+    text-align: center;
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 3rem;
+    height: 3rem;
+    background-color: rgba(0,0,0,.7);
+    @include mobile-version {
+        bottom: .5rem;
+        right: .5rem;
+    }
+    div {
+        color: white;
+        &::before {
+            @include icon('\f077', 2.4rem);
+        }
+    }
+}
+
+.button-container {
+    z-index: 99;
+    position: fixed;
+    right: .5em;
+    top: .5em;
+    display: flex;
+    align-items: center;
+    color: $fifth-color;
+    &::before {
+        @include icon('\f185', 25px);
+    }
+    &::after {
+        @include icon('\f186',20px);
+    }
+}
+
+.dark .button-container {
+    color: white;
+}
+
+.switch-button {
+    width: 45px;
+    display: flex;
+    align-items: center;
+    border: solid $fifth-color;
+    background-color: inherit;
+    border-radius: 20px;
+    margin: 0 5px;
+    &::before {
+        content: '';
+        width: 15px;
+        height: 15px;
+        margin: 1px;
+        border-radius: 50%;
+        background-color: $fifth-color;
+        transition: transform .5s;
+    }
+}
+
+.dark .switch-button {
+    border-color: white;
+    &::before {
+        transform: translateX(22px);
+        background-color: #fff;
+    }
+}

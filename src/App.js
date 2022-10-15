@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { useDispatch, useSelector } from "react-redux";
+import { Route, Routes } from "react-router-dom";
+import Home from "./composants/Home";
+import SoundEngineer from "./composants/IngeSon";
+import RadioEngineer from "./composants/RadioEngineer";
+import { updateGeneralParams } from "./redux";
 
-function App() {
+export default function App() {
+  const dark = useSelector(state => state.generalParams.darkMode);
+  const dispatch = useDispatch();
+
+  const switchMode = () => {
+    dispatch(updateGeneralParams({darkMode:!dark}));
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={dark ? "App dark" : "App"}>
+      <div className="button-container">
+        <button className="switch-button" onClick={switchMode}></button>
+      </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/soundEngineer" element={<SoundEngineer />} />
+        <Route path="/radioEngineer" element={<RadioEngineer />} />
+      </Routes>
     </div>
   );
 }
 
-export default App;
