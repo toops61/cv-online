@@ -1,0 +1,38 @@
+.sound-engineer {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.carousel {
+    //width: 60%;
+    height: 26em;
+    @include flexCenter;
+    margin-top: 4em;
+    .albums {
+        height: 100%;
+        //width: 20em;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+    }
+    .album {
+        top: 0;
+        position: absolute;
+        width: 15em;
+        height: 15em;
+        filter: blur(.5px);
+        img {
+            @include imageFit;
+        }
+    }
+    .album-infos {
+        @include flexColumn;
+        margin-bottom: 1em;
+    }
+    .album.selected {
+        filter: blur(0);
+    }
+}

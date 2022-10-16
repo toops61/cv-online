@@ -1,7 +1,7 @@
 * {
   margin: 0;
   padding: 0;
-  color: black;
+  color: $fifth-color;
 }
 
 body {
@@ -41,5 +41,7 @@ a {
 
 .dark {
   background-color: $fifth-color;
-  color: #fff;
+  * {
+    color: #fff;
+  }
 }
