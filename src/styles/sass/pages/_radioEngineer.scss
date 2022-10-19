@@ -1,0 +1,10 @@
+.radio-engineer {
+    height: 100%;
+    .background {
+        @include flexCenter;
+        height: 100%;
+        svg {
+            height: 100%;
+        }
+    }
+}

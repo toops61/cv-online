@@ -16,12 +16,12 @@ export default function Home() {
                 </div>
                 <h3>Sound Engineer</h3>
             </Link>
-            <div className="img-container">
+            <Link className="img-container" to="/RadioEngineer">
                 <div className="img micro">
                     <img src={micro} alt="micro" />
                 </div>
                 <h3>Radio Engineer</h3>
-            </div>
+            </Link>
         </section>
         <section>
             <div className="img-profil">
@@ -49,12 +49,12 @@ export default function Home() {
             </div>
         </section>
         <section className="bottom-links">
-            <div className="img-container">
+            <a className="img-container" href="https://www.kobutsune.com" target="_blank" rel="noref">
                 <h3>Kobutsune</h3>
                 <div className="img K">
                     <img src={logoK} alt="Kobutsune" />
                 </div>
-            </div>
+            </a>
             <div className="img-container">
                 <h3>Illustration sonore</h3>
                 <div className="img TV">

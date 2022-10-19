@@ -1,5 +1,7 @@
+import hiphopee from '../assets/carouselCovers/hiphopee1.webp';
 import mehdi from '../assets/carouselCovers/djmehdi-storyofespion.webp';
 import urgence from '../assets/carouselCovers/113-urgence.webp';
+import fout from '../assets/carouselCovers/113-fout.webp';
 import sniper from '../assets/carouselCovers/Grave-dans-la-roche.webp';
 import ministerJohnny from '../assets/carouselCovers/ministereJohnny.webp';
 import roce from '../assets/carouselCovers/topdepart.webp';
@@ -14,7 +16,6 @@ export default function SoundEngineer() {
   const [selected, setSelected] = useState(0);
   const [albumsArray, setAlbumsArray] = useState([]);
   const [albumPosition, setAlbumPosition] = useState([]);
-
   class Album {
     constructor(name,artist,year,content,cover) {
       this.name = name;
@@ -24,41 +25,36 @@ export default function SoundEngineer() {
       this.cover = cover;
     }
   }
-  
   class PositionAlbum {
     constructor(posX,posY,zIndex,blurCover) {
-      this.transform = `translate(${posX},${posY})`;
+      this.transform = `translate(${posX}em,${posY}em)`;
       this.zIndex = zIndex;
-      this.filter = `blur(${blurCover})`;
+      this.filter = `blur(${blurCover}px)`;
     }
+  }
+
+  const initialiseCoverFlow = (ind,array) => {
+    array.push(new PositionAlbum(2*ind,ind,99-ind,ind));
   }
 
   useEffect(() => {
     const array = [];
     const arrayPos = [];
+
+    array.push(new Album('L\'hip-hopée','Compilation',2000,'Recording',hiphopee));
     array.push(new Album('The story of Espion','DJ Mehdi',2001,'Recording',mehdi));
-    arrayPos.push(new PositionAlbum(0,0,99,0));
-
-    array.push(new Album('Dans l\'urgence','113',2001,'Recording',urgence));
-    arrayPos.push(new PositionAlbum('2em','1em',98,'1px'));
-
-    array.push(new Album('Gravé dans la roche','Sniper',2001,'Recording/mixing',sniper));
-    arrayPos.push(new PositionAlbum('4em','2em',97,'2px'));
-
     array.push(new Album('Top départ','Rocé',2001,'Recording',roce));
-    arrayPos.push(new PositionAlbum('8em','3em',96,'3px'));
+    array.push(new Album('Fout la merde','113',2002,'Recording',fout));
+    array.push(new Album('Dans l\'urgence','113',2003,'Recording',urgence));
+    array.push(new Album('Gravé dans la roche','Sniper',2003,'Recording/mixing',sniper));
+    array.push(new Album('Le temps passe','Ministère Amer Johhny Hallyday',2005,'Recording',ministerJohnny));
+    array.push(new Album('Révolution','Passi',2007,'Recording/mixing',revolution));
+    array.push(new Album('Evolution','Passi',2007,'Recording/mixing',evolution));
+    array.push(new Album('Africa','Bisso Na Bisso',2009,'Recording/mixing',bisso));
 
-    array.push(new Album('Le temps passe','Ministère Amer Johhny Hallyday',2008,'Recording',ministerJohnny));
-    arrayPos.push(new PositionAlbum('10em','4em',95,'4px'));
+    array.sort((a,b) => a.year - b.year);
 
-    array.push(new Album('Révolution','Passi',2009,'Recording/mixing',revolution));
-    arrayPos.push(new PositionAlbum('12em','5em',94,'5px'));
-
-    array.push(new Album('Evolution','Passi',2010,'Recording/mixing',evolution));
-    arrayPos.push(new PositionAlbum('14em','6em',93,'6px'));
-
-    array.push(new Album('Africa','Bisso Na Bisso',2011,'Recording/mixing',bisso));
-    arrayPos.push(new PositionAlbum('16em','7em',92,'7px'));
+    array.map((e,index) => initialiseCoverFlow(index,arrayPos));
 
     setAlbumsArray(array);
     setAlbumPosition(arrayPos);
@@ -69,13 +65,13 @@ export default function SoundEngineer() {
     const albumsPosArray = albumsArray.map((e,index) => {
       const difference = ind - index;
       const zIndex = (99 - Math.abs(difference));
-      const posX = (- difference*2)+'em';
-      const posY = Math.abs(difference)+'em';
-      const blurCover = Math.abs(difference)+'px';
+      const posX = - difference*2;
+      const posY = Math.abs(difference);
+      const blurCover = Math.abs(difference);
       const objectPos = {
-        transform:`translate(${posX},${posY})`,
+        transform:`translate(${posX}em,${posY}em)`,
         zIndex:zIndex,
-        filter:`blur(${blurCover})`
+        filter:`blur(${blurCover}px)`
       }
       return objectPos;
     })
@@ -97,6 +93,9 @@ export default function SoundEngineer() {
 
   return (
     <main className="sound-engineer">
+      {albumsArray.length < 0 && <div className="image-background">
+        <img src={albumsArray[selected].cover} alt="background" />
+      </div>}
       <section className="carousel">
         <div className="albums">
           {arrayAlbums}

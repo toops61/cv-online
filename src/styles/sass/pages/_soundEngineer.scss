@@ -3,6 +3,15 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    .image-background {
+        position: absolute;
+        width: 1000vw;
+        height: 1000vh;
+        filter: blur(80px);
+        img {
+            @include imageFit;
+        }
+    }
 }
 
 .carousel {
