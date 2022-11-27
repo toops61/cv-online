@@ -4,6 +4,7 @@ import Home from "./composants/Home";
 import SoundEngineer from "./composants/SoundEngineer";
 import RadioEngineer from "./composants/RadioEngineer";
 import { updateGeneralParams } from "./redux";
+import Projects from "./composants/Projects";
 
 export default function App() {
   const dark = useSelector(state => state.generalParams.darkMode);
@@ -23,6 +24,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/soundEngineer" element={<SoundEngineer />} />
         <Route path="/radioEngineer" element={<RadioEngineer />} />
+        <Route path="/projects" element={<Projects />} />
       </Routes>
     </div>
   );

@@ -38,7 +38,7 @@ export default function Home() {
                     <img src={seipra} alt="Seipra score" />
                 </div>
             </div>
-            <div className="img-container">
+            <Link className="img-container" to="/Projects">
                 <div className="text">
                     <h3>Projets code </h3>
                     <h3>personnels</h3>
@@ -46,10 +46,10 @@ export default function Home() {
                 <div className="img code-window">
                     <img src={codeWindow} alt="code" />
                 </div>
-            </div>
+            </Link>
         </section>
         <section className="bottom-links">
-            <a className="img-container" href="https://www.kobutsune.com" target="_blank" rel="noref">
+            <a className="img-container" href="https://www.kobutsune.com" target="_blank" rel="noreferrer">
                 <h3>Kobutsune</h3>
                 <div className="img K">
                     <img src={logoK} alt="Kobutsune" />
