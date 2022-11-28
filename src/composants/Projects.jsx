@@ -48,102 +48,102 @@ export default function Projects() {
         {
             name:"IMC",
             image:IMCpicture,
-            link:"/jsProjects/IMC"
+            link:"/Imc"
         },
         {
             name:"Quizz",
             image:quizzPicture,
-            link:"/jsProjects/Quizz"
+            link:"/Quizz"
         },
         {
             name:"WikiApp",
             image:wikiPicture,
-            link:"/jsProjects/WikiApp"
+            link:"/WikiApp"
         },
         {
             name:"Cookies",
             image:cookiesPicture,
-            link:"/jsProjects/Cookies"
+            link:"/Cookies"
         },
         {
             name:"AppMeteo",
             image:meteoPicture,
-            link:"/jsProjects/AppMeteo"
+            link:"/AppMeteo"
         },
         {
             name:"CouleursJS",
             image:colorsPicture,
-            link:"/jsProjects/CouleursJS"
+            link:"/CouleursJS"
         },
         {
             name:"Pomodoro",
             image:pomodoroPicture,
-            link:"/jsProjects/Pomodoro"
+            link:"/Pomodoro"
         },
         {
             name:"Formulaire",
             image:formPicture,
-            link:"/jsProjects/Formulaire"
+            link:"/Formulaire"
         },
         {
             name:"Jeu de mémoire",
             image:memoryPicture,
-            link:"/jsProjects/Memory"
+            link:"/Memory"
         },
         {
             name:"Scroll infini",
             image:scrollPicture,
-            link:"/jsProjects/Scroll"
+            link:"/Scroll"
         },
         {
             name:"Slider",
             image:sliderPicture,
-            link:"/jsProjects/Slider"
+            link:"/Slider"
         },
         {
             name:"Générateur de mots de passe",
             image:passwordPicture,
-            link:"/jsProjects/Password"
+            link:"/Password"
         },
         {
             name:"Liste filtrable",
             image:filterPicture,
-            link:"/jsProjects/Filter"
+            link:"/Filter"
         },
         {
             name:"Custom lecteur vidéo",
             image:videoPicture,
-            link:"/jsProjects/VideoPlayer"
+            link:"/VideoPlayer"
         },
         {
             name:"Jeu du morpion",
             image:morpionPicture,
-            link:"/jsProjects/Morpion"
+            link:"/Morpion"
         },
         {
             name:"Particules en JS avec canvas",
             image:particulesPicture,
-            link:"/jsProjects/Particules"
+            link:"/Particules"
         },
         {
             name:"Animations",
             image:animationPicture,
-            link:"/jsProjects/Animate"
+            link:"/Animate"
         },
         {
             name:"Jeu de frappe",
             image:typingPicture,
-            link:"/jsProjects/Typing"
+            link:"/Typing"
         },
         {
             name:"Calculatrice",
             image:calcPicture,
-            link:"/jsProjects/Calculator"
+            link:"/Calculator"
         },
         {
             name:"Player audio",
             image:audioPicture,
-            link:"/jsProjects/AudioPlayer"
+            link:"/AudioPlayer"
         },
     ]
   return (
