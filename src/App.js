@@ -13,6 +13,18 @@ import AppMeteo from "./composants/jsProjects/AppMeteo";
 import CouleursJS from "./composants/jsProjects/CouleursJS";
 import Formulaire from "./composants/jsProjects/Formulaire";
 import Pomodoro from "./composants/jsProjects/Pomodoro";
+import Memory from "./composants/jsProjects/Memory";
+import Scroll from "./composants/jsProjects/Scroll";
+import Slider from "./composants/jsProjects/Slider";
+import Password from "./composants/jsProjects/Password";
+import Filter from "./composants/jsProjects/Filter";
+import VideoPlayer from "./composants/jsProjects/VideoPlayer";
+import Morpion from "./composants/jsProjects/Morpion";
+import Particules from "./composants/jsProjects/Particules";
+import Animate from "./composants/jsProjects/Animate";
+import Typing from "./composants/jsProjects/Typing";
+import Calculator from "./composants/jsProjects/Calculator";
+import AudioPlayer from "./composants/jsProjects/AudioPlayer";
 
 export default function App() {
   const dark = useSelector(state => state.generalParams.darkMode);
@@ -41,18 +53,18 @@ export default function App() {
         <Route path="/CouleursJS" element={<CouleursJS />} />
         <Route path="/Pomodoro" element={<Pomodoro />} />
         <Route path="/Formulaire" element={<Formulaire />} />
-        <Route path="/Memory" element={<Imc />} />
-        <Route path="/Scroll" element={<Imc />} />
-        <Route path="/Slider" element={<Imc />} />
-        <Route path="/Password" element={<Quizz />} />
-        <Route path="/Filter" element={<Imc />} />
-        <Route path="/VideoPlayer" element={<Imc />} />
-        <Route path="/Morpion" element={<Imc />} />
-        <Route path="/Particules" element={<Imc />} />
-        <Route path="/Animate" element={<Imc />} />
-        <Route path="/Typing" element={<Imc />} />
-        <Route path="/Calculator" element={<Imc />} />
-        <Route path="/AudioPlayer" element={<Imc />} />
+        <Route path="/Memory" element={<Memory />} />
+        <Route path="/Scroll" element={<Scroll />} />
+        <Route path="/Slider" element={<Slider />} />
+        <Route path="/Password" element={<Password />} />
+        <Route path="/Filter" element={<Filter />} />
+        <Route path="/VideoPlayer" element={<VideoPlayer />} />
+        <Route path="/Morpion" element={<Morpion />} />
+        <Route path="/Particules" element={<Particules />} />
+        <Route path="/Animate" element={<Animate />} />
+        <Route path="/Typing" element={<Typing />} />
+        <Route path="/Calculator" element={<Calculator />} />
+        <Route path="/AudioPlayer" element={<AudioPlayer />} />
       </Routes>
     </div>
   );
