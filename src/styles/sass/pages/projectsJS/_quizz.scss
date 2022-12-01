@@ -1,8 +1,9 @@
 .quizz-page {
     font-family: Open sans, sans-serif;
     background: linear-gradient(to right, #e0eafc, #cfdef3);
-    padding: clamp(20px, 5vw, 50px) 20px 10px;
-    &-container {
+    position: relative;
+    padding-top: 2em;
+    &__container {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -25,14 +26,16 @@
          padding: .5em;
          margin-top: .5em;
          box-shadow: .1em .1em .1em rgb(143, 143, 143);
-         min-width: 80vw;
+         /* min-width: 80vw; */
        }
        .good {
          background: linear-gradient(90deg, rgb(201, 244, 103), rgb(54, 253, 187));
        }
        .false {
          background-color: rgb(214, 0, 0);
-         color: white;
+         h3,label {
+             color: white;
+         }
        }
        .response-container {
          border: none;
@@ -60,7 +63,7 @@
          padding: 1em;
          margin: .5em 0;
          box-shadow: .1em .1em .1em rgb(143, 143, 143);
-         min-width: 80vw;
+         min-width: 40vw;
          display: flex;
          flex-direction: column;
          justify-content: center;

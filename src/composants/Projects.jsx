@@ -153,7 +153,7 @@ export default function Projects() {
             <img src={logoJs} alt="logo JS" className="logo-js" onClick={toggleWindow}/>
             <div className={projectListVisible ? "projects-list visible" : "projects-list"}>
                 <ul>
-                    {arrayProjects.map(item => <Project item={item}  key={uuidv4()} />)}
+                    {arrayProjects.map(item => <Project item={item} key={uuidv4()} />)}
                 </ul>
                 <p>Projets issus du cours d'<a href="https://www.ecole-du-web.net/courses" target="_blank" rel="noreferrer" title="Ecole du Web">Ecole du Web</a></p>
             </div>
