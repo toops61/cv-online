@@ -5,6 +5,7 @@ export default function AppMeteo() {
   const [showLoader, setShowLoader] = useState(false);
   const [apiKey, setApiKey] = useState("");
   const [jsonResult, setJsonResult] = useState();
+  const [positionActual, setPositionActual] = useState(true)
   const [jsonCoordonates, setJsonCoordonates] = useState();
   const [timezone, setTimezone] = useState();
   const [night, setNight] = useState(false);
@@ -147,35 +148,17 @@ export default function AppMeteo() {
     )
   }
 
+  const handlePositionChoice = e => {
+    e.target.id === 'actual' ? setPositionActual(true) : setPositionActual(false);
+  }
+
+  const submitNewCoord = () => {
+
+  }
+
   return (
     <div className="meteo-page">
       <main className={night ? "main-container night" : "main-container"}>
-        <div className="input-container">
-          <input
-            type="password"
-            name="api-key"
-            id="api-key"
-            onChange={handleKey}
-            value={apiKey}
-          />
-          <button onClick={validateKey}>validez</button>
-          <label htmlFor="api-key">
-            {apiKey ? (
-              <p>Changez votre clé d'API ?</p>
-            ) : (
-              <p>
-                Entrez votre clé d'API, récupérée{" "}
-                <a
-                  href="https://openweathermap.org/api"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  ici
-                </a>
-              </p>
-            )}
-          </label>
-        </div>
         <div className="meteo-container">
           {showLoader && (
             <div className="loader">
@@ -207,6 +190,51 @@ export default function AppMeteo() {
               {meteoDisplayed === 'hours' ? <HoursDisplayed /> : <DaysDisplayed />}
             </div>
           </section>
+        </div>
+        <div className="inputs-container">
+            <div className="position-container">
+              <div className="input-container">
+                <input type="radio" name="position-choice" id="actual" defaultChecked="true" onChange={handlePositionChoice} />
+                <label htmlFor="position-choice">Utiliser votre position actuelle</label>
+              </div>
+              <div className="input-container">
+                <input type="radio" name="position-choice" id="chosen" onChange={handlePositionChoice} />
+                <label htmlFor="position-choice">Choisir une autre position</label>
+              </div>
+                {!positionActual && <div className="position-fields">
+                  <label htmlFor="chosen-latitude">Latitude</label>
+                  <input type="number" name="chosen-latitude" id="chosen-latitude" />
+                  <label htmlFor="chosen-latitude">Longitude</label>
+                  <input type="number" name="chosen-latitude" id="chosen-longitude" />
+                  <button onClick={submitNewCoord}></button>
+                </div>}
+            </div>
+          <div className="apikey-container">
+            <input
+              type="password"
+              name="api-key"
+              id="api-key"
+              onChange={handleKey}
+              value={apiKey}
+            />
+            <button onClick={validateKey} className="validate-api"></button>
+            <label htmlFor="api-key">
+              {apiKey ? (
+                <p>Changez votre clé d'API ?</p>
+              ) : (
+                <p>
+                  Entrez votre clé d'API, récupérée{" "}
+                  <a
+                    href="https://openweathermap.org/api"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    ici
+                  </a>
+                </p>
+              )}
+            </label>
+          </div>
         </div>
       </main>
     </div>

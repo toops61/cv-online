@@ -6,7 +6,8 @@
     width: 100vw;
     height: 100vh;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 
     .loader {
       display: flex;
@@ -30,14 +31,67 @@
       }
     }
 
-    .input-container {
+    .inputs-container {
+        padding: 0 2em;
+        position: absolute;
+        bottom: 1em;
+        width: 100%;
         display: flex;
-        align-items: center;
+        justify-content: space-between;
+        align-items: flex-end;
     }
 
+    .position-container {
+        display: flex;
+        flex-direction: column;
+        .input-container {
+            margin: .5em 0;
+        }
+    }
+
+    .apikey-container {
+        display: flex;
+        align-items: center;
+      }
+
+      .input-container input {
+        margin-right: .5em;
+      }
+
+      .position-fields {
+        display: flex;
+        align-items: center;
+        input {
+            margin: 0 1em 0 .5em;
+            width: 6em;
+        }
+        button {
+            width: 1.3em;
+            height: 1.3em;
+            &::before {
+                @include icon('\f08e');
+            }
+        }
+      }
+
+    .validate-api {
+        width: 1.7em;
+        height: 1.7em;
+        background-color: #fff;
+        border: solid .1em;
+        border-radius: 0 .5em .5em 0;
+        @include flexCenter;
+        margin-right: 1em;
+        &::before {
+            @include icon ('\f08e');
+        }
+    }
+    
     #api-key {
-      width: fit-content;
-      padding: .2em;
+        width: fit-content;
+        padding: .2em .5em;
+        border: solid .1em;
+      border-radius: .5em 0 0 .5em;
     }
 
     .point {
@@ -77,13 +131,20 @@
       padding: 0.5em 0;
     }
 
-    .night {
+    &.night {
       background-color: black;
-    }
-
-    .night .meteo-container {
-      background-color: rgb(0, 0, 106);
-      color: white;
+      .meteo-container {
+          background-color: rgb(0, 0, 106);
+          span,h1,h2,p {
+            color: white;
+          }
+          .tabs-section p,.temp-container p {
+            color: #082879;
+          }
+      }
+      label, label p {
+        color: white;
+      }
     }
 
     h1 span {
@@ -102,10 +163,6 @@
       align-items: center;
     }
 
-    .hide {
-      display: none;
-    }
-
     .logo {
       width: 4em;
       height: 4em;
@@ -113,11 +170,10 @@
       justify-content: center;
       align-items: center;
       overflow: hidden;
-    }
-
-    .logo img {
-      object-fit: contain;
-      height: 150%;
+      img {
+          object-fit: contain;
+          height: 150%;
+      }
     }
 
     .temp {
@@ -126,25 +182,22 @@
 
     .tabs-section {
       margin: 1em 0;
-    }
-
-    .tabs-section button {
-      padding: 0.3em 0.5em;
-      background-color: #fff;
-      border: solid 0.1em rgb(181, 181, 181);
-      box-shadow: 0.1em 0.1em 0.2em rgb(142, 142, 142);
-      color: rgba(0, 0, 0, 0.3);
-      border-radius: 0.4em;
-    }
-
-    .tabs-section .select {
-      box-shadow: none;
-      color: black;
-      background-color: rgb(123, 226, 255);
-    }
-
-    .tabs-section button p {
-      font-size: 0.8em;
+      button {
+          padding: 0.3em 0.5em;
+          background-color: #fff;
+          border: solid 0.1em rgb(181, 181, 181);
+          box-shadow: 0.1em 0.1em 0.2em rgb(142, 142, 142);
+          color: rgba(0, 0, 0, 0.3);
+          border-radius: 0.4em;
+          p {
+              font-size: 0.8em;
+          }
+      }
+      .select {
+          box-shadow: none;
+          color: black;
+          background-color: rgb(123, 226, 255);
+      }
     }
 
     .display-part {
@@ -177,12 +230,6 @@
       * {
         font-size: 4vw;
       }
-    }
-
-    .input-container {
-      position: absolute;
-      bottom: 1em;
-      right: 1em;
     }
   }
 }
