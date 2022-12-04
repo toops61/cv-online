@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 
 export default function AppMeteo() {
@@ -209,10 +210,14 @@ export default function AppMeteo() {
                 <label htmlFor="position-choice">Choisir une autre position</label>
               </div>
                 {!positionActual && <form onSubmit={submitNewCoord} className="position-fields">
-                  <label htmlFor="chosen-latitude">Latitude</label>
-                  <input type="number" name="chosen-latitude" id="chosen-latitude" />
-                  <label htmlFor="chosen-latitude">Longitude</label>
-                  <input type="number" name="chosen-latitude" id="chosen-longitude" />
+                  <div className="coordinates-container">
+                    <label htmlFor="chosen-latitude">Latitude</label>
+                    <input type="number" name="chosen-latitude" id="chosen-latitude" />
+                  </div>
+                  <div className="coordinates-container">
+                    <label htmlFor="chosen-latitude">Longitude</label>
+                    <input type="number" name="chosen-latitude" id="chosen-longitude" />
+                  </div>
                   <button type="submit"></button>
                 </form>}
             </div>
@@ -244,6 +249,9 @@ export default function AppMeteo() {
           </div>
         </div>
       </main>
+      <Link to="/Projects">
+              <button className="previous-page"></button>
+      </Link>
     </div>
   );
 }

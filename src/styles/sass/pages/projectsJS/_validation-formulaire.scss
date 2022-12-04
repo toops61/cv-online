@@ -1,0 +1,169 @@
+.valid-form-page {
+    min-height: 100vh;
+    background: linear-gradient(to right, #d9a7c7, #fffcdc); 
+    font-family: Open sans, Helvetica, sans-serif;
+    padding: clamp(20px, 5vw, 50px) 10px;
+    .main-formulaire {
+        display: flex;
+        justify-content: center;
+        .alert-window {
+            z-index: 99;
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(255,255,255,.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .alert-container {
+                position: relative;
+                background-color: rgb(0, 98, 0);
+                color: white;
+                text-shadow: .1em .1em .1em black;
+                padding: 4em;
+                border-radius: 1em;
+                border: solid;
+                box-shadow: 0 0 .7em black;
+                h2 {
+                    font-size: 1.5em;
+                }
+                p {
+                    position: absolute;
+                    bottom: 1em;
+                    right: 1em;
+                }
+                &.alert {
+                    background-color: rgb(214, 0, 0);
+                }
+            }
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(26, 0, 0);
+            width: 35em;
+            padding: 1em;
+            h1,label,p {
+                color: rgb(242, 225, 225);
+            }
+        }
+        
+        .input-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin: .8em 0;
+        }
+        
+        input {
+            background-color: transparent;
+            border: none;
+            border-bottom: solid .2em grey;
+            padding: .2em .5em;
+            color: rgb(242, 225, 225);
+        }
+        
+        input::placeholder {
+            font-size: .8em;
+        }
+        
+        .attention {
+            position: absolute;
+            top: 1.4em;
+            right: 0;
+            color: rgb(26, 0, 0);
+            background-color: red;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            width: 1.2em;
+            height: 1.2em;
+            font-weight: bold;
+        }
+        
+        .check {
+            position: absolute;
+            top: 1.4em;
+            right: 0;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .check::before {
+            @include icon('\f058',1.3em);
+            color: green;
+        }
+        
+        .input-infos {
+            color: red;
+            font-size: .8em;
+            display: none;
+        }
+        
+        
+        .invalid .attention {
+            display: flex;
+        }
+        
+        .valid .check {
+            display: flex;
+        }
+        
+        .invalid .input-infos {
+            display: flex;
+        }
+        
+        .password-level {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .level {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: .5em .3em 0;
+            opacity: 1;
+        }
+        
+        .level::before {
+            content: '';
+            width: 6em;
+            height: .2em;
+            background-color: rgb(255, 208, 1);
+        }
+        
+        .level:first-child::before {
+            background-color: rgb(197, 55, 11);
+        }
+        .level:last-child::before {
+            background-color: rgb(1, 140, 22);
+        }
+        
+        .level p {
+            font-size: .8em;
+        }
+        
+        button {
+            padding: .5em;
+            border-radius: .4em;
+            border: none;
+            background-color: #fdfbe3;
+            margin: .8em 0;
+        }
+        
+        .hide-level {
+            opacity: 0;
+        }
+    }
+}

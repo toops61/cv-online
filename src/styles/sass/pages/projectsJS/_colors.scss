@@ -1,0 +1,111 @@
+.colors-page {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #333;
+  .main-colors {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: linear-gradient(180deg, #fff, #fff);
+    .color-container {
+        position: relative;
+      }
+    .color-label {
+        border-radius: 0.5em;
+        display: flex;
+        align-items: center;
+        padding: 0.3em 0.5em;
+        width: 15em;
+        height: 2em;
+        border: 0.1em solid;
+        margin: 0.5em 0;
+        background-color: #000;
+        cursor: pointer;
+        p {
+            color: white;
+        }
+    }
+    .input-color {
+        position: absolute;
+        opacity: 0;
+    }
+
+    .label-orientation {
+      display: flex;
+      justify-content: center;
+      background-color: rgb(218, 218, 218);
+      padding: 0.3em 0.6em;
+      border-radius: 0.3em;
+      width: fit-content;
+      margin-bottom: 0.5em;
+      p {
+        font-size: 0.8em;
+        margin-left: 0.5em;
+      }
+    }
+
+    label h2 {
+      font-size: 0.9em;
+    }
+
+    #orientation {
+      width: 15em;
+      cursor: pointer;
+    }
+
+    .range-container {
+      margin: 1em 0;
+    }
+
+    button {
+      padding: 0.3em 0.8em;
+      background-color: rgb(218, 218, 218);
+      border: none;
+      border-radius: 0.3em;
+      box-shadow: 0.1em 0.1em 0.2em rgb(98, 98, 98);
+      margin: 0 0.5em;
+      cursor: pointer;
+      p {
+        font-size: 0.7em;
+      }
+    }
+  }
+  .alert-window {
+    z-index: 99;
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .alert-container {
+      position: relative;
+      background-color: rgb(0, 98, 0);
+      text-shadow: 0.1em 0.1em 0.1em black;
+      padding: 4em;
+      border-radius: 1em;
+      border: solid;
+      box-shadow: 0 0 0.7em black;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      h2 {
+        color: white;
+        font-size: 1.5em;
+      }
+    }
+  }
+  @media screen and (max-width: 600px) {
+    * {
+      font-size: 4vw;
+    }
+  }
+}

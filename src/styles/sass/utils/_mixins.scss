@@ -83,3 +83,11 @@
 @mixin text-shadow {
     text-shadow: 2px 2px 1px black;
 }
+
+@mixin adapt-size {
+    @media screen and (max-width: 600px) {
+        * {
+            font-size: 4vw;
+        }
+    }
+}

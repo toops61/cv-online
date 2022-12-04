@@ -102,12 +102,17 @@
         position: relative;
         display: flex;
         align-items: center;
+        width: 60%;
+        @media screen and (max-width: 600px) {
+          width: 90%;
+        }
       }
       
       #searchInput {
-        width: 30em;
+        width: 90%;
         padding: .5em;
-        border: none;
+        border-radius: .5em;
+        border: solid .1em;
         box-shadow: .2em .2em .2em rgb(155, 155, 155);
         margin: 1em 0;
       }
@@ -121,7 +126,7 @@
         position: absolute;
         width: 1em;
         height: 1em;
-        right: 2.5em;
+        right: 9%;
         top: .5em;
         background-color: #fff;
         border-radius: 50%;
@@ -129,6 +134,9 @@
         justify-content: center;
         align-items: center;
         border: solid .05em;
+        @media screen and (max-width: 600px) {
+          right: 12%;
+        }
       }
       
       .reset p {
@@ -175,4 +183,5 @@
         background-color: #fff;
         margin-bottom: 1em;
       }
+      @include adapt-size;
 }

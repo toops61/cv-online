@@ -37,6 +37,7 @@
                 font-weight: bold;
             }
             li {
+                cursor: pointer;
                 display: flex;
             }
             .screen-shot {
@@ -55,4 +56,6 @@
             transition: transform .8s, opacity .8s, z-index 2s;
         }
     }
+
+    @include adapt-size;
 }

@@ -1,0 +1,112 @@
+.pomodoro-page {
+  min-height: 100vh;
+  background: linear-gradient(to right, #70e1f5, #ffd194);
+  font-family: Lato, sans-serif;
+  color: #161616;
+  .pomodoro-main {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .title {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .title p {
+    font-size: 1.4em;
+  }
+
+  h1 {
+    font-size: 1.4em;
+    text-decoration: underline;
+    margin-left: 0.5em;
+  }
+
+  h1 span {
+    font-weight: normal;
+    text-decoration: none;
+  }
+
+  .timers-container {
+    margin: 1.5em;
+    display: flex;
+    align-items: center;
+  }
+
+  .timer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1em 3em;
+    background-color: rgb(230, 230, 230);
+    margin: 0 0.2em;
+    box-shadow: 0.1em 0.1em 0.2em rgb(134, 134, 134);
+    border-radius: 0.5em;
+  }
+
+  .selected {
+    background-color: #fff;
+  }
+
+  .title-container {
+    overflow: hidden;
+  }
+
+  .title-container div {
+    background-color: black;
+    width: 100%;
+    height: 0.1em;
+    opacity: 0;
+  }
+
+  .title-container .animation-time {
+    opacity: 1;
+  }
+
+  .animation {
+    animation: anim-line 1s forwards linear infinite;
+  }
+
+  .buttons-container {
+    display: flex;
+    margin-bottom: 1em;
+  }
+
+  button {
+    width: 3em;
+    height: 3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0.2em;
+    border: none;
+    box-shadow: 0.2em 0.2em 0.2em rgb(170, 170, 170);
+    background-color: #008080;
+    }
+
+    .pause {
+        box-shadow: 0.05em 0.05em 0.1em rgb(170, 170, 170);
+    }
+
+    .play::before {
+        @include icon("\f144",1.8em);
+        color: white;
+    }
+
+    .pause::before {
+        @include icon("\f28b",1.8em);
+        color: white;
+    }
+
+    .reset::before {
+        @include icon("\f2ea",1.5em);
+        color: white;
+  }
+  @include adapt-size;
+}
