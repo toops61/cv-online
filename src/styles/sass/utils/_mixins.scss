@@ -84,10 +84,10 @@
     text-shadow: 2px 2px 1px black;
 }
 
-@mixin adapt-size {
+@mixin adapt-size ($font-size: 4vw) {
     @media screen and (max-width: 600px) {
         * {
-            font-size: 4vw;
+            font-size: $font-size;
         }
     }
 }
