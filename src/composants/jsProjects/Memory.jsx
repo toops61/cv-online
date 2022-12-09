@@ -182,10 +182,13 @@ const resetAllScores = () => {
         const array = [...arrayCards];
         if (cardsPlayed.length < 2 && !array[props.index].turned) {
           array[props.index].turned = true;
-          setArrayCards([...array]);
-          !play && handlePlay();
-          checkPair();
-          setTotalShots(totalShots+1);
+          document.querySelectorAll('.card')[props.index].classList.add('flip')
+          setTimeout(() => {
+            !play && handlePlay();
+            setArrayCards([...array]);
+            checkPair();
+            setTotalShots(totalShots+1);
+          }, 500);
         }
       }
       
