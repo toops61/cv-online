@@ -4,12 +4,59 @@ import { v4 as uuidv4 } from 'uuid';
 import questionPicture from '../../assets/ressourcesMemory/question.svg';
 
 export default function Memory() {
-  const [showAlert, setShowAlert] = useState(false);
   const [randomArray, setRandomArray] = useState([]);
+  const [showAlert, setShowAlert] = useState(false);
   const [play, setPlay] = useState(false);
-  const [finished, setFinished] = useState(false);
+  const [finished, setFinished] = useState({coups:0,time:'',date:''});
+  const [finishMessage, setFinishMessage] = useState('');
+  const [arrayTimers, setArrayTimers] = useState(localStorage.timersMemory ? JSON.parse(localStorage.getItem('timersMemory')) : []);
   
   const handlePlay = () => setPlay(true);
+
+  const convertTimeToSeconds = time => {
+    const minutes = time.split(':')[0]*60;
+    const seconds = time.split(':')[1]/1;
+    return minutes+seconds;
+  };
+
+  const handleScores = lastObject => {
+    const array = [...arrayTimers];
+    array.length > 9 && array.splice(10,1);
+    array.push(lastObject);
+    array.length > 1 && array.sort((a,b) => convertTimeToSeconds(a.time)-convertTimeToSeconds(b.time));
+    localStorage.setItem('timersMemory',JSON.stringify(array));
+    setArrayTimers([...array]);
+  }
+
+  const displayBestTimers = object => {
+    setShowAlert(true);
+    setFinishMessage(`BRAVO !!! c\'est gagné.${(arrayTimers.length && convertTimeToSeconds(arrayTimers[0].time) > convertTimeToSeconds(object.time)) ? ' Record battu, vous avez le meilleur temps !!' : ''}`)
+  }
+
+  const BestTimers = () => {
+    return (
+      <div className="best-timers">
+        {arrayTimers.length && arrayTimers.map(el => {
+          return <div  className="timer-classment" key={uuidv4()}>
+            {el.date === finished.date && <div className="present-timer"></div>}
+            <p>Date: {el.date}</p>
+            <p>Nombre de coups: {el.coups}</p>
+            <p>Temps: {el.time}</p>
+          </div>
+        })}
+      </div>
+    )
+  }
+
+const resetAllScores = () => {
+  if (window.confirm('Voulez-vous vraiment effacer tous les scores ?')) {
+    const array = [];
+    setArrayTimers([...array]);
+    localStorage.setItem('timersMemory',JSON.stringify(array));
+    setShowAlert(false);
+    resetAll();
+  }
+}
 
   const getImages = () => {
     const importAll = r => {
@@ -51,6 +98,10 @@ export default function Memory() {
         timerInterval = setInterval(() => {
           setTimer(timer => timer + 1);
         }, 1000);
+      } else if (timer !== 0) {
+         const tempObject = {...finished};
+         tempObject.time = convertTimer(timer);
+         setFinished({...tempObject});
       }
   
       return () => {
@@ -67,9 +118,20 @@ export default function Memory() {
 
     return (
       <div className="chrono-container">
-          <p>{convertTimer(timer)}</p>
+          <p>{finished.time ? finished.time : convertTimer(timer)}</p>
       </div>
     )
+  }
+
+  const endGame = totalShots => {
+    const tempObject = {...finished};
+    tempObject.time = document.querySelector('.chrono-container p').textContent;
+    tempObject.coups = totalShots;
+    tempObject.date = new Date().toLocaleString()
+    setFinished({...tempObject})
+    handleScores(tempObject);
+    setPlay(false);
+    displayBestTimers(tempObject);
   }
 
   const CardSection = () => {
@@ -97,6 +159,7 @@ export default function Memory() {
             }
           });
           setArrayCards([...newArray]);
+          newArray.every(el => el.keep) && endGame(totalShots);
         } else {
           const newArray = arrayCards.map(el => {
             if (el.turned && !el.keep) {
@@ -116,12 +179,11 @@ export default function Memory() {
 
       const flipCard = () => {
         const cardsPlayed = arrayCards.filter(e => e.turned && !e.keep);
-        console.log(cardsPlayed);
-        if (cardsPlayed.length < 2) {
-          const array = [...arrayCards];
+        const array = [...arrayCards];
+        if (cardsPlayed.length < 2 && !array[props.index].turned) {
           array[props.index].turned = true;
           setArrayCards([...array]);
-          handlePlay();
+          !play && handlePlay();
           checkPair();
           setTotalShots(totalShots+1);
         }
@@ -143,7 +205,7 @@ export default function Memory() {
   
     return (
       <>
-        <p>Nombre de coups : {totalShots}</p>
+        <p>Nombre de coups : {finished.coups ? finished.coups : totalShots}</p>
         <div className="cards-container">
           {arrayCards.map((imagePicture,index) => <Card imagePicture={imagePicture} key={uuidv4()} index={index} />)}
         </div>
@@ -154,18 +216,21 @@ export default function Memory() {
   const resetAll = () => {
     setPlay(false);
     getImages();
+    setFinished({coups:0,time:'',date:''});
   }
 
   return (
     <div className="memory-page">
-      {showAlert && <div class="alert-window">
+      {showAlert && <div className="alert-window">
         <div className="alert-container">
-          <h2></h2>
-          <h4>Meileurs temps</h4>
-          <div className="best-timers">
-          </div>
-          <button className="close">X</button>
-          <button className="reset-all">reset all scores</button>
+          <h2>{finishMessage}</h2>
+          {arrayTimers.length && 
+          <>
+            <h4>Meilleurs temps</h4>
+            <BestTimers />
+          </>}
+          <button className="close" onClick={e => setShowAlert(false)}>X</button>
+          <button className="reset-all" onClick={resetAllScores}>reset all scores</button>
         </div>
       </div>}
       <main className="memory-main">
