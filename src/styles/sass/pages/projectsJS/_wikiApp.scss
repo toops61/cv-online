@@ -3,7 +3,7 @@
     position: relative;
     font-family: Arial, Helvetica, sans-serif;
     padding: clamp(20px, 5vw, 50px) 20px 20px;
-
+    
     .loader {
         display: flex;
         z-index: 99;
@@ -38,16 +38,11 @@
         justify-content: center;
         align-items: center;
         border-radius: 1em;
+        p {
+              color: #fff;
+              font-size: 1.4em;
+          }
     }
-    
-    .error p {
-          color: #fff;
-          font-size: 1.4em;
-      }
-
-      .hide {
-        display: none;
-      }
       
       .point-container {
         display: flex;
@@ -79,7 +74,6 @@
         animation-delay: 200ms;
       }
       
-      
       section {
         width: 100%;
         display: flex;
@@ -90,12 +84,11 @@
       .logo {
         width: 10em;
         height: 10em;
-      }
-      
-      .logo img {
-        object-fit: contain;
-        width: 100%;
-        height: 100%;
+        img {
+          object-fit: contain;
+          width: 100%;
+          height: 100%;
+        }
       }
       
       .search {
@@ -105,6 +98,17 @@
         width: 60%;
         @media screen and (max-width: 600px) {
           width: 90%;
+        }
+        button {
+          width: 2em;
+          height: 2em;
+          margin-left: 1em;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: #fff;
+          border-radius: .4em;
+          box-shadow: .1em .1em .2em rgb(155, 155, 155);
         }
       }
       
@@ -119,6 +123,7 @@
 
       #number-search {
         margin-left: .5em;
+        color: #082879;
       }
 
       .reset {
@@ -137,22 +142,9 @@
         @media screen and (max-width: 600px) {
           right: 12%;
         }
-      }
-      
-      .reset p {
-        font-size: .7em;
-      }
-      
-      button {
-        width: 2em;
-        height: 2em;
-        margin-left: 1em;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #fff;
-        border-radius: .4em;
-        box-shadow: .1em .1em .2em rgb(155, 155, 155);
+        p {
+          font-size: .7em;
+        }
       }
       
       svg {
@@ -182,6 +174,11 @@
         padding: 1em;
         background-color: #fff;
         margin-bottom: 1em;
+      }
+      .search,.result-container {
+        * {
+          color: #082879;
+        }
       }
       @include adapt-size;
 }

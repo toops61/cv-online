@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import wikiLogo from '../../assets/perso_proj/wiki-logo.png';
 
 export default function WikiApp() {
+  document.querySelector('.button-container').classList.remove('hide');
   const [showLoader, setShowLoader] = useState(false);
   const [searchInput, setSearchInput] = useState('');
   const [numberOfSearch, setNumberOfSearch] = useState(1);
@@ -112,8 +113,8 @@ export default function WikiApp() {
         </div>
         {searchResults.length && <ResultContainer />}
       </section>
-      <Link to="/Projects">
-              <button className="previous-page"></button>
+      <Link to="/MaulaveStephane/Projects">
+          <button className="previous-page"></button>
       </Link>
     </main>
   )

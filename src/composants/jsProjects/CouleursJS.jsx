@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function CouleursJS() {
+  document.querySelector('.button-container').classList.add('hide');
+  
   const [alertPage, setAlertPage] = useState(false);
   const [objectColor, setObjectColor] = useState({
     orientation: 128,
@@ -114,7 +116,7 @@ export default function CouleursJS() {
             <button onClick={randomColor}><p>Random</p></button>
         </div>
       </main>
-      <Link to="/Projects">
+      <Link to="/MaulaveStephane/Projects">
         <button className="previous-page"></button>
       </Link>
     </div>

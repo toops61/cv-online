@@ -17,6 +17,8 @@ export default function IMC() {
         { name: "Obésité morbide", color: "purple", range: 40 },
     ];
 
+    document.querySelector('.button-container').classList.add('hide');
+
     const calculateImc = () => {
         if (height && weight && height > 100 && height < 250 && weight > 20 && weight < 250) {
           setImc(Math.round((weight / ((height/100) ** 2))*10) / 10);
@@ -55,7 +57,7 @@ export default function IMC() {
             <h3 style={{color: BMIObject ? BMIObject.color : 'black'}}>{imc}</h3>
             <p>{answer}</p>
         </div>
-        <Link to="/Projects">
+        <Link to="/MaulaveStephane/Projects">
             <button className="previous-page"></button>
         </Link>
     </main>

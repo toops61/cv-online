@@ -34,6 +34,9 @@
     &::after {
         @include icon('\f186',20px);
     }
+    &.hide {
+        display: none;
+    }
 }
 
 .dark .button-container {

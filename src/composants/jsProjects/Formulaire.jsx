@@ -2,6 +2,8 @@ import { useState } from "react"
 import { Link } from "react-router-dom";
 
 export default function Formulaire() {
+  document.querySelector('.button-container').classList.add('hide');
+  
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertObject, setAlertObject] = useState({
     message1:'',
@@ -158,7 +160,7 @@ export default function Formulaire() {
         </form>
       </section>
       </div>
-      <Link to="/Projects">
+      <Link to="/MaulaveStephane/Projects">
         <button className="previous-page"></button>
       </Link>
     </div>

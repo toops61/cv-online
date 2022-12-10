@@ -36,35 +36,35 @@ export default function App() {
 
   return (
     <div className={dark ? "App dark" : "App"}>
-      <Link className="back" to="/"></Link>
+      <Link className="back" to="/MaulaveStephane/"></Link>
       <div className="button-container">
         <button className="switch-button" onClick={switchMode}></button>
       </div>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/soundEngineer" element={<SoundEngineer />} />
-        <Route path="/radioEngineer" element={<RadioEngineer />} />
-        <Route path="/projects" element={<Projects />} />
-        <Route path="/Imc" element={<Imc />} />
-        <Route path="/Quizz" element={<Quizz />} />
-        <Route path="/WikiApp" element={<WikiApp />} />
-        <Route path="/Cookies" element={<Cookies />} />
-        <Route path="/AppMeteo" element={<AppMeteo />} />
-        <Route path="/CouleursJS" element={<CouleursJS />} />
-        <Route path="/Pomodoro" element={<Pomodoro />} />
-        <Route path="/Formulaire" element={<Formulaire />} />
-        <Route path="/Memory" element={<Memory />} />
-        <Route path="/Scroll" element={<Scroll />} />
-        <Route path="/Slider" element={<Slider />} />
-        <Route path="/Password" element={<Password />} />
-        <Route path="/Filter" element={<Filter />} />
-        <Route path="/VideoPlayer" element={<VideoPlayer />} />
-        <Route path="/Morpion" element={<Morpion />} />
-        <Route path="/Particules" element={<Particules />} />
-        <Route path="/Animate" element={<Animate />} />
-        <Route path="/Typing" element={<Typing />} />
-        <Route path="/Calculator" element={<Calculator />} />
-        <Route path="/AudioPlayer" element={<AudioPlayer />} />
+        <Route path="/MaulaveStephane/" element={<Home />} />
+        <Route path="/MaulaveStephane/soundEngineer" element={<SoundEngineer />} />
+        <Route path="/MaulaveStephane/radioEngineer" element={<RadioEngineer />} />
+        <Route path="/MaulaveStephane/projects" element={<Projects />} />
+        <Route path="/MaulaveStephane/Imc" element={<Imc />} />
+        <Route path="/MaulaveStephane/Quizz" element={<Quizz />} />
+        <Route path="/MaulaveStephane/WikiApp" element={<WikiApp />} />
+        <Route path="/MaulaveStephane/Cookies" element={<Cookies />} />
+        <Route path="/MaulaveStephane/AppMeteo" element={<AppMeteo />} />
+        <Route path="/MaulaveStephane/CouleursJS" element={<CouleursJS />} />
+        <Route path="/MaulaveStephane/Pomodoro" element={<Pomodoro />} />
+        <Route path="/MaulaveStephane/Formulaire" element={<Formulaire />} />
+        <Route path="/MaulaveStephane/Memory" element={<Memory />} />
+        <Route path="/MaulaveStephane/Scroll" element={<Scroll />} />
+        <Route path="/MaulaveStephane/Slider" element={<Slider />} />
+        <Route path="/MaulaveStephane/Password" element={<Password />} />
+        <Route path="/MaulaveStephane/Filter" element={<Filter />} />
+        <Route path="/MaulaveStephane/VideoPlayer" element={<VideoPlayer />} />
+        <Route path="/MaulaveStephane/Morpion" element={<Morpion />} />
+        <Route path="/MaulaveStephane/Particules" element={<Particules />} />
+        <Route path="/MaulaveStephane/Animate" element={<Animate />} />
+        <Route path="/MaulaveStephane/Typing" element={<Typing />} />
+        <Route path="/MaulaveStephane/Calculator" element={<Calculator />} />
+        <Route path="/MaulaveStephane/AudioPlayer" element={<AudioPlayer />} />
       </Routes>
     </div>
   );

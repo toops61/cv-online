@@ -25,6 +25,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { Link } from 'react-router-dom';
 
 export default function Projects() {
+    document.querySelector('.button-container').classList.remove('hide');
+
     const [projectListVisible, setProjectListVisible] = useState(false);
     const toggleWindow = () => setProjectListVisible(!projectListVisible);
 
@@ -48,102 +50,102 @@ export default function Projects() {
         {
             name:"IMC",
             image:IMCpicture,
-            link:"/Imc"
+            link:"/MaulaveStephane/Imc"
         },
         {
             name:"Quizz",
             image:quizzPicture,
-            link:"/Quizz"
+            link:"/MaulaveStephane/Quizz"
         },
         {
             name:"WikiApp",
             image:wikiPicture,
-            link:"/WikiApp"
+            link:"/MaulaveStephane/WikiApp"
         },
         {
             name:"Cookies",
             image:cookiesPicture,
-            link:"/Cookies"
+            link:"/MaulaveStephane/Cookies"
         },
         {
             name:"AppMeteo",
             image:meteoPicture,
-            link:"/AppMeteo"
+            link:"/MaulaveStephane/AppMeteo"
         },
         {
             name:"CouleursJS",
             image:colorsPicture,
-            link:"/CouleursJS"
+            link:"/MaulaveStephane/CouleursJS"
         },
         {
             name:"Pomodoro",
             image:pomodoroPicture,
-            link:"/Pomodoro"
+            link:"/MaulaveStephane/Pomodoro"
         },
         {
             name:"Formulaire",
             image:formPicture,
-            link:"/Formulaire"
+            link:"/MaulaveStephane/Formulaire"
         },
         {
             name:"Jeu de mémoire",
             image:memoryPicture,
-            link:"/Memory"
+            link:"/MaulaveStephane/Memory"
         },
         {
             name:"Scroll infini",
             image:scrollPicture,
-            link:"/Scroll"
+            link:"/MaulaveStephane/Scroll"
         },
         {
             name:"Slider",
             image:sliderPicture,
-            link:"/Slider"
+            link:"/MaulaveStephane/Slider"
         },
         {
             name:"Générateur de mots de passe",
             image:passwordPicture,
-            link:"/Password"
+            link:"/MaulaveStephane/Password"
         },
         {
             name:"Liste filtrable",
             image:filterPicture,
-            link:"/Filter"
+            link:"/MaulaveStephane/Filter"
         },
         {
             name:"Custom lecteur vidéo",
             image:videoPicture,
-            link:"/VideoPlayer"
+            link:"/MaulaveStephane/VideoPlayer"
         },
         {
             name:"Jeu du morpion",
             image:morpionPicture,
-            link:"/Morpion"
+            link:"/MaulaveStephane/Morpion"
         },
         {
             name:"Particules en JS avec canvas",
             image:particulesPicture,
-            link:"/Particules"
+            link:"/MaulaveStephane/Particules"
         },
         {
             name:"Animations",
             image:animationPicture,
-            link:"/Animate"
+            link:"/MaulaveStephane/Animate"
         },
         {
             name:"Jeu de frappe",
             image:typingPicture,
-            link:"/Typing"
+            link:"/MaulaveStephane/Typing"
         },
         {
             name:"Calculatrice",
             image:calcPicture,
-            link:"/Calculator"
+            link:"/MaulaveStephane/Calculator"
         },
         {
             name:"Player audio",
             image:audioPicture,
-            link:"/AudioPlayer"
+            link:"/MaulaveStephane/AudioPlayer"
         },
     ]
   return (

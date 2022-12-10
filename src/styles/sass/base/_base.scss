@@ -28,18 +28,6 @@ body {
   padding: 0;
   min-height: 100vh;
   transition: .8s;
-  .previous-page {
-    cursor: pointer;
-    position: absolute;
-    bottom: 1em;
-    left: 1em;
-    border: none;
-    background-color: transparent;
-    box-shadow: none;
-    &::before {
-        @include icon('\f137',2em);
-    }
-  }
 }
 
 ul, li {
@@ -54,7 +42,20 @@ a {
 
 .dark {
   background-color: $fifth-color;
-  * {
+  *,::before,::after {
     color: #fff;
+  }
+}
+
+.previous-page {
+  cursor: pointer;
+  position: fixed;
+  bottom: 1em;
+  left: 1em;
+  border: none;
+  background-color: transparent;
+  box-shadow: none;
+  &::before {
+      @include icon('\f137',2em);
   }
 }

@@ -4,6 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 import questionPicture from '../../assets/ressourcesMemory/question.svg';
 
 export default function Memory() {
+  document.querySelector('.button-container').classList.add('hide');
+  
   const [randomArray, setRandomArray] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
   const [play, setPlay] = useState(false);
@@ -176,25 +178,22 @@ const resetAllScores = () => {
     }
     
     const Card = props => {
-
+      
       const flipCard = () => {
         const cardsPlayed = arrayCards.filter(e => e.turned && !e.keep);
         const array = [...arrayCards];
         if (cardsPlayed.length < 2 && !array[props.index].turned) {
           array[props.index].turned = true;
-          document.querySelectorAll('.card')[props.index].classList.add('flip')
-          setTimeout(() => {
-            !play && handlePlay();
-            setArrayCards([...array]);
-            checkPair();
-            setTotalShots(totalShots+1);
-          }, 500);
+          !play && handlePlay();
+          setArrayCards([...array]);
+          checkPair(props.index);
+          setTotalShots(totalShots+1);          
         }
       }
       
       return (
         <div className="sub-container">
-          <div className={props.imagePicture.turned ? "card flip" : "card"} onClick={flipCard}>
+          <div className={(arrayCards[props.index].keep || arrayCards[props.index].turned) ? "card flip" : "card"} onClick={flipCard}>
             <div className="card-back">
               <img src={questionPicture} alt="question" />
             </div>
@@ -243,7 +242,7 @@ const resetAllScores = () => {
         <button className="reset-button" onClick={resetAll}><h3>reset</h3></button>
         <Timer />
       </main>
-      <Link to="/Projects">
+      <Link to="/MaulaveStephane/Projects">
         <button className="previous-page"></button>
       </Link>
     </div>

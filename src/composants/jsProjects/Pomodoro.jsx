@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Pomodoro() {
+  document.querySelector('.button-container').classList.add('hide');
+  
   const [workTimer, setWorkTimer] = useState(1800);
   const [restTimer, setRestTimer] = useState(300);
   const [timerPlaying, setTimerPlaying] = useState('work');
@@ -86,7 +88,7 @@ export default function Pomodoro() {
       </section>
       <p className="cycle-container">Cycle : {cycle}</p>
       </main>
-      <Link to="/Projects">
+      <Link to="/MaulaveStephane/Projects">
         <button className="previous-page"></button>
       </Link>
     </div>

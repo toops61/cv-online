@@ -7,16 +7,17 @@ import seipra from '../assets/seipra.webp';
 import codeWindow from '../assets/capture-code.webp';
 import { Link } from 'react-router-dom';
 export default function Home() {
+    document.querySelector('.button-container').classList.remove('hide');
   return (
     <main className='home'>
         <section className="left-side">
-            <Link className="img-container" to="/SoundEngineer">
+            <Link className="img-container" to="/MaulaveStephane/SoundEngineer">
                 <div className="img vinyl">
                     <img src={vinyl} alt="vinyl" />
                 </div>
                 <h3>Sound Engineer</h3>
             </Link>
-            <Link className="img-container" to="/RadioEngineer">
+            <Link className="img-container" to="/MaulaveStephane/RadioEngineer">
                 <div className="img micro">
                     <img src={micro} alt="micro" />
                 </div>
@@ -38,7 +39,7 @@ export default function Home() {
                     <img src={seipra} alt="Seipra score" />
                 </div>
             </div>
-            <Link className="img-container" to="/Projects">
+            <Link className="img-container" to="/MaulaveStephane/Projects">
                 <div className="text">
                     <h3>Projets code </h3>
                     <h3>personnels</h3>
