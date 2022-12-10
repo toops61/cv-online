@@ -18,7 +18,6 @@ export default function Scroll() {
       apiStoredResult && setApiKey(JSON.parse(localStorage.getItem('apiUnsplash')));
     }
     const arrayStored = localStorage.arrayPhotos ? [...JSON.parse(localStorage.getItem('arrayPhotos'))] : [];
-    //arrayStored.length && setPage(Math.ceil(arrayStored.length/30));
     setArrayPhotos([...arrayStored]);
   }, [])
 
@@ -91,7 +90,7 @@ useEffect(() => {
     searchInput ? callApiPhotos() : displayMessageError('votre recherche est vide...');
   }
 
-  const checkScroll = e => setShowArrow(e.scrollY > 320 ? true : false);
+  const checkScroll = e => setShowArrow(window.scrollY > 320 ? true : false);
 
   document.addEventListener('scroll', checkScroll);
 

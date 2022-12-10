@@ -7,7 +7,6 @@ import seipra from '../assets/seipra.webp';
 import codeWindow from '../assets/capture-code.webp';
 import { Link } from 'react-router-dom';
 export default function Home() {
-    document.querySelector('.button-container').classList.remove('hide');
   return (
     <main className='home'>
         <section className="left-side">
