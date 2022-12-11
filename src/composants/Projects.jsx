@@ -20,12 +20,20 @@ import typingPicture from '../assets/perso_proj/frappe_screenshot.png';
 import calcPicture from '../assets/perso_proj/calculate_screenshot.png';
 import audioPicture from '../assets/perso_proj/audio_screenshot.png';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { updateGeneralParams } from '../redux';
 
 export default function Projects() {
     document.querySelector('.button-container')?.classList.remove('hide');
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(updateGeneralParams({darkMode:false}));
+    }, [])
 
     const [projectListVisible, setProjectListVisible] = useState(false);
     const toggleWindow = () => setProjectListVisible(!projectListVisible);
