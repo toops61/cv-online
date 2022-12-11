@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import questionPicture from '../../assets/ressourcesMemory/question.svg';
 
 export default function Memory() {
-  document.querySelector('.button-container').classList.add('hide');
+  document.querySelector('.button-container')?.classList.add('hide');
   
   const [randomArray, setRandomArray] = useState([]);
   const [showAlert, setShowAlert] = useState(false);

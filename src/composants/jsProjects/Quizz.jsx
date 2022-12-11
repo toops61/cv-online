@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 
 export default function Quizz() {
-  document.querySelector('.button-container').classList.add('hide');
+  window.addEventListener("load", e => {document.querySelector('.button-container').classList.add('hide')});
   
   const [responsesArray, setResponsesArray] = useState([]);
   const [resultResponse, setResultResponse] = useState('Cliquez sur valider pour vérifier vos réponses');

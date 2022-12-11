@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function IMC() {
+    document.querySelector('.button-container')?.classList.add('hide');
+    
     const [height, setHeight] = useState(100);
     const [weight, setWeight] = useState(10);
     const [imc, setImc] = useState(0);
@@ -16,8 +18,6 @@ export default function IMC() {
         { name: "Obésité sévère", color: "crimson", range: [35, 40] },
         { name: "Obésité morbide", color: "purple", range: 40 },
     ];
-
-    document.querySelector('.button-container').classList.add('hide');
 
     const calculateImc = () => {
         if (height && weight && height > 100 && height < 250 && weight > 20 && weight < 250) {

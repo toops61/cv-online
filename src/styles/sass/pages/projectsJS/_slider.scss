@@ -1,10 +1,8 @@
 .slider-page {
     font-family: sans-serif;
     min-height: 100vh;
-    background: linear-gradient(to right, #11998e, #38ef7d); 
-    padding: clamp(20px, 12vw, 120px) 10px 10px;
-    display: flex;
-    justify-content: center;
+    background: linear-gradient(10deg,#ba0303, #ffb638);
+    @include flexCenter;
     color: rgb(209, 209, 209);
     .alert-window {
         z-index: 99;
@@ -40,12 +38,13 @@
         flex-direction: column;
         align-items: center;
         background-color: black;
-        width: 22em;
-        height: 18em;
+        width: 30em;
+        height: 25em;
         overflow: hidden;
+        border: solid .2em white;
         .top-section {
             width: 35em;
-            height: 70%;
+            height: 80%;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -59,16 +58,16 @@
             transition: opacity 700ms;
             h3 {
               margin: .5em 0;
-              font-size: 1em;
+              font-size: 1.3em;
             }
             p {
-              font-size: .7em;
+              font-size: 1em;
             }
           }
           
           .picture-box {
-            width: 7em;
-            height: 7em;
+            width: 12em;
+            height: 12em;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -79,7 +78,6 @@
               border-radius: 50%;
             }
           }
-          
           
           .arrow {
             position: absolute;
@@ -127,10 +125,6 @@
             animation: anim-right 800ms forwards linear;
           }
           
-          .hide {
-            display: none;
-          }
-          
           .visible {
             opacity: 1;
           }
@@ -145,5 +139,14 @@
           button {
             cursor: pointer;
           }
+          *,::before {
+            color: rgb(237, 237, 237);
+          }
     }
+    .previous-page::before {
+        color: white;
+    }
+}
+.dark .slider-page {
+    background: linear-gradient(174deg,#1300c2, #8a4300);
 }

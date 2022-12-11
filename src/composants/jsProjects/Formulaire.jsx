@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Link } from "react-router-dom";
 
 export default function Formulaire() {
-  document.querySelector('.button-container').classList.add('hide');
+  document.querySelector('.button-container')?.classList.add('hide');
   
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertObject, setAlertObject] = useState({

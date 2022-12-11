@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function CouleursJS() {
-  document.querySelector('.button-container').classList.add('hide');
+  document.querySelector('.button-container')?.classList.add('hide');
   
   const [alertPage, setAlertPage] = useState(false);
   const [objectColor, setObjectColor] = useState({

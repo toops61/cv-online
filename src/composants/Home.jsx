@@ -7,6 +7,7 @@ import seipra from '../assets/seipra.webp';
 import codeWindow from '../assets/capture-code.webp';
 import { Link } from 'react-router-dom';
 export default function Home() {
+    
   return (
     <main className='home'>
         <section className="left-side">

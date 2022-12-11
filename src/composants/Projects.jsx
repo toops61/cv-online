@@ -25,7 +25,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Link } from 'react-router-dom';
 
 export default function Projects() {
-    document.querySelector('.button-container').classList.remove('hide');
+    document.querySelector('.button-container')?.classList.remove('hide');
 
     const [projectListVisible, setProjectListVisible] = useState(false);
     const toggleWindow = () => setProjectListVisible(!projectListVisible);

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 
 export default function Scroll() {
+  document.querySelector('.button-container')?.classList.remove('hide');
   const [apiKey, setApiKey] = useState('');
   const [apiStored, setApiStored] = useState(false);
   const [searchInput, setSearchInput] = useState('');
