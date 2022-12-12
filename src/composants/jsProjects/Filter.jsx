@@ -86,6 +86,37 @@ export default function Filter() {
   
   const searchByInput = e => setSearchBy(e.target.id.split('-category')[0]);
 
+  const filterSearch = e => {
+    const input = e.target.value;
+    setSearchInput(e.target.value);
+    const wordsArray = input.split(' ');
+    const first = wordsArray.join('').toLowerCase();
+    const reverse = wordsArray.reverse().join('').toLowerCase();
+    let usersStored = [...arrayRequest];
+    switch (searchBy) {
+        case 'name' :
+          usersStored = usersStored.filter(e => (e.name.first+e.name.last).toLowerCase().includes(first) || (e.name.first+e.name.last).includes(reverse));
+          break;
+        case 'username' :
+          usersStored = usersStored.filter(e => e.login.username.toLowerCase().includes(input.toLowerCase()));
+          break;
+        case 'email' :
+          usersStored = usersStored.filter(e => e.email.toLowerCase().includes(input.toLowerCase()));
+          break;
+        case 'city' :
+          usersStored = usersStored.filter(e => e.location.city.toLowerCase().includes(input.toLowerCase()));
+          break;
+        case 'state' :
+          usersStored = usersStored.filter(e => e.location.state.toLowerCase().includes(input.toLowerCase()));
+          break;
+        case 'country' :
+          usersStored = usersStored.filter(e => e.location.country.toLowerCase().includes(input.toLowerCase()));
+          break;
+    }
+    maleFemale !== 'all' && (usersStored = usersStored.filter(e => e.gender === maleFemale));
+    setUsersArray([...usersStored]);
+  }
+
   return (
     <div className="filter-page">
       <main className="main-filter">
@@ -131,7 +162,7 @@ export default function Filter() {
               <div className="search-bar__logo">
                 <img src={searchIcon} alt="loop" />
               </div>
-              <input type="text" placeholder="recherchez un utilisateur" />
+              <input type="text" placeholder="recherchez un utilisateur" onChange={filterSearch} value={searchInput} />
             </div>
             <div className="woman-man">
               <div>
