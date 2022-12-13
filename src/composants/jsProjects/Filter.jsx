@@ -81,6 +81,7 @@ export default function Filter() {
     let array = [...arrayRequest];
     array = arraySortBy(array);
     maleFemale !== 'all' && (array = array.filter(e => e.gender === maleFemale));
+    !Array.from(document.querySelectorAll('th')).some(e => e.className.includes('rotate')) && (array = array.reverse());
     setUsersArray([...array]);
   }
 
@@ -165,6 +166,7 @@ export default function Filter() {
     }
     maleFemale !== 'all' && (usersStored = usersStored.filter(e => e.gender === maleFemale));
     usersStored = arraySortBy(usersStored);
+    !Array.from(document.querySelectorAll('th')).some(e => e.className.includes('rotate')) && (usersStored = usersStored.reverse());
     setUsersArray([...usersStored]);
   }
 
@@ -175,34 +177,58 @@ export default function Filter() {
   }
 
   const handleSort = column => {
+    const thDiv = document.querySelectorAll('th');
+    const changeArrowSort = (selectedId,id2,id3) => {
+      thDiv.forEach(e => e.classList.remove('selected'));
+      thDiv[id2].classList.remove('rotate');
+      thDiv[id3].classList.remove('rotate');
+      thDiv[selectedId].classList.add('selected');
+      thDiv[selectedId].classList.toggle('rotate');
+    }
+    let reverse = false;
     switch (column) {
       case 0:
-        setSortBy('name');
+        thDiv[0].className.includes('selected') ? reverse = true : setSortBy('name');
+        changeArrowSort(0,1,2);
         break;
-      case 1:
-        setSortBy('email');
+        case 1:
+          thDiv[1].className.includes('selected') ? reverse = true : setSortBy('email');
+        changeArrowSort(1,0,2);
         break;
       case 2:
-        setSortBy('phone');
+        thDiv[2].className.includes('selected') ? reverse = true : setSortBy('phone');
+        changeArrowSort(2,1,0);
         break;
       case 3:
-        setSortBy('username');
+        thDiv[2].className.includes('selected') ? reverse = true : setSortBy('username');
+        changeArrowSort(2,1,0);
         break;
       case 4:
-        setSortBy('city');
+        thDiv[2].className.includes('selected') ? reverse = true : setSortBy('city');
+        changeArrowSort(2,1,0);
         break;
       case 5:
-        setSortBy('state');
+        thDiv[2].className.includes('selected') ? reverse = true : setSortBy('state');
+        changeArrowSort(2,1,0);
         break;
       case 6:
-        setSortBy('country');
+        thDiv[2].className.includes('selected') ? reverse = true : setSortBy('country');
+        changeArrowSort(2,1,0);
         break;
       default:
         break;
     }
-    const array = arraySortBy([...usersArray]);
-    setUsersArray([...array]);
+    if (reverse) {
+      const array = ([...usersArray]).reverse();    
+      setUsersArray([...array]);
+    }
   }
+  
+  useEffect(() => {
+    let array = arraySortBy([...usersArray]);
+    setUsersArray([...array]);
+  }, [sortBy])
+  
 
   return (
     <div className="filter-page">
