@@ -41,6 +41,38 @@ export default function Filter() {
           return (a.name.last < b.name.last) ? -1 : 1;
         })
         break;
+      case 'username':
+        array.sort((a,b) => {
+          return (a.login.username < b.login.username) ? -1 : 1;
+        })
+        break;
+      case 'email':
+        array.sort((a,b) => {
+          return (a.email < b.email) ? -1 : 1;
+        })
+        break;
+      case 'phone':
+        array.sort((a,b) => {
+          return (a.phone < b.phone) ? -1 : 1;
+        })
+        break;
+      case 'city':
+        array.sort((a,b) => {
+          return (a.location.city < b.location.city) ? -1 : 1;
+        })
+        break;
+      case 'state':
+        array.sort((a,b) => {
+          return (a.location.state < b.location.state) ? -1 : 1;
+        })
+        break;
+      case 'country':
+        array.sort((a,b) => {
+          return (a.location.country < b.location.country) ? -1 : 1;
+        })
+        break;
+      default:
+        break;
     }
     return array;
   }
@@ -54,7 +86,7 @@ export default function Filter() {
 
   useEffect(() => {
     arrayRequest.length && buildUserLines();
-  }, [arrayRequest,maleFemale])
+  }, [arrayRequest])
 
   const Users = () => {
     return (
@@ -73,9 +105,21 @@ export default function Filter() {
               <td>
                 <p>{user.email}</p>
               </td>
-              <td>
+              {(searchBy === 'name' || searchBy === 'email') && <td>
                 <p>{user.phone}</p>
-              </td>
+              </td>}
+              {searchBy === 'username' && <td>
+                <p>{user.login.username}</p>
+              </td>}
+              {searchBy === 'city' && <td>
+                <p>{user.location.city}</p>
+              </td>}
+              {searchBy === 'state' && <td>
+                <p>{user.location.state}</p>
+              </td>}
+              {searchBy === 'country' && <td>
+                <p>{user.location.country}</p>
+              </td>}
             </tr>
           )
         })
@@ -86,10 +130,14 @@ export default function Filter() {
   
   const searchByInput = e => setSearchBy(e.target.id.split('-category')[0]);
 
-  const filterSearch = e => {
-    const input = e.target.value;
-    setSearchInput(e.target.value);
-    const wordsArray = input.split(' ');
+  useEffect(() => {
+    const input = searchInput ? searchInput : document.querySelector('.search-bar input').value;
+    input ? filterSearch(input) : buildUserLines();
+  }, [maleFemale,searchBy])
+  
+
+  const filterSearch = value => {
+    const wordsArray = value.split(' ');
     const first = wordsArray.join('').toLowerCase();
     const reverse = wordsArray.reverse().join('').toLowerCase();
     let usersStored = [...arrayRequest];
@@ -98,23 +146,62 @@ export default function Filter() {
           usersStored = usersStored.filter(e => (e.name.first+e.name.last).toLowerCase().includes(first) || (e.name.first+e.name.last).includes(reverse));
           break;
         case 'username' :
-          usersStored = usersStored.filter(e => e.login.username.toLowerCase().includes(input.toLowerCase()));
+          usersStored = usersStored.filter(e => e.login.username.toLowerCase().includes(value.toLowerCase()));
           break;
         case 'email' :
-          usersStored = usersStored.filter(e => e.email.toLowerCase().includes(input.toLowerCase()));
+          usersStored = usersStored.filter(e => e.email.toLowerCase().includes(value.toLowerCase()));
           break;
         case 'city' :
-          usersStored = usersStored.filter(e => e.location.city.toLowerCase().includes(input.toLowerCase()));
+          usersStored = usersStored.filter(e => e.location.city.toLowerCase().includes(value.toLowerCase()));
           break;
         case 'state' :
-          usersStored = usersStored.filter(e => e.location.state.toLowerCase().includes(input.toLowerCase()));
+          usersStored = usersStored.filter(e => e.location.state.toLowerCase().includes(value.toLowerCase()));
           break;
         case 'country' :
-          usersStored = usersStored.filter(e => e.location.country.toLowerCase().includes(input.toLowerCase()));
+          usersStored = usersStored.filter(e => e.location.country.toLowerCase().includes(value.toLowerCase()));
+          break;
+        default:
           break;
     }
     maleFemale !== 'all' && (usersStored = usersStored.filter(e => e.gender === maleFemale));
+    usersStored = arraySortBy(usersStored);
     setUsersArray([...usersStored]);
+  }
+
+  const inputHandle = e => {
+    const input = e.target.value;
+    setSearchInput(input);
+    input ? filterSearch(input) : buildUserLines();
+  }
+
+  const handleSort = column => {
+    switch (column) {
+      case 0:
+        setSortBy('name');
+        break;
+      case 1:
+        setSortBy('email');
+        break;
+      case 2:
+        setSortBy('phone');
+        break;
+      case 3:
+        setSortBy('username');
+        break;
+      case 4:
+        setSortBy('city');
+        break;
+      case 5:
+        setSortBy('state');
+        break;
+      case 6:
+        setSortBy('country');
+        break;
+      default:
+        break;
+    }
+    const array = arraySortBy([...usersArray]);
+    setUsersArray([...array]);
   }
 
   return (
@@ -162,7 +249,7 @@ export default function Filter() {
               <div className="search-bar__logo">
                 <img src={searchIcon} alt="loop" />
               </div>
-              <input type="text" placeholder="recherchez un utilisateur" onChange={filterSearch} value={searchInput} />
+              <input type="text" placeholder="recherchez un utilisateur" onChange={inputHandle} value={searchInput} />
             </div>
             <div className="woman-man">
               <div>
@@ -231,9 +318,13 @@ export default function Filter() {
           <table>
             <thead>
               <tr>
-                <th className="selected rotate"><h3>Nom</h3><div className="order"></div></th>
-                <th className=""><h3>Email</h3><div className="order"></div></th>
-                <th className=""><h3>Téléphone</h3><div className="order"></div></th>
+                <th className="selected rotate" onClick={e => handleSort(0)}><h3>Nom</h3><div className="order"></div></th>
+                <th className="" onClick={e => handleSort(1)}><h3>Email</h3><div className="order"></div></th>
+                {(searchBy === 'name' || searchBy === 'email') && <th className="" onClick={e => handleSort(2)}><h3>Téléphone</h3><div className="order"></div></th>}
+                {(searchBy === 'username') && <th className="" onClick={e => handleSort(3)}><h3>Pseudo</h3><div className="order"></div></th>}
+                {(searchBy === 'city') && <th className="" onClick={e => handleSort(4)}><h3>Ville</h3><div className="order"></div></th>}
+                {(searchBy === 'state') && <th className="" onClick={e => handleSort(5)}><h3>Département</h3><div className="order"></div></th>}
+                {(searchBy === 'country') && <th className="" onClick={e => handleSort(6)}><h3>Pays</h3><div className="order"></div></th>}
               </tr>
             </thead>
             <tbody>

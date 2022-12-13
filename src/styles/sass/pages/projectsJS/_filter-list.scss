@@ -212,7 +212,7 @@
           
           
     }
-    @include tablette-version {
+    @media (max-width: 700px) {
         .main-filter {
           flex-direction: column;
         }
