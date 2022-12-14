@@ -107,9 +107,13 @@
           }
         }
       }
-      @media screen and (max-width: 800px) {
-        * {
-            font-size: 4vw;
-        }
-        }
+    @media screen and (max-width: 800px) {
+    * {
+        font-size: 4vw;
+    }
+    align-items: flex-start;
+    .calculator-body {
+        margin-top: 3em;
+    }
+    }
 }

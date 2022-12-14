@@ -26,7 +26,6 @@ export default function Calculator() {
         tempArray.pop();
         tempArray.length && tempArray[tempArray.length-1]/1 && setNumber(tempArray[tempArray.length - 1]);
         tempArray.pop();
-        console.log(tempArray);
         setOperationArray([...tempArray]);
       }
   }
@@ -39,7 +38,6 @@ const multDivFirst = array => {
           array.splice([index-1],3,multiplication);
       }
       if (e === '/') {
-          console.log(array[index+1]);
           if (array[index+1] == '0') {
             setNumber('Erreur');
             setTimeout(() => {
@@ -102,7 +100,7 @@ const getResult = () => {
       tempArray.length = 0;
       setOperationArray([]);
     } else if (touchContent === '=') {
-      getResult();
+      !number.includes('=') && getResult();
     } else {
       if (number === '0') {
         tempArray.pop();
