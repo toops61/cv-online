@@ -107,5 +107,9 @@
           }
         }
       }
-      @include adapt-size;
+      @media screen and (max-width: 800px) {
+        * {
+            font-size: 4vw;
+        }
+        }
 }

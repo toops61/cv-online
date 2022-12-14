@@ -1,7 +1,8 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { Link } from "react-router-dom";
 
 export default function Calculator() {
-  const [number, setNumber] = useState('');
+  const [number, setNumber] = useState('0');
   const [operation, setOperation] = useState('');
   const [operationArray, setOperationArray] = useState([]);
   const [colorsObject, setColorsObject] = useState({
@@ -10,24 +11,115 @@ export default function Calculator() {
     'lasttouch-color':'rgb(243, 178, 39)'
   });
 
+  useEffect(() => {
+    let tempOperation = '';
+    operationArray.map(el => tempOperation += el);
+    setOperation(tempOperation);
+  }, [operationArray])
+  
+
+  const correctTouch = () => {
+    const tempArray = [...operationArray];
+    if (number !== '0') {
+        setNumber(number.length === 1 ? '0' : number.slice(0,(number.length-1)));
+    } else if (tempArray.length && number === '0') {
+        tempArray.pop();
+        tempArray.length && tempArray[tempArray.length-1]/1 && setNumber(tempArray[tempArray.length - 1]);
+        tempArray.pop();
+        console.log(tempArray);
+        setOperationArray([...tempArray]);
+      }
+  }
+
+  //first do * and / operations
+const multDivFirst = array => {
+  array.map((e,index) => {
+      if (e === 'x') {
+          const multiplication = array[index-1]*array[index+1];
+          array.splice([index-1],3,multiplication);
+      }
+      if (e === '/') {
+          console.log(array[index+1]);
+          if (array[index+1] == '0') {
+            setNumber('Erreur');
+            setTimeout(() => {
+              setNumber('0');
+            }, 2000);
+            array = [];
+          } else {
+            let division = array[index-1]/array[index+1];
+            !Number.isInteger(division) && (division = division.toFixed(6));
+            array.splice([index-1],3,division);
+          }
+      }
+  })
+  return array;
+}
+
+const getResult = () => {
+  let tempArray = [...operationArray];
+  tempArray.push(number);
+  //execute * and / if it still is some
+  do {
+      tempArray = multDivFirst(tempArray);
+  } while (tempArray.some(e => (e === '*' || e === '/')));
+  if (tempArray.length) {
+    let result = tempArray[0]/1;
+    tempArray.length > 1 && tempArray.map((el,index) => {
+      if (index > 0 && index/1) {
+        switch (tempArray[index - 1]) {
+            case '+':
+                result += (el/1);
+                break;
+            case '-':
+                result -= el;
+                break;
+            default:
+              break;
+        }
+      }
+      return result
+    })
+    setNumber('='+result);
+  }
+  setOperationArray([...tempArray]);
+}
+
+  const handleTouch = e => {
+    const touchContent = e.target.innerText;
+    const isNumber = !isNaN(touchContent/1) ? true : false;
+    let tempArray = [...operationArray];
+    if (isNumber) {
+      number.includes('=') ? setNumber(touchContent) : setNumber((number === '0' ? '' : number) + touchContent);
+      number.includes('=') && setOperationArray([]);
+    }  else if (touchContent === '.' && !number.includes('.')) {
+      setNumber(number + (number !== '0' ? touchContent : '0.'));
+    }  else if (touchContent === 'CE' && !number.includes('=') && (number.length || operationArray.length)) {
+      correctTouch();
+    } else if (touchContent === 'C') {
+      setNumber('0');
+      setOperation('');
+      tempArray.length = 0;
+      setOperationArray([]);
+    } else if (touchContent === '=') {
+      getResult();
+    } else {
+      if (number === '0') {
+        tempArray.pop();
+        tempArray.push(touchContent);
+      } else {
+        number.includes('=') ? tempArray = [number.split('=')[1]] : tempArray.push(number);
+        tempArray.push(touchContent);
+        setNumber('0');
+      }
+      setOperationArray([...tempArray]);
+    }
+  }
+
   const handleColor = e => {
     const tempObjectColor = {...colorsObject};
     tempObjectColor[e.target.id] = e.target.value;
     setColorsObject({...tempObjectColor});
-  }
-
-  const hexToRgb = hex => {
-    const shorthandRegExp = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-    hex = hex.replace(shorthandRegExp, function(r, g, b) {
-      return r + r + g + g + b + b;
-    });
-    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    const r = parseInt(result[1], 16);
-    const g = parseInt(result[2], 16);
-    const b = parseInt(result[3], 16);
-    const yiq = (r*299 + g*587 + b*144) / 1000;
-    const newColor = yiq > 128 ? "#000" : "#fff";
-    return newColor;
   }
 
   const textColor = color => {
@@ -70,76 +162,79 @@ export default function Calculator() {
       </form>
       <main className="calculator-body" style={{backgroundColor:colorsObject['body-color']}}>
         <header className="calculator-screen">
-          <p className="operation"></p>
-          <h1>0</h1>
+          <p className="operation">{operation}</p>
+          <h1>{number}</h1>
         </header>
         <section className="calculator-touch">
           <div className="line">
             <div className="touch-background double" style={{backgroundColor:colorsObject['touch-color']}}>
-              <div className="touch"><p style={{color:textColor(colorsObject['touch-color'])}}>C</p></div>
+              <div className="touch" onClick={handleTouch}><p style={{color:textColor(colorsObject['touch-color'])}}>C</p></div>
             </div>
             <div className="touch-background" style={{backgroundColor:colorsObject['touch-color']}}>
-              <div className="touch"><p style={{color:textColor(colorsObject['touch-color'])}}>CE</p></div>
+              <div className="touch" onClick={handleTouch}><p style={{color:textColor(colorsObject['touch-color'])}}>CE</p></div>
             </div>
             <div className="touch-background" style={{backgroundColor:colorsObject['touch-color']}}>
-              <div className="touch operator"><p style={{color:textColor(colorsObject['touch-color'])}}>+</p></div>
-            </div>
-          </div>
-          <div className="line">
-            <div className="touch-background" style={{backgroundColor:colorsObject['touch-color']}}>
-              <div className="touch digits"><p style={{color:textColor(colorsObject['touch-color'])}}>7</p></div>
-            </div>
-            <div className="touch-background" style={{backgroundColor:colorsObject['touch-color']}}>
-              <div className="touch digits"><p style={{color:textColor(colorsObject['touch-color'])}}>8</p></div>
-            </div>
-            <div className="touch-background" style={{backgroundColor:colorsObject['touch-color']}}>
-              <div className="touch digits"><p style={{color:textColor(colorsObject['touch-color'])}}>9</p></div>
-            </div>
-            <div className="touch-background" style={{backgroundColor:colorsObject['touch-color']}}>
-              <div className="touch operator"><p style={{color:textColor(colorsObject['touch-color'])}}>-</p></div>
+              <div className="touch operator" onClick={handleTouch}><p style={{color:textColor(colorsObject['touch-color'])}}>+</p></div>
             </div>
           </div>
           <div className="line">
             <div className="touch-background" style={{backgroundColor:colorsObject['touch-color']}}>
-              <div className="touch digits"><p style={{color:textColor(colorsObject['touch-color'])}}>4</p></div>
+              <div className="touch" onClick={handleTouch}><p style={{color:textColor(colorsObject['touch-color'])}}>7</p></div>
             </div>
             <div className="touch-background" style={{backgroundColor:colorsObject['touch-color']}}>
-              <div className="touch digits"><p style={{color:textColor(colorsObject['touch-color'])}}>5</p></div>
+              <div className="touch" onClick={handleTouch}><p style={{color:textColor(colorsObject['touch-color'])}}>8</p></div>
             </div>
             <div className="touch-background" style={{backgroundColor:colorsObject['touch-color']}}>
-              <div className="touch digits"><p style={{color:textColor(colorsObject['touch-color'])}}>6</p></div>
+              <div className="touch" onClick={handleTouch}><p style={{color:textColor(colorsObject['touch-color'])}}>9</p></div>
             </div>
             <div className="touch-background" style={{backgroundColor:colorsObject['touch-color']}}>
-              <div className="touch operator"><p style={{color:textColor(colorsObject['touch-color'])}}>x</p></div>
-            </div>
-          </div>
-          <div className="line">
-            <div className="touch-background" style={{backgroundColor:colorsObject['touch-color']}}>
-              <div className="touch digits"><p style={{color:textColor(colorsObject['touch-color'])}}>1</p></div>
-            </div>
-            <div className="touch-background" style={{backgroundColor:colorsObject['touch-color']}}>
-              <div className="touch digits"><p style={{color:textColor(colorsObject['touch-color'])}}>2</p></div>
-            </div>
-            <div className="touch-background" style={{backgroundColor:colorsObject['touch-color']}}>
-              <div className="touch digits"><p style={{color:textColor(colorsObject['touch-color'])}}>3</p></div>
-            </div>
-            <div className="touch-background" style={{backgroundColor:colorsObject['touch-color']}}>
-              <div className="touch operator"><p style={{color:textColor(colorsObject['touch-color'])}}>/</p></div>
+              <div className="touch operator" onClick={handleTouch}><p style={{color:textColor(colorsObject['touch-color'])}}>-</p></div>
             </div>
           </div>
           <div className="line">
             <div className="touch-background" style={{backgroundColor:colorsObject['touch-color']}}>
-              <div className="touch digits"><p style={{color:textColor(colorsObject['touch-color'])}}>0</p></div>
+              <div className="touch" onClick={handleTouch}><p style={{color:textColor(colorsObject['touch-color'])}}>4</p></div>
             </div>
             <div className="touch-background" style={{backgroundColor:colorsObject['touch-color']}}>
-              <div className="touch"><p style={{color:textColor(colorsObject['touch-color'])}}>.</p></div>
+              <div className="touch" onClick={handleTouch}><p style={{color:textColor(colorsObject['touch-color'])}}>5</p></div>
+            </div>
+            <div className="touch-background" style={{backgroundColor:colorsObject['touch-color']}}>
+              <div className="touch" onClick={handleTouch}><p style={{color:textColor(colorsObject['touch-color'])}}>6</p></div>
+            </div>
+            <div className="touch-background" style={{backgroundColor:colorsObject['touch-color']}}>
+              <div className="touch operator" onClick={handleTouch}><p style={{color:textColor(colorsObject['touch-color'])}}>x</p></div>
+            </div>
+          </div>
+          <div className="line">
+            <div className="touch-background" style={{backgroundColor:colorsObject['touch-color']}}>
+              <div className="touch" onClick={handleTouch}><p style={{color:textColor(colorsObject['touch-color'])}}>1</p></div>
+            </div>
+            <div className="touch-background" style={{backgroundColor:colorsObject['touch-color']}}>
+              <div className="touch" onClick={handleTouch}><p style={{color:textColor(colorsObject['touch-color'])}}>2</p></div>
+            </div>
+            <div className="touch-background" style={{backgroundColor:colorsObject['touch-color']}}>
+              <div className="touch" onClick={handleTouch}><p style={{color:textColor(colorsObject['touch-color'])}}>3</p></div>
+            </div>
+            <div className="touch-background" style={{backgroundColor:colorsObject['touch-color']}}>
+              <div className="touch operator" onClick={handleTouch}><p style={{color:textColor(colorsObject['touch-color'])}}>/</p></div>
+            </div>
+          </div>
+          <div className="line">
+            <div className="touch-background" style={{backgroundColor:colorsObject['touch-color']}}>
+              <div className="touch" onClick={handleTouch}><p style={{color:textColor(colorsObject['touch-color'])}}>0</p></div>
+            </div>
+            <div className="touch-background" style={{backgroundColor:colorsObject['touch-color']}}>
+              <div className="touch" onClick={handleTouch}><p style={{color:textColor(colorsObject['touch-color'])}}>.</p></div>
             </div>
             <div className="touch-background double" style={{backgroundColor:colorsObject['lasttouch-color']}}>
-              <div className="touch"><p style={{color:textColor(colorsObject['lasttouch-color'])}}>=</p></div>
+              <div className="touch" onClick={handleTouch}><p style={{color:textColor(colorsObject['lasttouch-color'])}}>=</p></div>
             </div>
           </div>
         </section>
       </main>
+      <Link to="/MaulaveStephane/Projects">
+        <button className="previous-page"></button>
+      </Link>
     </div>
   )
 }
