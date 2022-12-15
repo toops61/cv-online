@@ -53,3 +53,12 @@
     opacity: 0;
   }
 }
+
+@keyframes flashing-text {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
