@@ -16,6 +16,9 @@
         position: relative;
         width: 50%;
         height: 25em;
+        @include tablette-version {
+            width: 100%;
+        }
         background-color: black;
         border-radius: .5em;
         display: flex;
@@ -176,4 +179,5 @@
             }
           }
     }
+    @include adapt-size(3vw);
 }
