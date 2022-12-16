@@ -1,0 +1,103 @@
+.morpion-page {
+    font-family: Roboto, Helvetica, sans-serif;
+    background: linear-gradient(3deg,#fdce08, #dd4f37);
+    color: #f1f1f1;
+    .main-morpion {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 2em;
+        .reset {
+            position: fixed;
+            top: 1em;
+            right: 1em;
+            padding: .2em 1em;
+            border-radius: .7em;
+            box-shadow: .3em .3em .2em black;
+            border: solid .1em;
+            background-color: rgb(0, 11, 68);
+            color: white;
+        }
+        
+        .selected {
+            animation: button-clicked .8s;
+        }
+        
+        .names {
+            position: fixed;
+            bottom: 1em;
+            right: 1em;
+            display: flex;
+            align-content: center;
+            justify-content: center;
+            .input-container {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                margin-left: 1em;
+                input {
+                    margin-bottom: 1em;
+                }
+            }
+        }
+        
+        h1 {
+            font-size: 2em;
+            text-transform: uppercase;
+            span {
+                font-weight: normal;
+            }
+        }
+        
+        .playground {
+            display: flex;
+            flex-direction: column;
+            border: solid .1em;
+            margin: 2em 0;
+            background-color: rgb(0, 11, 68);
+            .line {
+                display: flex;
+                .case:last-child {
+                    border-right: none;
+                }
+                
+                &:last-child .case {
+                    border-bottom: none;
+                }
+                .case {
+                    flex: 1;
+                    border-bottom: solid .1em white;
+                    border-right: solid .1em white;
+                    width: 6em;
+                    height: 6em;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    p {
+                        font-size: 5em;
+                        color: white;
+                    }
+                }
+            }
+        }
+        
+        h2 {
+            font-size: 3em;
+        }
+        
+        .animate {
+            animation: text-flashing infinite .8s alternate;
+        }
+        @include tablette-version {
+            h2 {
+                font-size: 2em;
+                text-align: center;
+            }
+            .names {
+                margin-bottom: 2em;
+            }
+        }
+    }
+    @include adapt-size;
+}

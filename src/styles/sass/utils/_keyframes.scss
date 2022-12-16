@@ -62,3 +62,12 @@
       opacity: 1;
     }
   }
+
+  @keyframes button-clicked {
+    from {
+        box-shadow: .1em .1em .1em black;
+    }
+    to {
+        box-shadow: .3em .3em .2em black;
+    }
+}

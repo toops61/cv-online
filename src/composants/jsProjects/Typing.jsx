@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 export default function Typing() {
   document.querySelector('.button-container')?.classList.add('hide');
 
-  const APIEndpoint = "http://api.quotable.io/random";
+  const APIEndpoint = "https://api.quotable.io/random";
   const [typingSentence, setTypingSentence] = useState('');
   const [typedInput, setTypedInput] = useState('');
   const [alertVisible, setAlertVisible] = useState(false);
