@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
 
 export default function Calculator() {
+  document.querySelector('.button-container')?.classList.remove('hide');
+
   const [number, setNumber] = useState('0');
   const [operation, setOperation] = useState('');
   const [operationArray, setOperationArray] = useState([]);

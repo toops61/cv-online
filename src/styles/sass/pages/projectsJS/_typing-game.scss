@@ -18,9 +18,11 @@
         height: 25em;
         background-color: black;
         border-radius: .5em;
-        color: white;
         display: flex;
         flex-direction: column;
+        p,h1,h4 {
+            color: white;
+        }
         .alert-window {
             z-index: 99;
             position: fixed;
@@ -55,6 +57,7 @@
               h4 {
                 font-size: 1.5em;
                 margin-bottom: .5em;
+                color: black;
               }
               p {
                 font-size: 1em;
@@ -68,6 +71,9 @@
                 border-radius: 50%;
                 width: 2em;
                 height: 2em;
+                }
+                .best-timers p {
+                    color: black;
                 }
             }
           }
@@ -92,33 +98,26 @@
             top: .5em;
             left: .5em;
             border-radius: 50%;
-            color: white;
             display: flex;
             justify-content: center;
             align-items: center;
-            &:nth-child(2) {
-              background-color: rgb(1, 101, 26);
+            &.valid {
+                background-color: rgb(1, 101, 26);
             }
             
-            &:nth-child(2)::before {
-              content: '\f00c';
-              font-family: 'Font Awesome 6 solid';
-              font-weight: 400;
-              font-size: 1em;
-              font-style: normal;
-              font-variant: normal;
-              text-rendering: auto;
-              line-height: 1;
+            &.valid::before {
+                @include icon('\f00c');
+                color: white;
             }
             
-            &:nth-child(3) {
+            &.invalid {
               background-color: rgb(182, 1, 1);
+              p {
+                font-weight: 500;
+                font-size: 1.2em;
+              }
             }
             
-            &:nth-child(2) p {
-              font-weight: 500;
-              font-size: 1.2em;
-            }
           }
           
           .top {
@@ -137,6 +136,9 @@
                 line-height: .5;
                 margin-left: .2em;
               }
+            }
+            .counter p {
+                color: black;
             }
           }
           
