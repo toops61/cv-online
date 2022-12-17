@@ -46,12 +46,18 @@
                 font-weight: normal;
             }
         }
+
+        .player-turn {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: .8em;
+        }
         
         .playground {
             display: flex;
             flex-direction: column;
             border: solid .1em;
-            margin: 2em 0;
+            margin-top: 2em;
             background-color: rgb(0, 11, 68);
             .line {
                 display: flex;
@@ -84,7 +90,7 @@
         }
         
         .animate {
-            animation: text-flashing infinite .8s alternate;
+            animation: flashing-text infinite .8s alternate;
         }
         @include tablette-version {
             h2 {

@@ -71,3 +71,12 @@
         box-shadow: .3em .3em .2em black;
     }
 }
+
+@keyframes flashing-cursor {
+    from {
+      border-right: 1px solid rgba(211, 211, 211, 0);
+    }
+    to {
+      border-right: 1px solid rgba(211, 211, 211, 1);
+    }
+  }

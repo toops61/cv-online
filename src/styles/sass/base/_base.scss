@@ -49,6 +49,7 @@ a {
 
 .previous-page {
   cursor: pointer;
+  z-index: 50;
   position: fixed;
   bottom: 1em;
   left: 1em;
