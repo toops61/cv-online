@@ -82,7 +82,7 @@
         padding: 0.6em;
         bottom: 1em;
         img {
-          object-fit: contain;
+          @include imageFit;
         }
       }
       .appears {
