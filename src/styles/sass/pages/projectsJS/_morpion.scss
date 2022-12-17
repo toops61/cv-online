@@ -26,18 +26,15 @@
         
         .names {
             position: fixed;
-            bottom: 1em;
-            right: 1em;
-            display: flex;
-            align-content: center;
-            justify-content: center;
+            top: .5em;
+            left: 3em;
+            @include flexColumn;
             .input-container {
                 position: relative;
                 display: flex;
                 flex-direction: column;
-                margin-left: 1em;
                 input {
-                    margin-bottom: 1em;
+                    margin-bottom: .5em;
                 }
             }
         }
@@ -95,9 +92,22 @@
                 text-align: center;
             }
             .names {
-                margin-bottom: 2em;
+                top: auto;
+                left: auto;
+                bottom: .5em;
+                right: .5em;
             }
         }
     }
-    @include adapt-size;
+    @media screen and (max-width:$breakpoint-ipad) and (orientation: portrait) {
+        * {
+            font-size: 3vw;
+        }
+    }
+    @include mobile-version {
+        * {
+            font-size: 4vw;
+        }
+        
+    }
 }
