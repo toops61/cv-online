@@ -1,0 +1,121 @@
+.video-player-page {
+    font-family: Montserrat, sans-serif;
+    background: #d1d1d1;
+    padding-top: 50px;
+    height: 100vh;
+    .video-player-main {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        h1 {
+            font-weight: 600;
+            font-size: 1.5em;
+          }
+          
+          span {
+            font-weight: normal;
+            font-size: 1em;
+          }
+          
+          .player-container {
+            margin-top: 2em;
+          }
+          
+          .video-container {
+            position: relative;
+            width: 40em;
+          }
+          
+          video {
+            object-fit: contain;
+            width: 100%;
+          }
+          
+          .controls-section {
+            opacity: 0;
+            position: absolute;
+            background-color: black;
+            height: 2.5em;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            bottom: 0;
+            transition: .5s;
+            p {
+                color: white;
+
+            }
+          }
+          
+          .time-container {
+            width: 5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          
+          .volume {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            &.off::after {
+                @include icon('\f6a9',1.2em);
+                color: white;
+            }
+            &.low::after {
+                @include icon('\f027',1.2em);
+                color: white;
+            }
+            &.high::after {
+                @include icon('\f028',1.2em);
+                color: white;
+            }
+          }
+          
+          #scroll-volume {
+            position: absolute;
+            transform: rotate(-90deg);
+            top: -3.3em;
+            width: 5em;
+            height: .3em;
+          }
+          
+          .controls-section:hover {
+            opacity: 1;
+          }
+          
+          button {
+              margin: 0 1em;
+              border: none;
+              background-color: inherit;
+            }
+        .play::before {
+            @include icon('\f04b',1.2em);
+            color: white;
+        }
+        .pause::before {
+            @include icon('\f04c',1.2em);
+            color: white;
+        }
+        .full-screen::before {
+            @include icon('\f065',1.2em);
+            color: white;
+        }
+          
+          button:last-child {
+            position: absolute;
+            right: 0;
+          }
+          
+          p {
+            margin: 0 .5em;
+          }
+          
+          #scroll-time {
+            width: 40%;
+            height: .3em;
+          }
+    }
+}
