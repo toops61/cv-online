@@ -1,5 +1,313 @@
 .audio-player-page {
-    .audio-player-main {
-        
+    min-height: 100vh;
+    background: linear-gradient(132deg, #3d3f41 6%, #384a52 61%, #4a4c4e 95%);
+    font-family: "Lato", sans-serif;
+    font-size: 1.5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .player-body {
+        z-index: 10;
+        background-color: black;
+        padding: 1em;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 1em;
+        position: relative;
+
+        .selected::before {
+            color: white;
+        }
+
+        ::before {
+            color: #5d5d5d;
+        }
+
+        p {
+            color: #a5a5a5;
+            font-size: .8em;
+        }
+
+        .triangle-corner {
+            position: absolute;
+            border: solid;
+            border-color: transparent rgb(232, 232, 232) transparent transparent;
+            border-width: .7em;
+            transform: rotate(-35deg);
+            right: .4em;
+            top: -.4em;
+        }
+
+        .player-front {
+            position: absolute;
+            background-color: black;
+            width: 100%;
+            height: 100%;
+            border-radius: 1em;
+        }
+        .player-back {
+            z-index: -10;
+            position: absolute;
+            background-color: rgb(232, 232, 232);
+            width: 15em;
+            height: 27em;
+            border-radius: 1em;
+            transform: translate(.7em, .7em);
+        }
+
+        .volume-buttons {
+            z-index: 50;
+            position: absolute;
+            top: 1em;
+            right: -.7em;
+            margin: 2em .1em;
+            height: 5em;
+            width: 0.5em;
+            background-color: black;
+            border-radius: .3em;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;
+            padding: .2em 0;
+            .volume {
+                font-size: 100%;
+                width: .4em;
+                flex: 1;
+                border: none;
+                border-radius: .3em;
+                margin: .2em 0;
+                border-left: solid .15em rgb(169, 169, 169);
+                border-right: solid .05em black;
+            }
+        }
+
+
+        .screen-container {
+            z-index: 1;
+            width: 13em;
+            height: 13em;
+            border-radius: 1em;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        }
+
+        .no-picture {
+            width: 100%;
+            height: 100%;
+            border-radius: 1em;
+            border: solid .1em white;
+            @include flexCenter;
+
+            &::before {
+                @include iconBrands('\f3b5', 6em);
+                color: white;
+            }
+        }
+
+        .title-container {
+            position: relative;
+            width: 94%;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .title h1 {
+            color: white;
+            font-size: 1.2em;
+        }
+
+        .title p {
+            font-size: .9em;
+            white-space: nowrap;
+            overflow: hidden;
+            max-width: 14em;
+            text-overflow: ellipsis;
+        }
+
+        .title p:nth-child(3) {
+            max-width: 12em;
+            color: white;
+        }
+
+        .title-number {
+            position: absolute;
+            right: 0;
+        }
+
+        .progressbar-container {
+            z-index: 1;
+            width: 100%;
+            height: 3em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1em;
+            p {
+                color: white;
+            }
+            .progress-bar {
+                cursor: pointer;
+                overflow: hidden;
+                position: relative;
+                width: 94%;
+                height: .4em;
+                background-color: rgb(199, 199, 199);
+                border-radius: .2em;
+                .progress {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgb(0, 231, 224);
+                    transform: translateX(-100%);
+                    border-radius: .2em;
+                }
+            }
+            .time {
+                width: 94%;
+                display: flex;
+                justify-content: space-between;
+                margin-top: .2em;
+                p:first-child {
+                    cursor: pointer;
+                }
+            }
+    
+        }
+
+        .controls-container {
+            position: relative;
+            width: 94%;
+            height: 5em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            button {
+                font-size: 100%;
+            }
+        }
+
+        .random {
+            position: absolute;
+            left: 0;
+            color: #5d5d5d;
+
+            &.active {
+                color: white;
+            }
+        }
+
+
+        .random::before {
+            @include icon('\f074', 1.2em);
+        }
+
+        .backward,
+        .forward {
+            background-color: inherit;
+            border: none;
+            color: white;
+        }
+
+        .backward::before {
+            @include icon('\f048', 1.4em);
+        }
+
+        .play-pause {
+            border-radius: 50%;
+            width: 3.5em;
+            height: 3.5em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 .8em;
+            overflow: hidden;
+            background-color: rgb(0, 142, 137);
+            border: none;
+        }
+
+        .play-pause.active {
+            background-color: rgb(0, 231, 224);
+        }
+
+        .play {
+            transform: translateX(.1em);
+        }
+
+        .pause {
+            display: none;
+        }
+
+        .active .play {
+            display: none;
+        }
+
+        .active .pause {
+            display: flex;
+        }
+
+        .play::before {
+            @include icon('\f04b', 1.2em);
+        }
+
+        .pause::before {
+            @include icon('\f04c', 1.3em);
+        }
+
+        .forward::before {
+            @include icon('\f051', 1.4em);
+        }
+
+        .repeat {
+            position: absolute;
+            right: 0;
+            color: #5d5d5d;
+
+            p {
+                position: absolute;
+                top: .65em;
+                left: 1em;
+                font-size: .5em;
+            }
+        }
+
+        .repeat::before {
+            @include icon('\f363', 1.4em);
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .hide {
+            display: none;
+        }
+
+
+    }
+
+    @media screen and (max-width: 900px) {
+        * {
+            font-size: 3.5vw;
+        }
+    }
+
+    @media screen and (max-width: 400px) {
+        * {
+            font-size: 4.5vw;
+        }
     }
 }
