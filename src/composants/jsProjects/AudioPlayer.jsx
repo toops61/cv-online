@@ -6,6 +6,7 @@ import { updateGeneralParams } from "../../redux";
 export default function AudioPlayer() {
   const [repeat, setRepeat] = useState('');
   const [songsArray, setSongsArray] = useState([]);
+  const [playedSongs, setPlayedSongs] = useState([]);
   const [play, setPlay] = useState(false);
   const [timerAudio, setTimerAudio] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -20,6 +21,16 @@ export default function AudioPlayer() {
   });
   //const [jsmediatags, setJsmediatags] = useState('');
   const jsmediatags = window.jsmediatags;
+
+  //hide dark mode
+  document.querySelector(".button-container")?.classList.add("hide");
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(updateGeneralParams({ darkMode: true }));
+    getSongs();
+  }, [])
 
   const getSongs = () => {
     const importAll = r => {
@@ -38,18 +49,6 @@ export default function AudioPlayer() {
     setSongSelected({...tempSongObject});
   }
 
-  useEffect(() => {
-    const timerPlay = setInterval(() => {
-      play && setTimerAudio(timerVideo => timerVideo+1);
-    }, 1000);
-
-    audioRef.current && (play ? audioRef.current.play() : audioRef.current.pause());
-
-    return () => {
-      clearInterval(timerPlay);
-    }
-  }, [play])
-
   const audioRef = useRef();
 
   const getCover = tags => {
@@ -64,6 +63,7 @@ export default function AudioPlayer() {
   //check songs metadata
 const getTags = async () => {
   const targetUrl = audioRef.current.src;
+  const tempArray = [...songsArray];
   return await jsmediatags.read(targetUrl, {
     onSuccess: tag => {
       const songTags = tag.tags;
@@ -75,6 +75,8 @@ const getTags = async () => {
         pictureURL:getCover(songTags)
       }
       setSongSelected({...tempSongObject});
+      tempArray.splice(tempSongObject.id-1,1,tempSongObject);
+      setSongsArray([...tempArray])
     },
     onError: error => console.log(error)
   })
@@ -90,31 +92,134 @@ const formatTime = time => {
 const getDuration = () => {
   setDuration(audioRef.current.duration);
 };
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    getSongs();
-    dispatch(updateGeneralParams({ darkMode: true }));
-  }, [])
   
   useEffect(() => {
-    if (songsArray.length) {
+    if (audioRef.current) {
       audioRef.current.volume = volume;
     }
-  }, [songsArray])
+  }, [volume])
 
   useEffect(() => {
     if (audioRef.current) {
-      getTags();
+      audioRef.current.volume = volume;
+      !songSelected.artist && getTags();
+      play && audioRef.current.play();
+      setTimerAudio(0);
     }
   }, [songSelected])
+
+  //display progress bar
+  const displayTimeBar = () => {
+    const current = audioRef.current.currentTime;
+    const progress = -100 + (current*100)/duration;
+    return progress;
+  }
+
+  const jumpCurrent = e => {
+    const clickPosition = e.nativeEvent.layerX;
+    const barLength = document.querySelector('.progress-bar').offsetWidth;
+    const x = Math.round((clickPosition * duration) / barLength);
+    audioRef.current.currentTime = x;
+    setTimerAudio(x);
+  }
+
+  useEffect(() => {
+    const timerPlay = setInterval(() => {
+      play && setTimerAudio(timerAudio => timerAudio+1);
+    }, 1000);
+
+    audioRef.current && (play ? audioRef.current.play() : audioRef.current.pause());
+
+    return () => {
+      clearInterval(timerPlay);
+    }
+  }, [play])
   
+  useEffect(() => {
+    if (timerAudio > duration) {       
+      switch (repeat) {
+        case '':
+          songSelected.id === songsArray.length && setPlay(false);
+          nextSong();
+          break;
+        case 'all':
+          nextSong();
+          break;
+        case 'one':
+          setTimerAudio(0);
+          audioRef.current.currentTime = 0;
+          audioRef.current.play();
+          break;         
+        default:
+          break;
+      }
+    
+  }
+  }, [timerAudio])
+  
+
   const handlePlay = e => {
     setPlay(!play);
   }
 
-  document.querySelector(".button-container")?.classList.add("hide");
+  const nextSong = () => {
+    const tempSongObject = {
+      id:'',
+      url:'',
+      artist:'',
+      song:'',
+      album:'',
+      pictureURL:''
+    }
+    tempSongObject.id = songSelected.id === songsArray.length ? 1 : songSelected.id + 1;
+    tempSongObject.url = songsArray[songSelected.id === songsArray.length ? 0 : songSelected.id].url;
+    setSongSelected(songsArray[tempSongObject.id-1].artist ? {...songsArray[tempSongObject.id-1]} : {...tempSongObject});
+  }
+  
+  const handleNext = e => {
+    if (songSelected.id !== songsArray.length || repeat === 'all') {
+      nextSong();
+    }
+  }
+
+  const previousSong = () => {
+    if (timerAudio === 0 && songSelected.id > 1) {
+      const tempSongObject = {
+        id:'',
+        url:'',
+        artist:'',
+        song:'',
+        album:'',
+        pictureURL:''
+      }
+      songSelected.id !== 1 && (tempSongObject.id = songSelected.id - 1);
+      songSelected.id !== 1 && (tempSongObject.url = songsArray[songSelected.id-2].url);
+      setSongSelected(songsArray[tempSongObject.id-1].artist ? {...songsArray[tempSongObject.id-1]} : {...tempSongObject});
+    } else if (timerAudio !== 0) {
+      setTimerAudio(0);
+      audioRef.current.currentTime = 0;
+    }
+  }
+
+  const handlePrevious = e => {
+    previousSong();
+  }
+
+  const handleRepeat = e => {
+    switch (repeat) {
+      case '':
+        setRepeat('all');
+        break;
+      case 'all':
+        setRepeat('one');
+        break;
+      case 'one':
+        setRepeat('');
+        break;
+      default:
+        break;
+    }
+  }
 
   return (
     <div className="audio-player-page">
@@ -124,10 +229,10 @@ const getDuration = () => {
         </div>
         <div className="player-front"></div>
         <div className="volume-buttons">
-          <button className="volume"></button>
-          <button className="volume"></button>
+          <button className="volume" onClick={e => volume < 1 && setVolume(Math.ceil((volume*10)+1)/10)}></button>
+          <button className="volume" onClick={e => volume > 0 && setVolume(Math.ceil(volume*10-1)/10)}></button>
         </div>
-        {songsArray.length && <audio src={songsArray[0].url} className="song" ref={audioRef} onDurationChange={getDuration}></audio>}
+        {songSelected.url && <audio src={songSelected.url} className="song" ref={audioRef} onDurationChange={getDuration}></audio>}
         <section className="screen-container">
           {songSelected.pictureURL ? <img src={songSelected.pictureURL} alt="cover" /> : <div className="no-picture"></div>}
         </section>
@@ -140,23 +245,23 @@ const getDuration = () => {
           <div className="title-number"><p>{`${songSelected.id}/${songsArray.length}`}</p></div>
         </section>
         <section className="progressbar-container">
-          <div className="progress-bar">
-            <div className="progress"></div>
+          <div className="progress-bar" onClick={jumpCurrent}>
+            <div className="progress" style={{transform:`translateX(${audioRef.current ? displayTimeBar() : 0}%)`}}></div>
           </div>
           <div className="time">
-            <p>0:00</p>
+            <p>{formatTime(timerAudio)}</p>
             <p>{formatTime(duration)}</p>
           </div>
         </section>
         <section className="controls-container">
           <div className="random"></div>
-          <button className="backward"></button>
+          <button className="backward" onClick={handlePrevious}></button>
           <button className={play ? "play-pause active" : "play-pause"} onClick={handlePlay}>
             <div className="play"></div>
             <div className="pause"></div>
           </button>
-          <button className="forward"></button>
-          <div className={repeat ? "repeat selected" : "repeat"}>
+          <button className="forward" onClick={handleNext}></button>
+          <div className={repeat ? "repeat selected" : "repeat"} onClick={handleRepeat}>
             {repeat === 'one' && <p>1</p>}
           </div>
         </section>

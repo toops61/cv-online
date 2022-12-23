@@ -85,7 +85,6 @@
             }
         }
 
-
         .screen-container {
             z-index: 1;
             width: 13em;
@@ -121,6 +120,10 @@
             width: 94%;
             display: flex;
             align-items: flex-end;
+        }
+
+        .title {
+            min-height: 3.4em;
         }
 
         .title h1 {
@@ -278,9 +281,11 @@
 
             p {
                 position: absolute;
-                top: .65em;
+                top: .6em;
                 left: 1em;
-                font-size: .5em;
+                font-size: .6em;
+                font-weight: bold;
+                color: white;
             }
         }
 
