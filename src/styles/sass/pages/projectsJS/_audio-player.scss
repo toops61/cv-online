@@ -124,20 +124,24 @@
 
         .title {
             min-height: 3.4em;
+            h1 {
+                color: white;
+                font-size: 1.2em;
+                white-space: nowrap;
+                overflow: hidden;
+                max-width: 10.8em;
+                text-overflow: ellipsis;
+            }
+            p {
+                font-size: .9em;
+                white-space: nowrap;
+                overflow: hidden;
+                max-width: 14em;
+                text-overflow: ellipsis;
+            }
         }
 
-        .title h1 {
-            color: white;
-            font-size: 1.2em;
-        }
 
-        .title p {
-            font-size: .9em;
-            white-space: nowrap;
-            overflow: hidden;
-            max-width: 14em;
-            text-overflow: ellipsis;
-        }
 
         .title p:nth-child(3) {
             max-width: 12em;
@@ -204,18 +208,18 @@
         }
 
         .random {
+            cursor: pointer;
             position: absolute;
             left: 0;
             color: #5d5d5d;
-
-            &.active {
+            &.active::before {
                 color: white;
             }
         }
 
 
         .random::before {
-            @include icon('\f074', 1.2em);
+            @include icon('\f074', 1.5em);
         }
 
         .backward,
@@ -275,10 +279,10 @@
         }
 
         .repeat {
+            cursor: pointer;
             position: absolute;
             right: 0;
             color: #5d5d5d;
-
             p {
                 position: absolute;
                 top: .6em;
@@ -296,12 +300,6 @@
         button {
             cursor: pointer;
         }
-
-        .hide {
-            display: none;
-        }
-
-
     }
 
     @media screen and (max-width: 900px) {

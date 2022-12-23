@@ -5,6 +5,7 @@ import { updateGeneralParams } from "../../redux";
 
 export default function AudioPlayer() {
   const [repeat, setRepeat] = useState('');
+  const [random, setRandom] = useState(false);
   const [songsArray, setSongsArray] = useState([]);
   const [playedSongs, setPlayedSongs] = useState([]);
   const [play, setPlay] = useState(false);
@@ -72,7 +73,7 @@ const getTags = async () => {
         artist:songTags.artist,
         album:songTags.album,
         song:songTags.title,
-        pictureURL:getCover(songTags)
+        pictureURL:songTags.picture ? getCover(songTags) : ''
       }
       setSongSelected({...tempSongObject});
       tempArray.splice(tempSongObject.id-1,1,tempSongObject);
@@ -136,6 +137,11 @@ const getDuration = () => {
   }, [play])
   
   useEffect(() => {
+    if (timerAudio > 0 && !playedSongs.includes(songSelected.id)) {
+      const tempArray = [...playedSongs];
+       tempArray.push(songSelected.id);
+       setPlayedSongs([...tempArray]);
+    } 
     if (timerAudio > duration) {       
       switch (repeat) {
         case '':
@@ -153,13 +159,31 @@ const getDuration = () => {
         default:
           break;
       }
-    
-  }
+    }
   }, [timerAudio])
   
 
   const handlePlay = e => {
+    if (!timerAudio && !play && songSelected.id === 1 && random) randomSong();
     setPlay(!play);
+  }
+
+  const randomSong = () => {
+      const songNotPlayed = songsArray.map(e => !playedSongs.includes(e.id) && e.id).filter(el => el);
+      if (songNotPlayed.length) {
+        const index = songNotPlayed[Math.floor(Math.random() * songNotPlayed.length)];
+        const tempSongObject = {
+          id:'',
+          url:'',
+          artist:'',
+          song:'',
+          album:'',
+          pictureURL:''
+        }
+        tempSongObject.id = index;
+        tempSongObject.url = songsArray[index-1].url;
+        setSongSelected(songsArray[index-1].artist ? {...songsArray[index-1]} : {...tempSongObject});
+      }
   }
 
   const nextSong = () => {
@@ -173,12 +197,26 @@ const getDuration = () => {
     }
     tempSongObject.id = songSelected.id === songsArray.length ? 1 : songSelected.id + 1;
     tempSongObject.url = songsArray[songSelected.id === songsArray.length ? 0 : songSelected.id].url;
+    songSelected.id === songsArray.length && setPlayedSongs([]);
     setSongSelected(songsArray[tempSongObject.id-1].artist ? {...songsArray[tempSongObject.id-1]} : {...tempSongObject});
   }
   
   const handleNext = e => {
-    if (songSelected.id !== songsArray.length || repeat === 'all') {
+    if ((songSelected.id !== songsArray.length || repeat === 'all') && !random && repeat !== 'one') {
       nextSong();
+    } else if (random && repeat !== 'one') {
+      if (playedSongs.length === songsArray.length) {
+        setPlayedSongs([]);
+        repeat !== 'all' && setPlay(false);
+        setTimeout(() => {
+          randomSong();
+        }, 100);
+      } else {
+        randomSong();
+      }
+    } else if (repeat === 'one') {
+      audioRef.current.currentTime = 0;
+      setTimerAudio(0);
     }
   }
 
@@ -254,7 +292,7 @@ const getDuration = () => {
           </div>
         </section>
         <section className="controls-container">
-          <div className="random"></div>
+          <div className={random ? "random active" : "random"} onClick={e => setRandom(!random)}></div>
           <button className="backward" onClick={handlePrevious}></button>
           <button className={play ? "play-pause active" : "play-pause"} onClick={handlePlay}>
             <div className="play"></div>
