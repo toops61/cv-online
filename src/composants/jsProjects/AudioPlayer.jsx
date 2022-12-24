@@ -142,23 +142,9 @@ const getDuration = () => {
        tempArray.push(songSelected.id);
        setPlayedSongs([...tempArray]);
     } 
-    if (timerAudio > duration) {       
-      switch (repeat) {
-        case '':
-          songSelected.id === songsArray.length && setPlay(false);
-          nextSong();
-          break;
-        case 'all':
-          nextSong();
-          break;
-        case 'one':
-          setTimerAudio(0);
-          audioRef.current.currentTime = 0;
-          audioRef.current.play();
-          break;         
-        default:
-          break;
-      }
+    if (timerAudio > duration) {
+      handleNext();
+      repeat === 'one' && audioRef.current.play();
     }
   }, [timerAudio])
   
@@ -169,7 +155,7 @@ const getDuration = () => {
   }
 
   const randomSong = () => {
-      const songNotPlayed = songsArray.map(e => !playedSongs.includes(e.id) && e.id).filter(el => el);
+      const songNotPlayed = playedSongs.length === songsArray.length ? songsArray.map(e => e.id) : songsArray.map(e => !playedSongs.includes(e.id) && e.id).filter(el => el);
       if (songNotPlayed.length) {
         const index = songNotPlayed[Math.floor(Math.random() * songNotPlayed.length)];
         const tempSongObject = {
@@ -201,19 +187,16 @@ const getDuration = () => {
     setSongSelected(songsArray[tempSongObject.id-1].artist ? {...songsArray[tempSongObject.id-1]} : {...tempSongObject});
   }
   
-  const handleNext = e => {
-    if ((songSelected.id !== songsArray.length || repeat === 'all') && !random && repeat !== 'one') {
+  const handleNext = () => {
+    if (!random && repeat !== 'one') {
+      if (songSelected.id === songsArray.length && repeat === '') setPlay(false);
       nextSong();
     } else if (random && repeat !== 'one') {
       if (playedSongs.length === songsArray.length) {
-        setPlayedSongs([]);
         repeat !== 'all' && setPlay(false);
-        setTimeout(() => {
-          randomSong();
-        }, 100);
-      } else {
-        randomSong();
+        setPlayedSongs([]);
       }
+      randomSong();
     } else if (repeat === 'one') {
       audioRef.current.currentTime = 0;
       setTimerAudio(0);
