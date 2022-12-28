@@ -46,7 +46,7 @@ export default function Morpion() {
     winArray.map(e => {
         if (array[e[0]] === array[e[1]] && array[e[1]] === array[e[2]] && array[e[0]]) {
             setWinner(player1Turn ? playerNames.player1Name : playerNames.player2Name);
-        };
+        } else if (array.every(el => el)) setWinner('nul');
     })
   }
 
@@ -99,7 +99,7 @@ export default function Morpion() {
           </div>
         </section>
         {!winner && <p className="player-turn">Au tour de {player1Turn ? playerNames.player1Name : playerNames.player2Name}</p>}
-        {winner && <h2 className="winner animate">BRAVO !! Le gagnant est {winner}</h2>}
+        {winner && <h2 className="winner animate">{winner !== 'nul' ? `BRAVO !! Le gagnant est ${winner}` : `MATCH NUL !!`}</h2>}
       </main>
       <Link to="/MaulaveStephane/Projects">
         <button className="previous-page"></button>
