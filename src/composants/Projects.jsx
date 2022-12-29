@@ -159,6 +159,7 @@ export default function Projects() {
   return (
     <main className="projects-container">
         <section className="project twenty-projects">
+            <div className="hide-top"></div>
             <h2>20 projets JavaScript</h2>
             <img src={logoJs} alt="logo JS" className="logo-js" onClick={toggleWindow}/>
             <div className={projectListVisible ? "projects-list visible" : "projects-list"}>

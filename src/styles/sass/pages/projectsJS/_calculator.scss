@@ -35,6 +35,7 @@
         .calculator-screen {
           width: 12em;
           min-height: 5em;
+          max-height: 5em;
           background-color: rgb(83, 83, 83);
           margin: .8em;
           border-radius: 1em;
@@ -46,6 +47,12 @@
           align-items: flex-end;
           margin-top: 1.5em;
           overflow: hidden;
+          .operation {
+            max-width: 13em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
           p {
             color: white;
             font-size: .8em;

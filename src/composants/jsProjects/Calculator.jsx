@@ -81,6 +81,7 @@ const getResult = () => {
       }
       return result
     })
+    result = Math.round(result*1000000) / 1000000;
     setNumber('='+result);
   }
   setOperationArray([...tempArray]);
@@ -91,7 +92,7 @@ const getResult = () => {
     const isNumber = !isNaN(touchContent/1) ? true : false;
     let tempArray = [...operationArray];
     if (isNumber) {
-      number.includes('=') ? setNumber(touchContent) : setNumber((number === '0' ? '' : number) + touchContent);
+      number.includes('=') ? setNumber(touchContent) : setNumber((number === '0' ? '' : number) + (number.length < 8 ? touchContent : ''));
       number.includes('=') && setOperationArray([]);
     }  else if (touchContent === '.' && !number.includes('.')) {
       setNumber(number + (number !== '0' ? touchContent : '0.'));
@@ -116,9 +117,11 @@ const getResult = () => {
         tempArray.pop();
         tempArray.push(touchContent);
       } else {
-        number.includes('=') ? tempArray = [number.split('=')[1]] : tempArray.push(number);
-        tempArray.push(touchContent);
-        setNumber('0');
+        if (touchContent!=='.') {
+          number.includes('=') ? tempArray = [number.split('=')[1]] : tempArray.push(number);
+          tempArray.push(touchContent);
+          setNumber('0');
+        } 
       }
       setOperationArray([...tempArray]);
     }

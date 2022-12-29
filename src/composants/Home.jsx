@@ -6,7 +6,17 @@ import photoTV from '../assets/ecran-LCD.webp';
 import seipra from '../assets/seipra.webp';
 import codeWindow from '../assets/capture-code.webp';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateGeneralParams } from '../redux';
+
 export default function Home() {
+    const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(updateGeneralParams({darkMode:false}));
+}, [])
+
     document.querySelector('.button-container')?.classList.remove('hide');
   return (
     <main className='home'>
