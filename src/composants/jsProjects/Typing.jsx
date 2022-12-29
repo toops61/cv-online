@@ -144,7 +144,7 @@ const endGame = () => {
           <p className="typing-sentence">{typingSentence}</p>
         </section>
       </main>
-      <Link to="/MaulaveStephane/Projects">
+      <Link to="/Projects">
         <button className="previous-page"></button>
       </Link>
     </div>

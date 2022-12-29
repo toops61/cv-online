@@ -209,7 +209,7 @@ export default function Animate() {
           </div>
         </section>
       </main>
-      <Link to="/MaulaveStephane/Projects">
+      <Link to="/Projects">
         <button className="previous-page"></button>
       </Link>
     </div>

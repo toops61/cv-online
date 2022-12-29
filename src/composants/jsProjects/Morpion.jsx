@@ -101,7 +101,7 @@ export default function Morpion() {
         {!winner && <p className="player-turn">Au tour de {player1Turn ? playerNames.player1Name : playerNames.player2Name}</p>}
         {winner && <h2 className="winner animate">{winner !== 'nul' ? `BRAVO !! Le gagnant est ${winner}` : `MATCH NUL !!`}</h2>}
       </main>
-      <Link to="/MaulaveStephane/Projects">
+      <Link to="/Projects">
         <button className="previous-page"></button>
       </Link>
     </div>

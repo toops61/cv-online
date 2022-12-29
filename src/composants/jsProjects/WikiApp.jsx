@@ -113,7 +113,7 @@ export default function WikiApp() {
         </div>
         {searchResults.length && <ResultContainer />}
       </section>
-      <Link to="/MaulaveStephane/Projects">
+      <Link to="/Projects">
           <button className="previous-page"></button>
       </Link>
     </main>

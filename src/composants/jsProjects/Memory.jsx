@@ -242,7 +242,7 @@ const resetAllScores = () => {
         <button className="reset-button" onClick={resetAll}><h3>reset</h3></button>
         <Timer />
       </main>
-      <Link to="/MaulaveStephane/Projects">
+      <Link to="/Projects">
         <button className="previous-page"></button>
       </Link>
     </div>

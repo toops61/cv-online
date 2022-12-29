@@ -287,7 +287,7 @@ const getDuration = () => {
           </div>
         </section>
       </main>
-      <Link to="/MaulaveStephane/Projects">
+      <Link to="/Projects">
         <button className="previous-page"></button>
       </Link>
     </div>

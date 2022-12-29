@@ -153,7 +153,7 @@ export default function Quizz() {
           <p>{(total && total < 5) ? 'Vous pouvez retenter votre chance' : ''}</p>
         </footer>
       </div>
-      <Link to="/MaulaveStephane/Projects">
+      <Link to="/Projects">
             <button className="previous-page"></button>
       </Link>
     </main>

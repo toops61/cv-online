@@ -116,7 +116,7 @@ export default function CouleursJS() {
             <button onClick={randomColor}><p>Random</p></button>
         </div>
       </main>
-      <Link to="/MaulaveStephane/Projects">
+      <Link to="/Projects">
         <button className="previous-page"></button>
       </Link>
     </div>

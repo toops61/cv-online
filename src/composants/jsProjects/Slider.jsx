@@ -119,7 +119,7 @@ export default function Slider() {
         {imagesArray.length && <PictureSection />}
         <button className="button-change" onClick={getImages}>Changer d'image</button>
       </main>
-      <Link to="/MaulaveStephane/Projects">
+      <Link to="/Projects">
         <button className="previous-page"></button>
       </Link>
     </div>

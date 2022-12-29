@@ -129,7 +129,7 @@ export default function Password() {
         <button className="button-generate" onClick={generatePassword}>Générer</button>
       </form>
     </main>
-    <Link to="/MaulaveStephane/Projects">
+    <Link to="/Projects">
         <button className="previous-page"></button>
     </Link>
     </div>

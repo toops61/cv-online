@@ -160,7 +160,7 @@ export default function Formulaire() {
         </form>
       </section>
       </div>
-      <Link to="/MaulaveStephane/Projects">
+      <Link to="/Projects">
         <button className="previous-page"></button>
       </Link>
     </div>

@@ -57,7 +57,7 @@ export default function IMC() {
             <h3 style={{color: BMIObject ? BMIObject.color : 'black'}}>{imc}</h3>
             <p>{answer}</p>
         </div>
-        <Link to="/MaulaveStephane/Projects">
+        <Link to="/Projects">
             <button className="previous-page"></button>
         </Link>
     </main>

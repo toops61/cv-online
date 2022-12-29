@@ -11,13 +11,13 @@ export default function Home() {
   return (
     <main className='home'>
         <section className="left-side">
-            <Link className="img-container" to="/MaulaveStephane/SoundEngineer">
+            <Link className="img-container" to="/SoundEngineer">
                 <div className="img vinyl">
                     <img src={vinyl} alt="vinyl" />
                 </div>
                 <h3>Sound Engineer</h3>
             </Link>
-            <Link className="img-container" to="/MaulaveStephane/RadioEngineer">
+            <Link className="img-container" to="/RadioEngineer">
                 <div className="img micro">
                     <img src={micro} alt="micro" />
                 </div>
@@ -39,7 +39,7 @@ export default function Home() {
                     <img src={seipra} alt="Seipra score" />
                 </div>
             </div>
-            <Link className="img-container" to="/MaulaveStephane/Projects">
+            <Link className="img-container" to="/Projects">
                 <div className="text">
                     <h3>Projets code </h3>
                     <h3>personnels</h3>

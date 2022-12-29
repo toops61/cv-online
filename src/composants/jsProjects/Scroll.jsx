@@ -136,7 +136,7 @@ useEffect(() => {
         </form>
         <Cards />
       </main>
-      <Link to="/MaulaveStephane/Projects">
+      <Link to="/Projects">
         <button className="previous-page"></button>
       </Link>
       {showArrow && <div className="arrow" onClick={e => window.scrollTo(0,0)}></div>}

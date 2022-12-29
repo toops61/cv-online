@@ -58,102 +58,102 @@ export default function Projects() {
         {
             name:"IMC",
             image:IMCpicture,
-            link:"/MaulaveStephane/Imc"
+            link:"/Imc"
         },
         {
             name:"Quizz",
             image:quizzPicture,
-            link:"/MaulaveStephane/Quizz"
+            link:"/Quizz"
         },
         {
             name:"WikiApp",
             image:wikiPicture,
-            link:"/MaulaveStephane/WikiApp"
+            link:"/WikiApp"
         },
         {
             name:"Cookies",
             image:cookiesPicture,
-            link:"/MaulaveStephane/Cookies"
+            link:"/Cookies"
         },
         {
             name:"AppMeteo",
             image:meteoPicture,
-            link:"/MaulaveStephane/AppMeteo"
+            link:"/AppMeteo"
         },
         {
             name:"CouleursJS",
             image:colorsPicture,
-            link:"/MaulaveStephane/CouleursJS"
+            link:"/CouleursJS"
         },
         {
             name:"Pomodoro",
             image:pomodoroPicture,
-            link:"/MaulaveStephane/Pomodoro"
+            link:"/Pomodoro"
         },
         {
             name:"Formulaire",
             image:formPicture,
-            link:"/MaulaveStephane/Formulaire"
+            link:"/Formulaire"
         },
         {
             name:"Jeu de mémoire",
             image:memoryPicture,
-            link:"/MaulaveStephane/Memory"
+            link:"/Memory"
         },
         {
             name:"Scroll infini",
             image:scrollPicture,
-            link:"/MaulaveStephane/Scroll"
+            link:"/Scroll"
         },
         {
             name:"Slider",
             image:sliderPicture,
-            link:"/MaulaveStephane/Slider"
+            link:"/Slider"
         },
         {
             name:"Générateur de mots de passe",
             image:passwordPicture,
-            link:"/MaulaveStephane/Password"
+            link:"/Password"
         },
         {
             name:"Liste filtrable",
             image:filterPicture,
-            link:"/MaulaveStephane/Filter"
+            link:"/Filter"
         },
         {
             name:"Custom lecteur vidéo",
             image:videoPicture,
-            link:"/MaulaveStephane/VideoPlayer"
+            link:"/VideoPlayer"
         },
         {
             name:"Jeu du morpion",
             image:morpionPicture,
-            link:"/MaulaveStephane/Morpion"
+            link:"/Morpion"
         },
         {
             name:"Particules en JS avec canvas",
             image:particulesPicture,
-            link:"/MaulaveStephane/Particules"
+            link:"/Particules"
         },
         {
             name:"Animations",
             image:animationPicture,
-            link:"/MaulaveStephane/Animate"
+            link:"/Animate"
         },
         {
             name:"Jeu de frappe",
             image:typingPicture,
-            link:"/MaulaveStephane/Typing"
+            link:"/Typing"
         },
         {
             name:"Calculatrice",
             image:calcPicture,
-            link:"/MaulaveStephane/Calculator"
+            link:"/Calculator"
         },
         {
             name:"Player audio",
             image:audioPicture,
-            link:"/MaulaveStephane/AudioPlayer"
+            link:"/AudioPlayer"
         },
     ]
   return (

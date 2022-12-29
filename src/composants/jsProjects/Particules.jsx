@@ -116,7 +116,7 @@ export default function Particules() {
       <canvas ref={canvasRef}>
         Désolé, votre navigateur ne prend pas en charge &lt;canvas&gt;.
       </canvas>
-      <Link to="/MaulaveStephane/Projects">
+      <Link to="/Projects">
         <button className="previous-page"></button>
       </Link>
     </main>

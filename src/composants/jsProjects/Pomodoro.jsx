@@ -88,7 +88,7 @@ export default function Pomodoro() {
       </section>
       <p className="cycle-container">Cycle : {cycle}</p>
       </main>
-      <Link to="/MaulaveStephane/Projects">
+      <Link to="/Projects">
         <button className="previous-page"></button>
       </Link>
     </div>
