@@ -28,7 +28,7 @@ export default function WikiApp() {
         {array.map(result => {
           return (
             <div className="result-card"  key={uuidv4()}>
-              <a href={`https://en.wikipedia.org/?curid=${result.pageid}`} target='_blank' rel='noreferrer'>
+              <a href={`https://fr.wikipedia.org/?curid=${result.pageid}`} target='_blank' rel='noreferrer'>
                 <h2>{result.title}</h2>
               </a>
               <p dangerouslySetInnerHTML={{__html: result.snippet}}></p>
@@ -42,7 +42,7 @@ export default function WikiApp() {
   const searchQuery = async () => {
       setShowLoader(true);
       try {
-          const response = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&format=json&origin=*&srlimit=${numberOfSearch}&srsearch=${searchInput}`);
+          const response = await fetch(`https://fr.wikipedia.org/w/api.php?action=query&list=search&format=json&origin=*&srlimit=${numberOfSearch}&srsearch=${searchInput}`);
           if (!response.ok) {
               throw new Error(`Erreur HTTP : ${response.status}`);
           }
