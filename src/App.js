@@ -26,6 +26,7 @@ import Typing from "./composants/jsProjects/Typing";
 import Calculator from "./composants/jsProjects/Calculator";
 import AudioPlayer from "./composants/jsProjects/AudioPlayer";
 import PrimeNumbers from "./composants/otherProjects/PrimeNumbers";
+import NasaPictures from "./composants/otherProjects/NasaPictures";
 
 export default function App() {
   const dark = useSelector(state => state.generalParams.darkMode);
@@ -67,6 +68,7 @@ export default function App() {
         <Route path="/Calculator" element={<Calculator />} />
         <Route path="/AudioPlayer" element={<AudioPlayer />} />
         <Route path="/Prime" element={<PrimeNumbers />} />
+        <Route path="/Nasa" element={<NasaPictures />} />
       </Routes>
     </div>
   );

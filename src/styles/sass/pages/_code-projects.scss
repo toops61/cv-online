@@ -131,11 +131,19 @@
         h2 {
             margin-top: 2em;
             z-index: 10;
+            height: fit-content;
         }
         .logo {
             position: absolute;
             img {
                 @include imageFit;
+            }
+        }
+        .projects-list {
+            left: auto;
+            right: 0;
+            li {
+                flex-direction: row-reverse;
             }
         }
         @include tablette-version {
