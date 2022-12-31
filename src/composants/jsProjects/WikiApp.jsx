@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import wikiLogo from '../../assets/perso_proj/wiki-logo.png';
+import Loader from '../../components/Loader';
 
 export default function WikiApp() {
-  document.querySelector('.button-container').classList.remove('hide');
+  document.querySelector('.button-container')?.classList.remove('hide');
   const [showLoader, setShowLoader] = useState(false);
   const [searchInput, setSearchInput] = useState('');
   const [numberOfSearch, setNumberOfSearch] = useState(1);
@@ -77,13 +78,7 @@ export default function WikiApp() {
 
   return (
     <main className="wiki-page">
-      {showLoader && <div className="loader">
-        <div className="point-container">
-          <div className="point"></div>
-          <div className="point"></div>
-          <div className="point"></div>
-        </div>
-      </div>}
+      {showLoader && <Loader />}
       {showErrorWindow && <div className="error-window">
         <div className="error">
           <p>{errorMessage}</p>

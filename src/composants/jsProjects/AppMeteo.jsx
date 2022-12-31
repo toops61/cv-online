@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
+import Loader from "../../components/Loader";
 
 export default function AppMeteo() {
   document.querySelector('.button-container')?.classList.add('hide');
@@ -170,13 +171,7 @@ export default function AppMeteo() {
     <div className="meteo-page">
       <main className={night ? "main-container night" : "main-container"}>
         <div className="meteo-container">
-          {showLoader && (
-            <div className="loader">
-              <div className="point"></div>
-              <div className="point"></div>
-              <div className="point"></div>
-            </div>
-          )}
+          {showLoader && <Loader />}
           <section className="up-part">
             <h1>
               <span>Application</span> météo
@@ -252,7 +247,7 @@ export default function AppMeteo() {
         </div>
       </main>
       <Link to="/Projects">
-              <button className="previous-page"></button>
+        <button className="previous-page"></button>
       </Link>
     </div>
   );

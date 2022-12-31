@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
+import Loader from "../../components/Loader";
 
 export default function Scroll() {
   document.querySelector('.button-container')?.classList.remove('hide');
@@ -12,6 +13,7 @@ export default function Scroll() {
   const [page, setPage] = useState(0);
   const [arrayPhotos, setArrayPhotos] = useState([]);
   const [showArrow, setShowArrow] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
 
   useEffect(() => {
     if(localStorage.apiUnsplash) {
@@ -19,6 +21,7 @@ export default function Scroll() {
       apiStoredResult && setApiKey(JSON.parse(localStorage.getItem('apiUnsplash')));
     }
     const arrayStored = localStorage.arrayPhotos ? [...JSON.parse(localStorage.getItem('arrayPhotos'))] : [];
+    setPage(Math.ceil(arrayStored.length/30));
     setArrayPhotos([...arrayStored]);
   }, [])
 
@@ -46,11 +49,11 @@ export default function Scroll() {
 
 useEffect(() => {
   let photoTarget = '';
-  page && (photoTarget = document.querySelectorAll('.photo-card')[page*25]);
+  page && (photoTarget = observerCard.current);
   if (photoTarget) {
     observer.observe(photoTarget);
   } 
-}, [arrayPhotos])
+}, [arrayPhotos,showArrow])
 
   const displayMessageError = message => {
     setErrorMessage(message);
@@ -62,6 +65,7 @@ useEffect(() => {
 
   const callApiPhotos = async () => {
     console.log('CALL API');
+    setShowLoader(true);
     try {
       const response = await fetch(
         `https://api.unsplash.com/search/photos?query=${searchInput}&client_id=${apiKey}&page=${page+1}&per_page=30`
@@ -76,8 +80,10 @@ useEffect(() => {
       setPage(Math.ceil(array.length/30));
       setArrayPhotos([...array]);
       !array.length && displayMessageError('Aucun résultat pour cette recherche, essayez autre chose.');
+      setShowLoader(false);
     } catch (error) {
       console.error(error);
+      setShowLoader(false);
       displayMessageError('Il y a eu une erreur, réessayez.');
     }
   }
@@ -95,16 +101,19 @@ useEffect(() => {
 
   document.addEventListener('scroll', checkScroll);
 
+  const observerCard = useRef();
+
   const Cards = () => {
     return (
       <section className="photos-container">
-        {arrayPhotos.length && arrayPhotos.map(photo => {
+        {showLoader && <Loader />}
+        {arrayPhotos.length ? arrayPhotos.map((photo,index) => {
           return (
-            <div className="photo-card" key={uuidv4()}>
+            <div className="photo-card" key={uuidv4()} ref={(page && index===24*page) ? observerCard : null}>
               <img src={photo.urls.small} alt={photo.alt_description} />
             </div>
           )
-        })}
+        }): <></>}
       </section>
     )
   }

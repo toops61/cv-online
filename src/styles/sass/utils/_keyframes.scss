@@ -80,3 +80,12 @@
       border-right: 1px solid rgba(211, 211, 211, 1);
     }
   }
+
+  @keyframes bouncing {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(2em);
+    }
+  }

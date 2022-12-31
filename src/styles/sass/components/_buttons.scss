@@ -28,11 +28,18 @@
     display: flex;
     align-items: center;
     color: $fifth-color;
+    @include adapt-size(2.5vw);
     &::before {
-        @include icon('\f185', 25px);
+        @include icon('\f185', 1.5em);
+        @include tablette-version {
+            font-size: 4vw;
+        }
     }
     &::after {
-        @include icon('\f186',20px);
+        @include icon('\f186',1.3em);
+        @include tablette-version {
+            font-size: 4vw;
+        }
     }
     &.hide {
         display: none;
@@ -44,18 +51,18 @@
 }
 
 .switch-button {
-    width: 45px;
+    width: 3em;
     display: flex;
     align-items: center;
     border: solid $fifth-color;
     background-color: inherit;
     border-radius: 20px;
-    margin: 0 5px;
+    margin: 0 .1em;
     &::before {
         content: '';
-        width: 15px;
-        height: 15px;
-        margin: 1px;
+        width: 1em;
+        height: 1em;
+        margin: .12em;
         border-radius: 50%;
         background-color: $fifth-color;
         transition: transform .5s;
@@ -65,7 +72,7 @@
 .dark .switch-button {
     border-color: white;
     &::before {
-        transform: translateX(22px);
+        transform: translateX(1.3em);
         background-color: #fff;
     }
 }
@@ -79,5 +86,8 @@
     left: .5em;
     &::before {
         @include icon('\f3e5',2em);
+        @include tablette-version {
+            font-size: 6vw;
+        }
     }
 }
