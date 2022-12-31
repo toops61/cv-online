@@ -1,4 +1,5 @@
 import logoJs from '../assets/perso_proj/Unofficial_JavaScript_logo.svg';
+import logoReact from '../assets/perso_proj/logo512.png';
 import IMCpicture from '../assets/perso_proj/IMC_screenshot.png';
 import quizzPicture from '../assets/perso_proj/Quizz_screenshot.png';
 import wikiPicture from '../assets/perso_proj/wiki_screenshot.png';
@@ -20,6 +21,8 @@ import typingPicture from '../assets/perso_proj/frappe_screenshot.png';
 import calcPicture from '../assets/perso_proj/calculate_screenshot.png';
 import audioPicture from '../assets/perso_proj/audio_screenshot.png';
 
+import primePicture from '../assets/perso_proj/audio_screenshot.png';
+
 import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Link } from 'react-router-dom';
@@ -36,7 +39,7 @@ export default function Projects() {
     }, [])
 
     const [projectListVisible, setProjectListVisible] = useState(false);
-    const toggleWindow = () => setProjectListVisible(!projectListVisible);
+    const [othersListVisible, setOthersListVisible] = useState(false);
 
     const Project = props => {
         const [imageVisible, setImageVisible] = useState(false);
@@ -156,17 +159,40 @@ export default function Projects() {
             link:"/AudioPlayer"
         },
     ]
+    const otherProjects = [
+        {
+            name:"PrimeNumbers",
+            image:primePicture,
+            link:"/Prime"
+        }
+    ]
   return (
     <main className="projects-container">
-        <section className="project twenty-projects">
+        <section className="projects twenty-projects">
             <div className="hide-top"></div>
+            <div className="popup-projects">
+                <h2>20 projets javascript issus des cours de "<a href="https://www.ecole-du-web.net/courses" target="_blank" rel="noreferrer" title="Ecole du Web">Ecole du Web</a>"</h2>
+                <p>Convertis en projets React</p>
+            </div>
             <h2>20 projets JavaScript</h2>
-            <img src={logoJs} alt="logo JS" className="logo-js" onClick={toggleWindow}/>
+            <img src={logoJs} alt="logo JS" className="logo-js"/>
+            <img src={logoReact} alt="logo React" className="logo-react" onClick={e => setProjectListVisible(!projectListVisible)}/>
             <div className={projectListVisible ? "projects-list visible" : "projects-list"}>
                 <ul>
                     {arrayProjects.map(item => <Project item={item} key={uuidv4()} />)}
                 </ul>
-                <p>Projets issus du cours d'<a href="https://www.ecole-du-web.net/courses" target="_blank" rel="noreferrer" title="Ecole du Web">Ecole du Web</a></p>
+                <p>Projets issus du cours de <a href="https://www.ecole-du-web.net/courses" target="_blank" rel="noreferrer" title="Ecole du Web">Ecole du Web</a></p>
+            </div>
+        </section>
+        <section className="projects various">
+            <h2>Divers projets</h2>
+            <div className="logo">
+                <img src={logoReact} alt="logo React" onClick={e => setOthersListVisible(!othersListVisible)} />
+            </div>
+            <div className={othersListVisible ? "projects-list visible" : "projects-list"}>
+                <ul>
+                    {otherProjects.map(item => <Project item={item} key={uuidv4()} />)}
+                </ul>
             </div>
         </section>
     </main>

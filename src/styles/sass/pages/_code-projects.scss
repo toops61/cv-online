@@ -1,7 +1,18 @@
 .projects-container {
     display: flex;
-    flex-direction: column;
-    padding: 2em;
+    justify-content: space-around;
+    padding: 3em 2em;
+    @include tablette-version {
+        padding-top: 6em;
+    }
+    .projects {
+        position: relative;
+        z-index: 10;
+        width: 10em;
+        height: 10em;
+        display: flex;
+        justify-content: center;
+    }
     .twenty-projects {
         .hide-top {
             position: absolute;
@@ -11,60 +22,136 @@
             background-color: #fff;
             z-index: 5;
         }
-        position: relative;
-        width: 10em;
-        height: 10em;
         background-color: #f0db4f;
-        display: flex;
-        justify-content: center;
+        transition: .8s;
         h2 {
             margin-top: 1em;
             color: black;
+            opacity: 1;
+            transition: .8s;
         }
         .logo-js {
             position: absolute;
             top: 0;
             @include imageFit;
+            transition: .8s;
         }
-        .projects-list {
-            padding: .5em;
+        .logo-react {
             opacity: 0;
-            z-index: -1;
-            top: 0;
-            left: 0;
             position: absolute;
-            border: solid .2em;
-            min-width: 10em;
-            transform: translateY(-30em);
-            transition: transform .8s, opacity .8s;
-            p:last-child {
-                margin-top: 1em;
-                font-size: .8em;
+            top: 0;
+            @include imageFit;
+            transition: .8s;
+        }
+        .popup-projects {
+            position: absolute;
+            z-index: -5;
+            transition: .8s;
+            opacity: 0;
+            text-align: center;
+            padding: .8em;
+            background-color: #61dafb;
+            border-radius: .8em;
+            border: solid .2em $fifth-color;
+            align-self: center;
+            h2 {
+                margin: 0;
             }
-            a {
-                font-size: 1em;
-                font-weight: bold;
+            * {
+                color: black;
             }
-            li {
-                cursor: pointer;
-                display: flex;
-            }
-            .screen-shot {
-                width: 15em;
-                display: flex;
-                margin: 1em;
-                img {
-                    @include imageFit;
-                }
+            &::before {
+                position: absolute;
+                left: -1em;
+                top: 30%;
+                align-self: center;
+                @include icon ('\f061',3em);
             }
         }
-        .visible {
+        &:hover {
+            background-color: #fff;
+        }
+        &:hover > .popup-projects {
+            transform: translateX(130%);
             opacity: 1;
-            z-index: 0;
-            transform: translateY(10em);
-            transition: transform .8s, opacity .8s, z-index 2s;
+        }
+        &:hover > .logo-js {
+            opacity: 0;
+        }
+        &:hover > h2 {
+            opacity: 0;
+        }
+        &:hover > .logo-react {
+            opacity: 1;
+        }
+    }
+
+    .projects-list {
+        padding: .5em;
+        opacity: 0;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        position: absolute;
+        border: solid .2em;
+        min-width: 10em;
+        background-color: #fff;
+        transform: translateY(-30em);
+        transition: transform .8s, opacity .8s;
+        p:last-child {
+            margin-top: 1em;
+            font-size: .8em;
+        }
+        a {
+            font-size: 1em;
+            font-weight: bold;
+        }
+        li {
+            cursor: pointer;
+            display: flex;
+        }
+        .screen-shot {
+            width: 15em;
+            display: flex;
+            margin: 1em;
+            img {
+                @include imageFit;
+            }
+        }
+    }
+    .visible {
+        opacity: 1;
+        transform: translateY(10em);
+        transition: transform .8s, opacity .8s, z-index 2s;
+    }
+    
+
+    .various {
+        z-index: 9;
+        h2 {
+            margin-top: 2em;
+            z-index: 10;
+        }
+        .logo {
+            position: absolute;
+            img {
+                @include imageFit;
+            }
+        }
+        @include tablette-version {
+            margin-top: 10em;
         }
     }
 
     @include adapt-size;
+}
+
+
+.dark {
+    .projects-container .twenty-projects .hide-top {
+       background-color: $fifth-color;
+    }
+    .projects-container .twenty-projects .visible {
+       background-color: $fifth-color;
+   }
 }
