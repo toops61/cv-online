@@ -6,6 +6,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 10em 0;
     .main-prime {
         width: 40em;
         display: flex;
@@ -39,18 +40,16 @@
             }
             
             .input-number-container input {
-                max-width: 50vw;
-                font-size: .5em;
+                max-width: 8em;
             }
             #enter-number {
-                height: 2em;
+                //height: 2em;
                 padding: 0 .5em;
             }
         }
             
         .valid {
             padding: .5em;
-            font-size: 1vw;
             &::before {
                 @include icon('\f002',1em);
             }
@@ -87,25 +86,23 @@
             opacity: 1;    
         }
         
-        @media screen and (max-width: 900px) {
-            main {
-                width: 90%;
-            }
-            .input-number-container {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .input-number-container input{
-                font-size: 1.5em;
-            }
-            .valid {
-                font-size: 100%;
-            }
+        @include tablette-version {
+            
+                width: 94%;
+                padding: 1em .5em;
+                .input-number-container {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+                .valid {
+                    font-size: 100%;
+                }
+            
         }
 
         *,::before {
             color: $fifth-color;
         }
     }
-
+    @include adapt-size;
 }

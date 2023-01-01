@@ -42,7 +42,7 @@ export default function PrimeNumbers() {
         resetAll();
         setNumberToCheck(number);
         e.preventDefault();
-        if (number > 1) {
+        if (number) {
             setNumberPrime(true);
             for (let i = 2; i < number; i++) {
                 if (Number.isInteger(number/i)) {
