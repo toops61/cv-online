@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
@@ -6,7 +6,7 @@ import Loader from "../../components/Loader";
 import { updateGeneralParams } from "../../redux";
 
 export default function NasaPictures() {
-    document.querySelector('.button-container')?.classList.remove('hide');
+    document.querySelector('.button-container')?.classList.add('hide');
 
     const [imageUrl, setImageUrl] = useState('');
     const [showLoader, setShowLoader] = useState(false);
@@ -18,6 +18,8 @@ export default function NasaPictures() {
 
     const dispatch = useDispatch();
 
+    const formRef = useRef();
+
     useEffect(() => {
         dispatch(updateGeneralParams({darkMode:true}));
         apiCall();
@@ -26,9 +28,8 @@ export default function NasaPictures() {
 //call meteo API
   const apiCall = async () => {
     setShowLoader(true);
-    console.log('CALL API');
     try {
-      const response = await fetch(`http://images-api.nasa.gov/asset/PIA25334`);
+      const response = await fetch(`https://images-api.nasa.gov/asset/PIA25334`);
       if (!response.ok) {
         throw new Error(`Erreur HTTP : ${response.status}`);
       }
@@ -60,8 +61,6 @@ export default function NasaPictures() {
     if (jsonResult.collection && jsonResult.collection.items) {
         const items = jsonResult.collection.items;
         setImageUrl(items.find(e => e.href.includes('medium'))?.href);
-        //const metadataUrl = items.find(e => e.href.includes('metadata'))?.href;
-        //getMetadata(metadataUrl);
     }
   }, [jsonResult])
 
@@ -78,6 +77,10 @@ export default function NasaPictures() {
         URL = URL.replaceAll('\'','%27');
     }
     URL && setImageUrl(URL);
+    URL && window.scrollTo({
+        top: formRef.current.offsetTop,
+        behavior: 'smooth'
+    });
   }, [metadataJson])
 
   const searchQuery = async () => {
@@ -106,7 +109,7 @@ export default function NasaPictures() {
     <div className="nasa-page">
         <main className="nasa-main">
             {showLoader ? <Loader /> : null}
-            <form>
+            <form ref={formRef}>
                 <label htmlFor="search-image">rechercher une image</label>
                 <input type="text" name="search-image" id="search-image" onChange={e => setInput(e.target.value)} value={input} />
                 <button className="valid-search" onClick={searchImage}></button>

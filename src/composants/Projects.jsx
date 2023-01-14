@@ -162,14 +162,19 @@ export default function Projects() {
     ]
     const otherProjects = [
         {
-            name:"PrimeNumbers",
+            name:"Nombres premiers",
             image:primePicture,
             link:"/Prime"
         },
         {
-            name:"NasaPictures",
+            name:"Photos / vidéos de la Nasa",
             image:nasaPicture,
             link:"/Nasa"
+        },
+        {
+            name:"Convertisseurs",
+            image:nasaPicture,
+            link:"/Converter"
         }
     ]
   return (
