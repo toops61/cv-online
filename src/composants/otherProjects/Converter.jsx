@@ -5,14 +5,14 @@ import { v4 as uuidv4 } from 'uuid';
 export default function Converter() {
     const arrayTemperatures = ['Celsius','Fahrenheit','Kelvin'];
     const arrayMasses = ['Picogramme','Nanogramme','Microgramme','Milligramme','Gramme','Kilogramme','Tonne','Once','Livre','Stone'];
-    const arrayDimensions = ['Picomètre','Nanomètre','Micromètre','Millimètre','Centimètre','Décimètre','Mètre','Décamètre','Hectomètre','Kilomètre','Once','Livre','Stone'];
+    const arrayDimensions = ['Picomètre','Nanomètre','Micromètre','Millimètre','Centimètre','Décimètre','Mètre','Décamètre','Hectomètre','Kilomètre','Pouce','Pied','Yard','Mile','Mile marin'];
 
     const [arraySelected, setArraySelected] = useState([...arrayTemperatures]);
     const [type, setType] = useState('temperature');
     const [selectedFrom, setSelectedFrom] = useState(arraySelected[0]);
-    const [inputFrom, setInputFrom] = useState('');
+    const [inputFrom, setInputFrom] = useState(0);
     const [selectedTo, setSelectedTo] = useState(arraySelected[1]);
-    const [inputTo, setInputTo] = useState('');
+    const [inputTo, setInputTo] = useState(32);
 
     const resetInputs = () => {
         setInputFrom(0);
@@ -24,14 +24,18 @@ export default function Converter() {
             case 'temperature':
                 setArraySelected([...arrayTemperatures]);
                 setType('temperature');
+                setInputFrom(0);
+                setInputTo(32);
                 break;
             case 'masse':
                 setArraySelected([...arrayMasses]);
                 setType('masse');
+                resetInputs();
                 break;
             case 'dimensions':
                 setArraySelected([...arrayDimensions]);
                 setType('dimensions');
+                resetInputs();
                 break;
             default:
                 break;
@@ -39,13 +43,42 @@ export default function Converter() {
     }
 
     useEffect(() => {
-        resetInputs();
         setSelectedFrom(arraySelected[0]);
         setSelectedTo(arraySelected[1]);
     }, [arraySelected])
+
+    const limitTemperature = (tempMin,id) => {
+        const valueNumber = tempMin;
+        id === 'before' ? setInputFrom(tempMin) : setInputTo(tempMin);
+        return valueNumber;
+    }
     
-    const convertTemperature = () => {
-        console.log('convert temperature');
+    const convertTemperature = (id,value) => {
+        let valueNumber = value/1;
+        let result = 0;
+        const first = id === 'before' ? selectedFrom : selectedTo;
+        const second = id === 'before' ? selectedTo : selectedFrom;
+        switch (first) {
+            case 'Celsius':
+                valueNumber < (-273.15) && (valueNumber = limitTemperature(-273.15,id));
+                result = second === 'Fahrenheit' ? ((valueNumber * 9 / 5) + 32) : (valueNumber + 273.15);
+                first === second && (result = valueNumber);
+                break;
+            case 'Fahrenheit':
+                valueNumber < (-459.66) && (valueNumber = limitTemperature(-459.66,id));
+                result = ((valueNumber - 32) * 5 / 9) + (second === 'Celsius' ? 0 : 273.15);
+                first === second && (result = valueNumber);
+                break;
+            case 'Kelvin':
+                valueNumber < 0 && (valueNumber = limitTemperature(0,id));
+                const celsius = valueNumber - 273.15;
+                result = second === 'Fahrenheit' ? ((celsius * 9 / 5) + 32) : celsius;
+                first === second && (result = valueNumber);
+                break;
+            default:
+                break;
+        }
+        return result;
     }
 
     const picoKilo = (object,direction) => {
@@ -61,13 +94,35 @@ export default function Converter() {
         }
     }
 
+    const convertDimensions = (object,direction) => {
+        const index = direction === 'toX' ? object.index : object.target_index;
+        let result = 0;
+        switch (index) {
+            case 10:
+                result = direction === 'toX' ? (object.input / 39.37) : (object.input * 39.37);
+                break;
+            case 11:
+                result = direction === 'toX' ? (object.input / 3.281) : (object.input * 3.281);
+                break;
+            case 12:
+                result = direction === 'toX' ? (object.input / 1.094) : (object.input * 1.094);
+                break;
+            case 13:
+                result = direction === 'toX' ? (object.input * 1609) : (object.input / 1609);
+                break;
+            case 14:
+                result = direction === 'toX' ? (object.input * 1852) : (object.input / 1852);
+                break;
+            default:
+                break;
+        }
+        return result;
+    }
+
     const convertMasse = () => {
         console.log('convert masse');
     }
 
-    const convertDimensions = () => {
-        console.log('convert dimensions');
-    }
 
     const convertFunct = (id,value) => {
         let result = 0;
@@ -81,24 +136,24 @@ export default function Converter() {
             input: value
         }
         
-        if (selectedFrom === selectedTo) {
+        if (selectedFrom === selectedTo && type !== 'temperature') {
             result = value;
         } else {
             switch (type) {
                 case 'temperature':
-                    convertTemperature();
+                    result = convertTemperature(id,value);
                     break;
                 case 'masse':
                     result = tempObject.index <= 9 ? picoKilo({...tempObject,input:picoKilo(tempObject,'toX')},'fromX') : convertMasse();
                     break;
                 case 'dimensions':
-                    result = tempObject.index <= 9 ? picoKilo({...tempObject,input:picoKilo(tempObject,'toX')},'fromX') : convertDimensions();
+                    const meters = tempObject.index <= 9 ? picoKilo(tempObject,'toX') : convertDimensions(tempObject,'toX');
+                    result = tempObject.target_index <= 9 ? picoKilo({...tempObject,input:meters},'fromX') : convertDimensions({...tempObject,input:meters},'fromX');
                     break;
                 default:
                     break;
             }
         }
-
         id === 'before' ? setInputTo(result) : setInputFrom(result);
     }
 
@@ -112,8 +167,16 @@ export default function Converter() {
     const changeUnities = e => {
         const id = e.target.id;
         id === 'from' ? setSelectedFrom(e.target.value) : setSelectedTo(e.target.value);
-        id === 'from' ? convertFunct('before',inputFrom) : convertFunct('after',inputTo);
     }
+
+    useEffect(() => {
+      convertFunct('before',inputFrom);
+    }, [selectedFrom])
+
+    useEffect(() => {
+      convertFunct('after',inputTo);
+    }, [selectedTo])
+    
 
   return (
     <div className="converter-page">
