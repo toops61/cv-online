@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 export default function Converter() {
     const arrayTemperatures = ['Celsius','Fahrenheit','Kelvin'];
     const arrayMasses = ['Picogramme','Nanogramme','Microgramme','Milligramme','Gramme','Kilogramme','Tonne','Once','Livre','Stone'];
-    const arrayDimensions = ['Picomètre','Nanomètre','Micromètre','Millimètre','Centimètre','Décimètre','Mètre','Décamètre','Hectomètre','Kilomètre','Pouce','Pied','Yard','Mile','Mile marin'];
+    const arrayDimensions = ['Picomètre','Nanomètre','Micromètre','Millimètre','Centimètre','Décimètre','Mètre','Décamètre','Hectomètre','Kilomètre','Pouce','Pied','Yard','Mile','Mile marin','Année lumière'];
 
     const [arraySelected, setArraySelected] = useState([...arrayTemperatures]);
     const [type, setType] = useState('temperature');
@@ -113,6 +113,9 @@ export default function Converter() {
             case 14:
                 result = direction === 'toX' ? (object.input * 1852) : (object.input / 1852);
                 break;
+            case 15:
+                result = direction === 'toX' ? (object.input * 9.4608e15) : (object.input / 9.4608e15);
+                break;
             default:
                 break;
         }
@@ -122,7 +125,6 @@ export default function Converter() {
     const convertMasse = () => {
         console.log('convert masse');
     }
-
 
     const convertFunct = (id,value) => {
         let result = 0;
@@ -144,7 +146,8 @@ export default function Converter() {
                     result = convertTemperature(id,value);
                     break;
                 case 'masse':
-                    result = tempObject.index <= 9 ? picoKilo({...tempObject,input:picoKilo(tempObject,'toX')},'fromX') : convertMasse();
+                    const masse = tempObject.index <= 9 ? picoKilo(tempObject,'toX') : convertMasse(tempObject,'toX');
+                    result = tempObject.target_index <= 9 ? picoKilo({...tempObject,input:masse},'fromX') : convertMasse({...tempObject,input:masse},'fromX');
                     break;
                 case 'dimensions':
                     const meters = tempObject.index <= 9 ? picoKilo(tempObject,'toX') : convertDimensions(tempObject,'toX');
@@ -154,6 +157,7 @@ export default function Converter() {
                     break;
             }
         }
+        result > 1e6 && (result = result.toExponential());
         id === 'before' ? setInputTo(result) : setInputFrom(result);
     }
 
@@ -171,13 +175,9 @@ export default function Converter() {
 
     useEffect(() => {
       convertFunct('before',inputFrom);
-    }, [selectedFrom])
+    }, [selectedFrom,selectedTo])
 
-    useEffect(() => {
-      convertFunct('after',inputTo);
-    }, [selectedTo])
     
-
   return (
     <div className="converter-page">
         <main className="converter-main">

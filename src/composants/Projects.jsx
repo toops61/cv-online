@@ -23,6 +23,7 @@ import audioPicture from '../assets/perso_proj/audio_screenshot.png';
 
 import primePicture from '../assets/perso_proj/primes_numbers.png';
 import nasaPicture from '../assets/perso_proj/nasa_screenshot.png';
+import converterPicture from '../assets/perso_proj/converter_screenshot.png';
 
 import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
@@ -173,7 +174,7 @@ export default function Projects() {
         },
         {
             name:"Convertisseurs",
-            image:nasaPicture,
+            image:converterPicture,
             link:"/Converter"
         }
     ]
