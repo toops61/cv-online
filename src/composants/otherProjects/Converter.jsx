@@ -7,6 +7,8 @@ export default function Converter() {
     const arrayTime = ['Picosecondes','Nanosecondes','Microsecondes','Millisecondes','Secondes','Minutes','Heures','Jour','Semaine','Mois','Année','Décennie','Siècle','Millénaire'];
     const arrayMasses = ['Picogrammes','Nanogrammes','Microgrammes','Milligrammes','Centigrammes','Décigrammes','Grammes','Décagrammes','Hectogrammes','Kilogrammes','Onces','Livres','Stones','Tonnes'];
     const arrayDimensions = ['Picomètres','Nanomètres','Micromètres','Millimètres','Centimètres','Décimètres','Mètres','Décamètres','Hectomètres','Kilomètres','Pouces','Pieds','Yards','Miles','Miles marins','Années-lumière'];
+    const arrayAreas = ['Picomètres carrés','Nanomètres carrés','Micromètres carrés','Millimètres carrés','Centimètres carrés','Décimètres carrés','Mètres carrés','Décamètres carrés','Hectomètres carrés','Kilomètres carrés','Pouces carrés','Pieds carrés','Yards carrés','Milles carrés','Hectares'];
+    const arrayVolumes = ['Picomètres cubes','Nanomètres cubes','Micromètres cubes','Millimètres cubes','Centimètres cubes','Décimètres cubes','Mètres cubes','Décamètres cubes','Hectomètres cubes','Kilomètres cubes'];
 
     const [arraySelected, setArraySelected] = useState([...arrayTemperatures]);
     const [type, setType] = useState('temperature');
@@ -41,6 +43,16 @@ export default function Converter() {
             case 'dimensions':
                 setArraySelected([...arrayDimensions]);
                 setType('dimensions');
+                resetInputs();
+                break;
+            case 'area':
+                setArraySelected([...arrayAreas]);
+                setType('area');
+                resetInputs();
+                break;
+            case 'volume':
+                setArraySelected([...arrayVolumes]);
+                setType('volume');
                 resetInputs();
                 break;
             default:
@@ -90,11 +102,11 @@ export default function Converter() {
     const picoKilo = (object,direction) => {
         const index = direction === 'toX' ? object.index : object.target_index;
         if (index <= 3) {
-            const indice = direction === 'toX' ? (index - 4) : (4 - index);
+            const indice = direction === 'toX' ? ((index - 4)*object.rate) : ((4 - index)*object.rate);
             const result = object.input * (10**(3*indice));
             return result;
         } else {
-            const indice = direction === 'toX' ? (index - 6) : (6 - index);
+            const indice = direction === 'toX' ? ((index - 6)*object.rate) : ((6 - index)*object.rate);
             const result = object.input * (10**indice);
             return result;
         }
@@ -121,6 +133,44 @@ export default function Converter() {
                 break;
             case 15:
                 result = direction === 'toX' ? (object.input * 9.4608e15) : (object.input / 9.4608e15);
+                break;
+            default:
+                break;
+        }
+        return result;
+    }
+
+    const convertAreas = (object,direction) => {
+        const index = direction === 'toX' ? object.index : object.target_index;
+        let result = 0;
+        switch (index) {
+            case 10:
+                result = direction === 'toX' ? (object.input / 1550) : (object.input * 1550);
+                break;
+            case 11:
+                result = direction === 'toX' ? (object.input / 10.764) : (object.input * 10.764);
+                break;
+            case 12:
+                result = direction === 'toX' ? (object.input / 1.196) : (object.input * 1.196);
+                break;
+            case 13:
+                result = direction === 'toX' ? (object.input * 2.59e6) : (object.input / 2.59e6);
+                break;
+            case 14:
+                result = direction === 'toX' ? (object.input * 10000) : (object.input / 10000);
+                break;
+            default:
+                break;
+        }
+        return result;
+    }
+
+    const convertVolumes = (object,direction) => {
+        const index = direction === 'toX' ? object.index : object.target_index;
+        let result = 0;
+        switch (index) {
+            case 10:
+                result = direction === 'toX' ? (object.input / 1550) : (object.input * 1550);
                 break;
             default:
                 break;
@@ -242,6 +292,15 @@ export default function Converter() {
                 case 10:
                     result = direction === 'toX' ? (object.input * 3.154e7) : timeDisplay(object.input,'year');
                     break;
+                case 11:
+                    result = direction === 'toX' ? (object.input * 3.154e8) : (object.input / 3.154e8);
+                    break;
+                case 12:
+                    result = direction === 'toX' ? (object.input * 3.154e9) : (object.input / 3.154e9);
+                    break;
+                case 13:
+                    result = direction === 'toX' ? (object.input * 3.154e10) : (object.input / 3.154e10);
+                    break;
                 default:
                     break;
             }
@@ -254,11 +313,13 @@ export default function Converter() {
         const tempObject = id === 'before' ? {
             index: arraySelected.indexOf(selectedFrom),
             target_index:arraySelected.indexOf(selectedTo),
-            input: value
+            input: value,
+            rate:1
         } : {
             index: arraySelected.indexOf(selectedTo),
             target_index:arraySelected.indexOf(selectedFrom),
-            input: value
+            input: value,
+            rate:1
         }
         
         if (selectedFrom === selectedTo && type !== 'temperature') {
@@ -275,6 +336,16 @@ export default function Converter() {
                 case 'dimensions':
                     const meters = tempObject.index <= 9 ? picoKilo(tempObject,'toX') : convertDimensions(tempObject,'toX');
                     result = tempObject.target_index <= 9 ? picoKilo({...tempObject,input:meters},'fromX') : convertDimensions({...tempObject,input:meters},'fromX');
+                    break;
+                case 'area':
+                    tempObject.rate = 2;
+                    const squareMeters = tempObject.index <= 9 ? picoKilo(tempObject,'toX') : convertAreas(tempObject,'toX');
+                    result = tempObject.target_index <= 9 ? picoKilo({...tempObject,input:squareMeters},'fromX') : convertAreas({...tempObject,input:squareMeters},'fromX');
+                    break;
+                case 'volume':
+                    tempObject.rate = 3;
+                    const cubeMeters = tempObject.index <= 9 ? picoKilo(tempObject,'toX') : convertVolumes(tempObject,'toX');
+                    result = tempObject.target_index <= 9 ? picoKilo({...tempObject,input:cubeMeters},'fromX') : convertVolumes({...tempObject,input:cubeMeters},'fromX');
                     break;
                 case 'time':
                     const seconds = convertTime(tempObject,'toX');
@@ -314,6 +385,8 @@ export default function Converter() {
                 <option value="time">Temps</option>
                 <option value="masse">Masses</option>
                 <option value="dimensions">Longueurs</option>
+                <option value="area">Aires</option>
+                <option value="volume">Volumes</option>
             </select>
             <section className="containers">
                 <div className="container">
