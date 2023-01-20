@@ -8,7 +8,7 @@ export default function Converter() {
     const arrayMasses = ['Picogrammes','Nanogrammes','Microgrammes','Milligrammes','Centigrammes','Décigrammes','Grammes','Décagrammes','Hectogrammes','Kilogrammes','Onces','Livres','Stones','Tonnes'];
     const arrayDimensions = ['Picomètres','Nanomètres','Micromètres','Millimètres','Centimètres','Décimètres','Mètres','Décamètres','Hectomètres','Kilomètres','Pouces','Pieds','Yards','Miles','Miles marins','Années-lumière'];
     const arrayAreas = ['Picomètres carrés','Nanomètres carrés','Micromètres carrés','Millimètres carrés','Centimètres carrés','Décimètres carrés','Mètres carrés','Décamètres carrés','Hectomètres carrés','Kilomètres carrés','Pouces carrés','Pieds carrés','Yards carrés','Milles carrés','Hectares'];
-    const arrayVolumes = ['Picomètres cubes','Nanomètres cubes','Micromètres cubes','Millimètres cubes','Centimètres cubes','Décimètres cubes','Mètres cubes','Décamètres cubes','Hectomètres cubes','Kilomètres cubes'];
+    const arrayVolumes = ['Picomètres cubes','Nanomètres cubes','Micromètres cubes','Millimètres cubes','Centimètres cubes','Décimètres cubes','Mètres cubes','Décamètres cubes','Hectomètres cubes','Kilomètres cubes','Picolitres','Nanolitres','Microlitres','Millilitres','Centilitres','Décilitres','Litres','Décalitres','Hectolitres','Kilolitres','Pouces cubes','Pieds cubes','cuillères à café impériales','cuillères à soupe impériales','Onces liquides impériales','Tasses impériales','Pintes impériales','Quarts impériaux','Gallons impériaux','cuillères à café américaines','cuillères à soupe américaines','Onces liquides américaines','Tasses américaines','Pintes américaines','Quarts américains','Gallons américains'];
 
     const [arraySelected, setArraySelected] = useState([...arrayTemperatures]);
     const [type, setType] = useState('temperature');
@@ -112,27 +112,30 @@ export default function Converter() {
         }
     }
 
+    const multDiv = (indice,dir,inp) => dir === 'toX' ? (inp * indice) : (inp / indice);
+    const divMult = (indice,dir,inp) => dir === 'toX' ? (inp / indice) : (inp * indice);
+
     const convertDimensions = (object,direction) => {
         const index = direction === 'toX' ? object.index : object.target_index;
         let result = 0;
         switch (index) {
             case 10:
-                result = direction === 'toX' ? (object.input / 39.37) : (object.input * 39.37);
+                result = divMult(39.3701,direction,object.input);
                 break;
             case 11:
-                result = direction === 'toX' ? (object.input / 3.281) : (object.input * 3.281);
+                result = divMult(3.28084,direction,object.input);
                 break;
             case 12:
-                result = direction === 'toX' ? (object.input / 1.094) : (object.input * 1.094);
+                result = divMult(1.09361,direction,object.input);
                 break;
             case 13:
-                result = direction === 'toX' ? (object.input * 1609) : (object.input / 1609);
+                result = multDiv(1609.34,direction,object.input);
                 break;
             case 14:
-                result = direction === 'toX' ? (object.input * 1852) : (object.input / 1852);
+                result = multDiv(1852,direction,object.input);
                 break;
             case 15:
-                result = direction === 'toX' ? (object.input * 9.4608e15) : (object.input / 9.4608e15);
+                result = multDiv(9.4608e15,direction,object.input);
                 break;
             default:
                 break;
@@ -145,19 +148,19 @@ export default function Converter() {
         let result = 0;
         switch (index) {
             case 10:
-                result = direction === 'toX' ? (object.input / 1550) : (object.input * 1550);
+                result = divMult(1550,direction,object.input);
                 break;
             case 11:
-                result = direction === 'toX' ? (object.input / 10.764) : (object.input * 10.764);
+                result = divMult(10.7639,direction,object.input);
                 break;
             case 12:
-                result = direction === 'toX' ? (object.input / 1.196) : (object.input * 1.196);
+                result = divMult(1.19599,direction,object.input);
                 break;
             case 13:
-                result = direction === 'toX' ? (object.input * 2.59e6) : (object.input / 2.59e6);
+                result = multDiv(2.59e6,direction,object.input);
                 break;
             case 14:
-                result = direction === 'toX' ? (object.input * 10000) : (object.input / 10000);
+                result = multDiv(10000,direction,object.input);
                 break;
             default:
                 break;
@@ -169,8 +172,53 @@ export default function Converter() {
         const index = direction === 'toX' ? object.index : object.target_index;
         let result = 0;
         switch (index) {
-            case 10:
-                result = direction === 'toX' ? (object.input / 1550) : (object.input * 1550);
+            case 20:
+                result = multDiv(61020,direction,object.input);
+                break;
+            case 21:
+                result = divMult(35.315,direction,object.input);
+                break;
+            case 22:
+                result = divMult(168936,direction,object.input);
+                break;
+            case 23:
+                result = divMult(56312.1,direction,object.input);
+                break;
+            case 24:
+                result = divMult(35195.1,direction,object.input);
+                break;
+            case 25:
+                result = divMult(3519.51,direction,object.input);
+                break;
+            case 26:
+                result = divMult(1759.75,direction,object.input);
+                break;
+            case 27:
+                result = divMult(879.877,direction,object.input);
+                break;
+            case 28:
+                result = divMult(219.969,direction,object.input);
+                break;
+            case 29:
+                result = divMult(202884,direction,object.input);
+                break;
+            case 30:
+                result = divMult(67628,direction,object.input);
+                break;
+            case 31:
+                result = divMult(33814,direction,object.input);
+                break;
+            case 32:
+                result = divMult(4166.67,direction,object.input);
+                break;
+            case 33:
+                result = divMult(2113.38,direction,object.input);
+                break;
+            case 34:
+                result = divMult(1056.69,direction,object.input);
+                break;
+            case 35:
+                result = divMult(264.172,direction,object.input);
                 break;
             default:
                 break;
@@ -183,16 +231,16 @@ export default function Converter() {
         let result = 0;
         switch (index) {
             case 10:
-                result = direction === 'toX' ? (object.input * 28.35) : (object.input / 28.35);
+                result = multDiv(28.3495,direction,object.input);
                 break;
             case 11:
-                result = direction === 'toX' ? (object.input * 453.6) : (object.input / 453.6);
+                result = multDiv(453.592,direction,object.input);
                 break;
             case 12:
-                result = direction === 'toX' ? (object.input * 6350) : (object.input / 6350);
+                result = multDiv(6350.29,direction,object.input);
                 break;
             case 13:
-                result = direction === 'toX' ? (object.input * 1e6) : (object.input / 1e6);
+                result = multDiv(1e6,direction,object.input);
                 break;
             default:
                 break;
@@ -268,6 +316,7 @@ export default function Converter() {
 
     const convertTime = (object,direction) => {
         const index = direction === 'toX' ? object.index : object.target_index;
+        const multDivTime = (indice,division) => direction === 'toX' ? (object.input * indice) : timeDisplay(object.input,division);
         let result = 0;
         if (index <= 4) {
             const indice = direction === 'toX' ? (index - 4) : (4 - index);
@@ -275,31 +324,31 @@ export default function Converter() {
         } else {
             switch (index) {
                 case 5:
-                    result = direction === 'toX' ? (object.input * 60) : timeDisplay(object.input,'min');
+                    result = multDivTime(60,'min');
                     break;
                 case 6:
-                    result = direction === 'toX' ? (object.input * 3600) : timeDisplay(object.input,'hour');
+                    result = multDivTime(3600,'hour');
                     break;
                 case 7:
-                    result = direction === 'toX' ? (object.input * 86400) : timeDisplay(object.input,'day');
+                    result = multDivTime(86400,'day');
                     break;
                 case 8:
-                    result = direction === 'toX' ? (object.input * 604800) : timeDisplay(object.input,'week');
+                    result = multDivTime(604800,'week');
                     break;
                 case 9:
-                    result = direction === 'toX' ? (object.input * 2.628e6) : timeDisplay(object.input,'month');
+                    result = multDivTime(2.628e6,'month');
                     break;
                 case 10:
-                    result = direction === 'toX' ? (object.input * 3.154e7) : timeDisplay(object.input,'year');
+                    result = multDivTime(3.154e7,'year');
                     break;
                 case 11:
-                    result = direction === 'toX' ? (object.input * 3.154e8) : (object.input / 3.154e8);
+                    result = multDiv(3.154e8,direction,object.input);
                     break;
                 case 12:
-                    result = direction === 'toX' ? (object.input * 3.154e9) : (object.input / 3.154e9);
+                    result = multDiv(3.154e9,direction,object.input);
                     break;
                 case 13:
-                    result = direction === 'toX' ? (object.input * 3.154e10) : (object.input / 3.154e10);
+                    result = multDiv(3.154e10,direction,object.input);
                     break;
                 default:
                     break;
@@ -344,8 +393,8 @@ export default function Converter() {
                     break;
                 case 'volume':
                     tempObject.rate = 3;
-                    const cubeMeters = tempObject.index <= 9 ? picoKilo(tempObject,'toX') : convertVolumes(tempObject,'toX');
-                    result = tempObject.target_index <= 9 ? picoKilo({...tempObject,input:cubeMeters},'fromX') : convertVolumes({...tempObject,input:cubeMeters},'fromX');
+                    const cubeMeters = tempObject.index <= 9 ? picoKilo(tempObject,'toX') : (tempObject.index <= 19 ? (picoKilo({...tempObject,rate:1,index:tempObject.index-10},'toX')/1000) : convertVolumes(tempObject,'toX'));
+                    result = tempObject.target_index <= 9 ? picoKilo({...tempObject,input:cubeMeters},'fromX') : (tempObject.target_index <= 19 ? (picoKilo({...tempObject,rate:1,target_index:tempObject.target_index-10,input:cubeMeters},'fromX'))*1000 : convertVolumes({...tempObject,input:cubeMeters},'fromX'));
                     break;
                 case 'time':
                     const seconds = convertTime(tempObject,'toX');

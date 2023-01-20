@@ -57,3 +57,10 @@
         }
     }
 }
+
+.dark .converter-page .converter-main .containers .container {
+    * {
+        color: $fifth-color;
+    }
+    border-color: white;
+}
