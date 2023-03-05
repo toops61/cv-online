@@ -61,9 +61,10 @@ export default function Password() {
   }
 
   const getCharacters = (first,last) => {
+    const forbiddenCaracters = [34,39,40,41,46,47,59,60,62,63,92];
     let string ='';
     for (let i = first; i <= last; i++) {
-        string += (String.fromCharCode(i))
+        !forbiddenCaracters.includes(i) && (string += (String.fromCharCode(i)));
     }
     return string;
   }
@@ -81,7 +82,7 @@ export default function Password() {
     const lowercaseLetters = getCharacters(97,122);
     const uppercaseLetters = getCharacters(65,90);
     const allIntegers = getCharacters(48,57);
-    const specialsCaracters = getCharacters(33,47)+getCharacters(58,64)+getCharacters(91,96)+getCharacters(123,126);
+    const specialsCaracters = getCharacters(33,47)+getCharacters(58,64)+getCharacters(91,95)+getCharacters(123,126);
 
     if (Object.values(passwordParams).some(e => e === true)) {     
         const lettersNumbersString = (passwordParams.lowercase ? lowercaseLetters : '') + (passwordParams.uppercase ? uppercaseLetters : '') + (passwordParams.integers ? allIntegers : '') + (passwordParams.specials ? specialsCaracters : '');
