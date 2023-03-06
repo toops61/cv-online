@@ -42,12 +42,15 @@
     }
     .sound-engineer {
         position: relative;
+        h3 {
+            transform: translateY(2em);
+        }
         .perso-wire {
             //border: solid red .1em;
             position: absolute;
             top: 7em;
             right: -11em;
-            width: 21em;
+            width: 19em;
             height: 8em;
             overflow: hidden;
             .fill {
@@ -67,7 +70,7 @@
             .second-part {
                 border-radius: 1em;
                 position: absolute;
-                left: 9.5em;
+                left: 8.5em;
                 top: 0.3em;
                 width: 1em;
                 height: 96%;
@@ -91,13 +94,13 @@
         }
         &:hover .perso-wire {
             .first-part .fill {
-                animation: 300ms 1500ms 1 forwards right-to-left-bar;
+                animation: 200ms 1000ms 1 forwards right-to-left-bar;
             }
             .second-part .fill {
-                animation: 600ms 900ms 1 forwards down-to-up-bar;
+                animation: 400ms 700ms 1 forwards down-to-up-bar;
             }
             .third-part .fill {
-                animation: 300ms 500ms 1 forwards right-to-left-bar;
+                animation: 200ms 500ms 1 forwards right-to-left-bar;
             }
         }
     }
@@ -113,7 +116,7 @@
             position: absolute;
             bottom: 10em;
             right: -11em;
-            width: 21em;
+            width: 18em;
             height: 8em;
             overflow: hidden;
             .fill {
@@ -135,10 +138,10 @@
             .second-part {
                 border-radius: 1em;
                 position: absolute;
-                right: 7.4em;
+                right: 6.4em;
                 top: 0.1em;
                 width: 1em;
-                height: 96%;
+                height: 98%;
                 overflow: hidden;
                 .fill {
                     transform: translateY(110%);
@@ -159,13 +162,13 @@
         }
         &:hover .perso-wire {
             .first-part .fill {
-                animation: 300ms 500ms 1 forwards right-to-left-bar;
+                animation: 200ms 500ms 1 forwards right-to-left-bar;
             }
             .second-part .fill {
-                animation: 600ms 900ms 1 forwards up-to-down-bar;
+                animation: 300ms 700ms 1 forwards up-to-down-bar;
             }
             .third-part .fill {
-                animation: 300ms 1500ms 1 forwards right-to-left-bar;
+                animation: 200ms 1000ms 1 forwards right-to-left-bar;
             }
         }
     }
@@ -173,7 +176,7 @@
 
 .img-profil {
     height: 20em;
-    transform: translateX(2em);
+    transform: translate(2em,-5em);
     position: relative;
     z-index: 99;
     img {
@@ -301,13 +304,13 @@
         }
         &:hover .perso-wire {
             .first-part .fill {
-                animation: 300ms 500ms 1 forwards left-to-right-bar;
+                animation: 200ms 500ms 1 forwards left-to-right-bar;
             }
             .second-part .fill {
-                animation: 600ms 900ms 1 forwards up-to-down-bar;
+                animation: 300ms 700ms 1 forwards up-to-down-bar;
             }
             .third-part .fill {
-                animation: 300ms 1500ms 1 forwards left-to-right-bar;
+                animation: 200ms 1000ms 1 forwards left-to-right-bar;
             }
         }
     }
@@ -371,10 +374,10 @@
         }
         &:hover .perso-wire {
             .first-part .fill {
-                animation: 300ms 500ms 1 forwards left-to-right-bar;
+                animation: 200ms 500ms 1 forwards left-to-right-bar;
             }
             .second-part .fill {
-                animation: 600ms 800ms 1 forwards up-to-down-bar;
+                animation: 400ms 700ms 1 forwards up-to-down-bar;
             }
         }
     }
@@ -382,10 +385,10 @@
         position: relative;
         .perso-wire {
             position: absolute;
-            bottom: 8em;
+            bottom: 9em;
             right: -9em;
             width: 11em;
-            height: 8em;
+            height: 13em;
             overflow: hidden;
             .fill {
                 width: 100%;

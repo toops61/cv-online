@@ -1,7 +1,7 @@
 import vinyl from '../assets/vinyl2.webp';
 import micro from '../assets/micro.webp';
 import logoK from '../assets/logo_K_rouge.webp';
-import photoProfil from '../assets/photo_profil.webp';
+import photoMac from '../assets/clavier_mac960.webp';
 import photoTV from '../assets/ecran-LCD.webp';
 import seipra from '../assets/seipra.webp';
 import codeWindow from '../assets/capture-code.webp';
@@ -58,7 +58,7 @@ export default function Home() {
         </section>
         <section>
             <div className="img-profil">
-                <img src={photoProfil} alt="profil" />
+                <img src={photoMac} alt="profil" />
             </div>
         </section>
         <section className="right-side">
