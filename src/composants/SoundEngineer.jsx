@@ -13,6 +13,9 @@ import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 export default function SoundEngineer() {
+  document.querySelector('.button-container')?.classList.remove('hide');
+  document.querySelector('.back')?.classList.remove('hide');
+
   const [selected, setSelected] = useState(0);
   const [albumsArray, setAlbumsArray] = useState([]);
   const [albumPosition, setAlbumPosition] = useState([]);

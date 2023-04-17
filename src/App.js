@@ -28,6 +28,7 @@ import AudioPlayer from "./composants/jsProjects/AudioPlayer";
 import PrimeNumbers from "./composants/otherProjects/PrimeNumbers";
 import NasaPictures from "./composants/otherProjects/NasaPictures";
 import Converter from "./composants/otherProjects/Converter";
+import Seipra from "./composants/Seipra";
 
 export default function App() {
   const dark = useSelector(state => state.generalParams.darkMode);
@@ -47,6 +48,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/soundEngineer" element={<SoundEngineer />} />
         <Route path="/radioEngineer" element={<RadioEngineer />} />
+        <Route path="/seipra" element={<Seipra />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/Imc" element={<Imc />} />
         <Route path="/Quizz" element={<Quizz />} />

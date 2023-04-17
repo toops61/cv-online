@@ -33,6 +33,7 @@ import { updateGeneralParams } from '../redux';
 
 export default function Projects() {
     document.querySelector('.button-container')?.classList.remove('hide');
+    document.querySelector('.back')?.classList.remove('hide');
 
     const dispatch = useDispatch();
 

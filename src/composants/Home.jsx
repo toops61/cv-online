@@ -13,11 +13,12 @@ import { updateGeneralParams } from '../redux';
 export default function Home() {
     const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(updateGeneralParams({darkMode:false}));
-}, [])
+    useEffect(() => {
+        dispatch(updateGeneralParams({darkMode:false}));
+    }, [])
 
-    document.querySelector('.button-container')?.classList.remove('hide');
+    document.querySelector('.button-container')?.classList.add('hide');
+    document.querySelector('.back')?.classList.add('hide');
   return (
     <main className='home'>
         <section className="left-side">
@@ -62,9 +63,10 @@ export default function Home() {
             </div>
         </section>
         <section className="right-side">
-            <div className="img-container pro-proj">
+            {/* <a className="img-container pro-proj" href="https://www.seiprascore.com/" target="_blank" rel="noreferrer"> */}
+            <Link to="/seipra" className="img-container pro-proj">
                 <div className="text">
-                    <h3>Projets code </h3>
+                    <h3>Projets</h3>
                     <h3>professionnels</h3>
                 </div>
                 <div className="img seipra">
@@ -78,7 +80,7 @@ export default function Home() {
                         <div className="fill"></div>
                     </div>
                 </div>
-            </div>
+            </Link>
             <Link className="img-container perso-proj" to="/Projects">
                 <div className="perso-wire">
                     <div className="first-part">
@@ -115,7 +117,7 @@ export default function Home() {
                     </div>
                 </div>
             </a>
-            <div className="img-container sound-design">
+            <a className="img-container sound-design" href="http://www.melodybox.fr/index.php" target="_blank" rel="noreferrer">
                 <h3>Illustration sonore</h3>
                 <div className="img TV">
                     <img src={photoTV} alt="Illustrations sonores" />
@@ -128,7 +130,7 @@ export default function Home() {
                         <div className="fill"></div>
                     </div>
                 </div>
-            </div>
+            </a>
         </section>
     </main>
   )
