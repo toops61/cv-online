@@ -3,8 +3,11 @@
     overflow: hidden;
     position: relative;
     display: flex;
-    justify-content: space-between;
+    //justify-content: space-between;
     align-items: center;
+    @include tablette-version {
+        align-items: start;
+    }
     background-color: #1D1D1B;
     * {
         color: white;
@@ -26,13 +29,11 @@
     }
 }
 
-.img-profil {
-    height: 20em;
-    transform: translate(1em,-5em);
-    position: relative;
-    z-index: 99;
-    img {
-        @include imageFit;
+.perso-wire {
+    position: absolute;
+    overflow: hidden;
+    @include tablette-version {
+        display: none;
     }
 }
 
@@ -40,11 +41,14 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    transform: translateX(-12em);
-    width: fit-content;
+    transform: translateX(-58%);
     height: 100%;
+    @include tablette-version {
+        transform: translateX(-42%);
+        height: 80%;
+    }
     .img-container:hover {
-        transform: translateX(4em);
+        transform: translateX(7vw);
     }
     .vinyl {
         img {
@@ -62,16 +66,14 @@
     .sound-engineer {
         position: relative;
         h3 {
-            transform: translateY(2em);
+            transform: translateY(3em);
         }
         .perso-wire {
             //border: solid red .1em;
-            position: absolute;
-            top: 7em;
-            right: -11em;
-            width: 19em;
-            height: 8em;
-            overflow: hidden;
+            top: 9em;
+            right: -13vw;
+            width: 24vw;
+            height: 7em;
             .first-part {
                 border-radius: 1em;
                 width: 50%;
@@ -84,7 +86,7 @@
             .second-part {
                 border-radius: 1em;
                 position: absolute;
-                left: 8.7em;
+                left: 11vw;
                 top: 0;
                 width: 1em;
                 height: 100%;
@@ -127,12 +129,10 @@
         position: relative;
         .perso-wire {
             //border: solid red .1em;
-            position: absolute;
             bottom: 8em;
             right: -11em;
             width: 18em;
             height: 9em;
-            overflow: hidden;
             .first-part {
                 border-radius: 1em;
                 position: absolute;
@@ -168,6 +168,9 @@
                     transform: translateX(110%);
                 }
             }
+            @include tablette-version {
+                display: none;
+            }
         }
         &:hover .perso-wire {
             .first-part .fill {
@@ -183,13 +186,40 @@
     }
 }
 
+.center {
+    height: 100%;
+    @include flexCenter;
+    width: 34vw;
+    @include mobile-version {
+        display: none;
+    }
+    @media (orientation: portrait) {
+        display: none;
+    }
+}
+
+.img-profil {
+    //height: 20em;
+    width: 100%;
+    margin-bottom: 5em;
+    position: relative;
+    z-index: 99;
+    img {
+        @include imageFit;
+    }
+}
+
 .right-side {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    transform: translateX(16em);
+    transform: translateX(17em);
     width: fit-content;
     height: 100%;
+    @include tablette-version {
+        transform: translateX(2em);
+        height: 77%;
+    }
     .fill {
         width: 100%;
         height: 100%;
@@ -220,18 +250,16 @@
         flex-direction: column;
 
         .perso-wire {
-            position: absolute;
             top: 3.5em;
-            right: 9em;
-            width: 21em;
+            width: 17vw;
+            left: -12vw;
             height: 9em;
-            overflow: hidden;
             .first-part {
                 position: absolute;
                 left: 0;
                 bottom: 0;
                 border-radius: 1em;
-                width: 50%;
+                width: 100%;
                 height: 1em;
                 overflow: hidden;
                 .fill {
@@ -241,7 +269,7 @@
             .second-part {
                 border-radius: 1em;
                 position: absolute;
-                left: 9.5em;
+                right: 0;
                 top: 0.3em;
                 width: 1em;
                 height: 96%;
@@ -271,12 +299,10 @@
     .perso-proj {
         position: relative;
         .perso-wire {
-            position: absolute;
             top: -50%;
-            left: -10em;
-            width: 9em;
+            left: -17vw;
+            width: 15vw;
             height: 8em;
-            overflow: hidden;
             .fill {
                 transform: translateX(-110%);
             }
@@ -289,7 +315,7 @@
             .second-part {
                 border-radius: 1em;
                 position: absolute;
-                left: 3.6em;
+                left: 6vw;
                 top: .1em;
                 width: 1em;
                 height: 99%;
@@ -355,12 +381,10 @@
     .sound-design {
         position: relative;
         .perso-wire {
-            position: absolute;
             top: -50%;
-            right: 6em;
-            width: 7em;
+            left: -1vw;
+            width: 13vw;
             height: 8em;
-            overflow: hidden;
             .fill {
                 transform: translateX(-110%);
             }
@@ -395,12 +419,10 @@
     .kobutsune {
         position: relative;
         .perso-wire {
-            position: absolute;
             bottom: 9em;
             right: -9em;
             width: 11em;
             height: 13em;
-            overflow: hidden;
             .first-part {
                 position: absolute;
                 bottom: 0;

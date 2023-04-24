@@ -16,6 +16,7 @@
     .screenshots-container {
         display: flex;
         flex-direction: column;
+        overflow: hidden;
     }
     .screenshot {
         display: flex;
@@ -26,12 +27,32 @@
             img {
                 @include imageFit;
             }
+            transition: .8s;
+            transform: translateX(100vw);
         }
         &__txt {
             flex: 1;
             padding: 1em;
             p {
                 font-size: 1.2em;
+            }
+            transition: .8s;
+            transform: translateX(100vw);
+        }
+        &.long {
+            flex-direction: column;
+            .screenshot__img {
+                width: 100%;
+            }
+        }
+        &.left {
+            .screenshot__img,.screenshot__txt {
+                transform: translateX(-100vw);
+            }
+        }
+        &.appears {
+            .screenshot__img,.screenshot__txt {
+                transform: translateX(0);
             }
         }
         margin-bottom: 2em;

@@ -15,10 +15,10 @@ export default function Home() {
 
     useEffect(() => {
         dispatch(updateGeneralParams({darkMode:false}));
+        document.querySelector('.button-container')?.classList.add('hide');
+        document.querySelector('.back')?.classList.add('hide');
     }, [])
 
-    document.querySelector('.button-container')?.classList.add('hide');
-    document.querySelector('.back')?.classList.add('hide');
   return (
     <main className='home'>
         <section className="left-side">
@@ -57,7 +57,7 @@ export default function Home() {
                 </div>
             </Link>
         </section>
-        <section>
+        <section className="center">
             <div className="img-profil">
                 <img src={photoMac} alt="profil" />
             </div>

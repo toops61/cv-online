@@ -37,7 +37,7 @@ export default function AudioPlayer() {
     const importAll = r => {
       return r.keys().map(r);
     }
-    let songs = importAll(require.context('../../assets/songs', false, /\.(mp3|m4a|webp|wav|aiff)$/));
+    let songs = importAll(require.context('../../assets/songs', false, /\.(mp3|m4a|wav|aiff)$/));
     //images = images.filter(e => !e.includes('question'));
     let array = songs.map((el,index) => {
       return {

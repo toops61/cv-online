@@ -24,6 +24,9 @@
 
 * {
   font-size: 1.5vw;
+  @include tablette-version {
+    font-size: 3vw;
+  }
 }
 
 @font-face {

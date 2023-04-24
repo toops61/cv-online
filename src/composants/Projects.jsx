@@ -32,12 +32,12 @@ import { useDispatch } from 'react-redux';
 import { updateGeneralParams } from '../redux';
 
 export default function Projects() {
-    document.querySelector('.button-container')?.classList.remove('hide');
-    document.querySelector('.back')?.classList.remove('hide');
-
+    
     const dispatch = useDispatch();
-
+    
     useEffect(() => {
+        document.querySelector('.button-container')?.classList.remove('hide');
+        document.querySelector('.back')?.classList.remove('hide');
         dispatch(updateGeneralParams({darkMode:false}));
     }, [])
 

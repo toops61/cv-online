@@ -1,24 +1,201 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import seipra from '../assets/seipra.webp';
 import { updateGeneralParams } from '../redux';
-import bayonneEmbarque from '../assets/seipra_proj/01_bayonne_embarques.webp';
-import bayonneEmbarque2 from '../assets/seipra_proj/02_Bayonne2.webp';
-import bayonneBiv from '../assets/seipra_proj/03_Bayonne_BIV.webp';
-import teleoQuai from '../assets/seipra_proj/04_teleo.webp';
-import teleoQuaiMeteo from '../assets/seipra_proj/05_teleo-meteo.webp';
-import salleDesBillets from '../assets/seipra_proj/06_SDB.webp';
-import quaiMetro from '../assets/seipra_proj/07_quais-metro1.webp';
-import quaiMetro2 from '../assets/seipra_proj/08_quais-metro2.webp';
 
 export default function Seipra() {
-    document.querySelector('.back')?.classList.remove('hide');
-
     const dispatch = useDispatch();
 
+    const [projectsArray, setProjectsArray] = useState([
+        {
+            sentence:'',
+            image:'',
+            playedImages:[],
+            visible:false
+        },
+        {
+            sentence:'',
+            image:'',
+            playedImages:[],
+            visible:false
+        },
+        {
+            sentence:'',
+            image:'',
+            playedImages:[],
+            visible:false
+        },
+        {
+            sentence:'',
+            image:'',
+            playedImages:[],
+            visible:false
+        },
+        {
+            sentence:'',
+            image:'',
+            playedImages:[],
+            visible:false
+        }
+    ])
+
+    const timeoutArray = [null,null,null,null,null];
+
+    let projectsFixArray = [
+        {
+            project:'bayonne',
+            sentences:['Horloge dynamique en CSS. ','Récupération et affichage des données dynamiques via le SAE: ','Noms des stations, destination, temps d\'attente, pictogrammes... ','Affichage des P.O.I (point of interest) lorsque le bus est à l\'arrêt. ','Interrogation de la base de données pour déterminer le nom des arrêts ou/et correspondances. ','','Affichage en temps réel du themomètre de ligne, des déviations ou incidents de parcours. ','Ecrans adaptés à l\'état du bus tout au long du parcours.'],
+            images:[]
+        },
+        {
+            project:'bayonneBiv',
+            sentences:[],
+            images:[]
+        },
+        {
+            project:'teleo',
+            sentences:[],
+            images:[]
+        },
+        {
+            project:'sdb',
+            sentences:[],
+            images:[]
+        },
+        {
+            project:'tisseoMetro',
+            sentences:[],
+            images:[]
+        }
+    ];
+
+    const observer = new IntersectionObserver(
+        entries => {
+            entries.map(e => {
+                if (e.isIntersecting) {
+                    const ind = Array.from(document.querySelectorAll('.screenshot')).findIndex(el => el === e.target);
+                    //ind !== -1 && timeoutLoop(ind);
+                    if (ind !== -1) {
+                        setProjectsArray(projectsArray => {
+                            const tempProjects = [...projectsArray];
+                            if (projectsArray[ind].image) {
+                                timeoutLoop(ind,tempProjects);
+                                tempProjects.splice(ind,1,{...tempProjects[ind],playedImages:[projectsFixArray[ind].images[0]],visible:true});
+                                return tempProjects
+                            }
+                        });
+                    } 
+                    e.target.classList.add('appears');
+                } else {
+                    const ind = Array.from(document.querySelectorAll('.screenshot')).findIndex(el => el === e.target);
+                    e.target.classList.remove('appears');
+                    if (ind !== -1) {
+                        setProjectsArray(projectsArray => {
+                            const tempProjects = [...projectsArray];
+                            if (projectsArray[ind].image) {
+                                clearTimeout(timeoutArray[ind]);
+                                tempProjects.splice(ind,1,{
+                                    sentence:projectsFixArray[ind].sentences[0] ? projectsFixArray[ind].sentences[0] : '',
+                                    image:projectsFixArray[ind].images[0],
+                                    playedImages:[],
+                                    visible:false
+                                });
+                                return tempProjects
+                            }
+                        });
+                    } 
+                }
+            });
+    },{threshold:1});
+
+    const importAll = r => {
+       return r.keys().map(r);
+    };
+
+    /* const getImages = screenshots => {
+        const array = screenshots.map(el => {
+            return {
+                displayed:false,
+                url:el
+            }
+        })
+        return array;
+    } */
+    
+    const getProjectsImages = () => {
+        let screenshots;
+        projectsFixArray.map((project,index) => {
+            switch (index) {
+                case 0:
+                    screenshots = importAll(require.context(`../assets/seipra_proj/bayonne`, false, /\.(webp)$/));
+                    break;
+                case 1:
+                    screenshots = importAll(require.context(`../assets/seipra_proj/bayonneBiv`, false, /\.(webp)$/));
+                    break;
+                case 2:
+                    screenshots = importAll(require.context(`../assets/seipra_proj/teleo`, false, /\.(webp)$/));
+                    break;
+                case 3:
+                    screenshots = importAll(require.context(`../assets/seipra_proj/sdb`, false, /\.(webp)$/));
+                    break;
+                case 4:
+                    screenshots = importAll(require.context(`../assets/seipra_proj/tisseoMetro`, false, /\.(webp)$/));
+                    break;
+                default:
+                    break;
+            };
+            const array = [...screenshots];
+            projectsFixArray[index] = {
+                ...projectsFixArray[index],
+                images:array
+            }
+        })
+    }
+
+    const timeoutLoop = (index,projects) => {
+        const project = projects[index];
+        clearTimeout(timeoutArray[index]);
+        const displayedImageTimeout = setTimeout(() => {
+            const displayedImageIndex = project.playedImages.length < projectsFixArray[index].images.length ? projectsFixArray[index].images.findIndex(image => !project.playedImages.includes(image)) : 0;
+            if (displayedImageIndex !== -1 && projectsFixArray[index].images.length > 1) {
+                const newSentence = projectsFixArray[index].sentences[displayedImageIndex] ? projectsFixArray[index].sentences[displayedImageIndex] : '';
+                project.image = projectsFixArray[index].images[displayedImageIndex];
+                if (displayedImageIndex > 0) {
+                    project.playedImages.push(projectsFixArray[index].images[displayedImageIndex]);
+                    project.sentence += newSentence;
+                } else {
+                    project.playedImages = [projectsFixArray[index].images[displayedImageIndex]];
+                    project.sentence = newSentence;
+                }
+                projects.splice(index,1,project);
+                setProjectsArray([...projects]);
+                timeoutLoop(index,projects);
+            }
+        }, 5000);
+        timeoutArray[index] = displayedImageTimeout;
+    }
+    
     useEffect(() => {
+        getProjectsImages();
+        document.querySelector('.back')?.classList.remove('hide');
+        document.querySelector('.button-container')?.classList.add('hide');
         dispatch(updateGeneralParams({darkMode:true}));
     }, [])
+    
+    useEffect(() => {
+        if (projectsFixArray.every(e => e.images.length)) {
+            const tempProjects = projectsArray.map(project => {return {...project}});
+            tempProjects.map((project,id) => {
+                project.image = projectsFixArray[id].images[0];
+                project.playedImages.push(projectsFixArray[id].images[0]);
+                project.sentence = projectsFixArray[id].sentences.length ? projectsFixArray[id].sentences[0] : '';
+            });
+            setProjectsArray([...tempProjects]);
+            const screenshotArray = Array.from(document.querySelectorAll('.screenshot'));
+            screenshotArray.map(e => observer.observe(e));
+        }
+    }, [projectsFixArray])
+    
 
   return (
     <main className="seipra-page">
@@ -27,68 +204,42 @@ export default function Seipra() {
         </a>
         <h1>Projets pour Seipra Score</h1>
         <section className="screenshots-container">
-            <div className="screenshot">
+            <div className="screenshot left">
                 <div className="screenshot__img">
-                    <img src={bayonneEmbarque} alt="Bayonne bus" />
+                    <img src={projectsArray[0].image} alt="Bayonne bus" />
+                </div>
+                <div className="screenshot__txt"><p>{projectsArray[0].sentence}</p></div>
+            </div>
+            <div className="screenshot long">
+                <div className="screenshot__img">
+                    <img src={projectsArray[1].image} alt="Bayonne Biv TFT" />
+                </div>
+                <div className="screenshot__txt">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut dolorem sunt, quisquam quis, ex sint eius dignissimos sed saepe harum necessitatibus ea veritatis possimus quod.</p>
+                </div>
+            </div>
+            <div className="screenshot  long">
+                <div className="screenshot__img">
+                    <img src={projectsArray[2].image} alt="Teleo meteo" />
                 </div>
                 <div className="screenshot__txt">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut dolorem sunt, quisquam quis, ex sint eius dignissimos sed saepe harum necessitatibus ea veritatis possimus quod.</p>
                 </div>
             </div>
             <div className="screenshot">
-                <div className="screenshot__txt">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut dolorem sunt, quisquam quis, ex sint eius dignissimos sed saepe harum necessitatibus ea veritatis possimus quod.</p>
-                </div>
                 <div className="screenshot__img">
-                    <img src={bayonneEmbarque2} alt="Bayonne bus2" />
-                </div>
-            </div>
-            <div className="screenshot">
-                <div className="screenshot__img">
-                    <img src={bayonneBiv} alt="Bayonne Biv TFT" />
+                    <img src={projectsArray[3].image} alt="Salles des billets" />
                 </div>
                 <div className="screenshot__txt">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut dolorem sunt, quisquam quis, ex sint eius dignissimos sed saepe harum necessitatibus ea veritatis possimus quod.</p>
                 </div>
             </div>
-            <div className="screenshot">
-                <div className="screenshot__txt">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut dolorem sunt, quisquam quis, ex sint eius dignissimos sed saepe harum necessitatibus ea veritatis possimus quod.</p>
-                </div>
+            <div className="screenshot left long">
                 <div className="screenshot__img">
-                    <img src={teleoQuai} alt="Teleo quai" />
-                </div>
-            </div>
-            <div className="screenshot">
-                <div className="screenshot__img">
-                    <img src={teleoQuaiMeteo} alt="Teleo meteo" />
+                    <img src={projectsArray[4].image} alt="Teleo meteo" />
                 </div>
                 <div className="screenshot__txt">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut dolorem sunt, quisquam quis, ex sint eius dignissimos sed saepe harum necessitatibus ea veritatis possimus quod.</p>
-                </div>
-            </div>
-            <div className="screenshot">
-                <div className="screenshot__txt">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut dolorem sunt, quisquam quis, ex sint eius dignissimos sed saepe harum necessitatibus ea veritatis possimus quod.</p>
-                </div>
-                <div className="screenshot__img">
-                    <img src={salleDesBillets} alt="Salles des billets" />
-                </div>
-            </div>
-            <div className="screenshot">
-                <div className="screenshot__img">
-                    <img src={quaiMetro} alt="Teleo meteo" />
-                </div>
-                <div className="screenshot__txt">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut dolorem sunt, quisquam quis, ex sint eius dignissimos sed saepe harum necessitatibus ea veritatis possimus quod.</p>
-                </div>
-            </div>
-            <div className="screenshot">
-                <div className="screenshot__txt">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut dolorem sunt, quisquam quis, ex sint eius dignissimos sed saepe harum necessitatibus ea veritatis possimus quod.</p>
-                </div>
-                <div className="screenshot__img">
-                    <img src={quaiMetro2} alt="Salles des billets" />
                 </div>
             </div>
         </section>
