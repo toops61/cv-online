@@ -44,12 +44,12 @@ export default function Seipra() {
     let projectsFixArray = [
         {
             project:'bayonne',
-            sentences:['Horloge dynamique en CSS. ','Récupération et affichage des données dynamiques via le SAE: ','Noms des stations, destination, temps d\'attente, pictogrammes... ','Affichage des P.O.I (point of interest) lorsque le bus est à l\'arrêt. ','Interrogation de la base de données pour déterminer le nom des arrêts ou/et correspondances. ','','Affichage en temps réel du themomètre de ligne, des déviations ou incidents de parcours. ','Ecrans adaptés à l\'état du bus tout au long du parcours.'],
+            sentences:['Ecrans embarqués dans les bus de Bayonne. Horloge dynamique en CSS. ','Récupération et affichage des données dynamiques via le service embarqué et la base de données.','Noms des stations, destination, temps d\'attente, pictogrammes... ','Affichage des P.O.I (point of interest) lorsque le bus est à l\'arrêt. ','Interrogation de la base de données pour déterminer le nom des arrêts ou/et correspondances. ','','Affichage en temps réel du themomètre de ligne, des déviations ou incidents de parcours. ','Ecrans adaptés à l\'état du bus tout au long du parcours.'],
             images:[]
         },
         {
             project:'bayonneBiv',
-            sentences:[],
+            sentences:['Affichage sur les bornes d\'information voyageurs pour Bayonne.','Récupération des données et affichages en temps réel des prochaines passages à l\'arrêt.'],
             images:[]
         },
         {
@@ -74,7 +74,6 @@ export default function Seipra() {
             entries.map(e => {
                 if (e.isIntersecting) {
                     const ind = Array.from(document.querySelectorAll('.screenshot')).findIndex(el => el === e.target);
-                    //ind !== -1 && timeoutLoop(ind);
                     if (ind !== -1) {
                         setProjectsArray(projectsArray => {
                             const tempProjects = [...projectsArray];
@@ -106,21 +105,11 @@ export default function Seipra() {
                     } 
                 }
             });
-    },{threshold:1});
+    },{threshold:.7});
 
     const importAll = r => {
        return r.keys().map(r);
     };
-
-    /* const getImages = screenshots => {
-        const array = screenshots.map(el => {
-            return {
-                displayed:false,
-                url:el
-            }
-        })
-        return array;
-    } */
     
     const getProjectsImages = () => {
         let screenshots;
@@ -160,12 +149,11 @@ export default function Seipra() {
             if (displayedImageIndex !== -1 && projectsFixArray[index].images.length > 1) {
                 const newSentence = projectsFixArray[index].sentences[displayedImageIndex] ? projectsFixArray[index].sentences[displayedImageIndex] : '';
                 project.image = projectsFixArray[index].images[displayedImageIndex];
+                newSentence && (project.sentence = newSentence);
                 if (displayedImageIndex > 0) {
                     project.playedImages.push(projectsFixArray[index].images[displayedImageIndex]);
-                    project.sentence += newSentence;
                 } else {
                     project.playedImages = [projectsFixArray[index].images[displayedImageIndex]];
-                    project.sentence = newSentence;
                 }
                 projects.splice(index,1,project);
                 setProjectsArray([...projects]);
@@ -215,7 +203,7 @@ export default function Seipra() {
                     <img src={projectsArray[1].image} alt="Bayonne Biv TFT" />
                 </div>
                 <div className="screenshot__txt">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut dolorem sunt, quisquam quis, ex sint eius dignissimos sed saepe harum necessitatibus ea veritatis possimus quod.</p>
+                    <p>{projectsArray[1].sentence}</p>
                 </div>
             </div>
             <div className="screenshot  long">
