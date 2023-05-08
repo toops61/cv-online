@@ -54,17 +54,17 @@ export default function Seipra() {
         },
         {
             project:'teleo',
-            sentences:['Affichage des bornes d\'information voyageurs à Toulouse pour Teleo, le téléphérique.','Récupération de l\'état et des temps de passage en temps réel avec utilisation de WebSockets.','Affichage de la météo du jour grâce à une API dédiée.','Affichage dynamiques de messages pour les voyageurs, suivant leur priorité.','','Mise à jour de l\'état en temps réel.','Utilisation du Text-to-speech pour les personnes malvoyantes munies d\'un dispositif.'],
+            sentences:['Affichage des bornes d\'information voyageurs à Toulouse pour Teleo, le téléphérique urbain.','Affichage dynamique de la destination, récupération des temps de passage en temps réel avec utilisation de WebSockets. ','','','Avertissements pour les voyageurs.','Météo du jour grâce à une API dédiée.','Messages d\'information pour les voyageurs avec adaptation de la taille du texte en fonction de la taille du message, avec ou sans saut de lignes.','Messages d\'alerte en temps réel. En cas d\'évacuation, de service arrêté et d\'autres perturbations possibles.','','','Affichage dynamiques de messages pour les voyageurs, suivant leur priorité.','','Utilisation du Text-to-speech pour les personnes malvoyantes munies d\'un dispositif.'],
             images:[]
         },
         {
             project:'sdb',
-            sentences:[],
+            sentences:['Affichage des bornes d\'information voyageurs pour les salles des billets du métro toulousain.'],
             images:[]
         },
         {
             project:'tisseoMetro',
-            sentences:[],
+            sentences:['Affichage des bornes d\'information voyageurs pour les quais du métro toulousain.','Affichage des deux prochains temps de passages, récupération dynamique de la destination et des pictogrammes.','','Mise à jour en temps réel, annonces pour les voyageurs et informations sur les rames.','','','','','Messages de perturbation ou d\'évacuation.','','Informations voyageurs. Adaptation de la taille des polices suivant la quantité de texte à afficher.','','','Messages d\'alertes.','','Synchronisation des écrans de quai.'],
             images:[]
         }
     ];
@@ -73,7 +73,7 @@ export default function Seipra() {
         entries => {
             entries.map(e => {
                 if (e.isIntersecting) {
-                    const ind = Array.from(document.querySelectorAll('.screenshot')).findIndex(el => el === e.target);
+                    const ind = Array.from(document.querySelectorAll('.seipra-page .screenshot')).findIndex(el => el === e.target);
                     if (ind !== -1) {
                         setProjectsArray(projectsArray => {
                             const tempProjects = [...projectsArray];
@@ -86,7 +86,7 @@ export default function Seipra() {
                     } 
                     e.target.classList.add('appears');
                 } else {
-                    const ind = Array.from(document.querySelectorAll('.screenshot')).findIndex(el => el === e.target);
+                    const ind = Array.from(document.querySelectorAll('.seipra-page .screenshot')).findIndex(el => el === e.target);
                     e.target.classList.remove('appears');
                     if (ind !== -1) {
                         setProjectsArray(projectsArray => {
@@ -182,7 +182,7 @@ export default function Seipra() {
                 project.sentence = projectsFixArray[id].sentences.length ? projectsFixArray[id].sentences[0] : '';
             });
             setProjectsArray([...tempProjects]);
-            const screenshotArray = Array.from(document.querySelectorAll('.screenshot'));
+            const screenshotArray = Array.from(document.querySelectorAll('.seipra-page .screenshot'));
             screenshotArray.map(e => observer.observe(e));
         }
     }, [projectsFixArray])
@@ -222,15 +222,21 @@ export default function Seipra() {
                     <img src={projectsArray[3].image} alt="Salles des billets" />
                 </div>
                 <div className="screenshot__txt">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut dolorem sunt, quisquam quis, ex sint eius dignissimos sed saepe harum necessitatibus ea veritatis possimus quod.</p>
+                <p>{projectsArray[3].sentence}</p>
                 </div>
             </div>
+            {projectsArray[4].playedImages.length > 3 ? <div className="dble-screen">
+                <div className="dble-screen__img">
+                    <p>{{...projectsArray[4]}.image}</p>
+                    {/* <img src={projectsArray[4].image} alt="metro second screen" /> */}
+                </div>
+            </div> : null}
             <div className="screenshot left long">
                 <div className="screenshot__img">
-                    <img src={projectsArray[4].image} alt="Teleo meteo" />
+                    <img src={projectsArray[4].image} alt="metro quai" />
                 </div>
                 <div className="screenshot__txt">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut dolorem sunt, quisquam quis, ex sint eius dignissimos sed saepe harum necessitatibus ea veritatis possimus quod.</p>
+                <p>{projectsArray[4].sentence}</p>
                 </div>
             </div>
         </section>
