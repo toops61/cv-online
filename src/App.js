@@ -29,6 +29,7 @@ import PrimeNumbers from "./composants/otherProjects/PrimeNumbers";
 import NasaPictures from "./composants/otherProjects/NasaPictures";
 import Converter from "./composants/otherProjects/Converter";
 import Seipra from "./composants/Seipra";
+import { useEffect } from "react";
 
 export default function App() {
   const dark = useSelector(state => state.generalParams.darkMode);
@@ -37,6 +38,15 @@ export default function App() {
   const switchMode = () => {
     dispatch(updateGeneralParams({darkMode:!dark}));
   }
+
+  const changeBodySize = () => {
+    window.innerWidth < 900 ? document.querySelector('body').style.height = window.innerHeight + 'px' : document.querySelector('body').style = '';
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', changeBodySize);
+    changeBodySize();
+  }, []);
 
   return (
     <div className={dark ? "App dark" : "App"}>

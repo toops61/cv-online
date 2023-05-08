@@ -44,17 +44,17 @@ export default function Seipra() {
     let projectsFixArray = [
         {
             project:'bayonne',
-            sentences:['Ecrans embarqués dans les bus de Bayonne. Horloge dynamique en CSS. ','Récupération et affichage des données dynamiques via le service embarqué et la base de données.','Noms des stations, destination, temps d\'attente, pictogrammes... ','Affichage des P.O.I (point of interest) lorsque le bus est à l\'arrêt. ','Interrogation de la base de données pour déterminer le nom des arrêts ou/et correspondances. ','','Affichage en temps réel du themomètre de ligne, des déviations ou incidents de parcours. ','Ecrans adaptés à l\'état du bus tout au long du parcours.'],
+            sentences:['Ecrans embarqués dans les bus de Bayonne.','Horloge dynamique en CSS. Récupération et affichage des données dynamiques via le service embarqué et les données G.T.F.S : Noms des stations, destination, temps d\'attente, pictogrammes... ','','Affichage des P.O.I (point of interest) lorsque le bus est à l\'arrêt. Interrogation de la base de données pour déterminer le nom des arrêts ou/et correspondances.','','Affichage en temps réel du thermomètre de ligne, des déviations ou incidents de parcours.','','Ecrans adaptés à l\'état du bus tout au long du parcours.','','Adaptation du thermomètre de ligne suivant la progression.','Arrêts remarquables.','Délocalisation.','Fin de parcours.','messages d\'information à destination des usagers.','Affichage de l\'accessibilité des lignes pour les personnes à mobilité réduite. Possibilité de messages vocaux "text-to-speech" pour les personnes malvoyantes contenant les informations affichées à l\'écran.'],
             images:[]
         },
         {
             project:'bayonneBiv',
-            sentences:['Affichage sur les bornes d\'information voyageurs pour Bayonne.','Récupération des données et affichages en temps réel des prochaines passages à l\'arrêt.'],
+            sentences:['Affichage sur les bornes d\'information voyageurs pour Bayonne. Récupération des données et affichage en temps réel des prochaines passages à l\'arrêt, pour chaque ligne, avec récupération des noms et pictogrammes.','','Affichage de deux ou trois pages suivant le nombre d\'horaires.','Dernier ou prochain passage en temps réel.','','Réduction de nombre de lignes affichées si peu ou plus de passages.','','Choix du nombre de lignes affichées de manière responsive.','','Affichage uniquement des horaires quand absence de messages avec une taille adaptée à l\'écran.','','Affichage dynamiques des messages suivant leur présence et leur priorité. Alternance ou défilement sous les horaires.','','','Récupération de l\'état en temps réel : retard, indisponibilité, reprise ou fin de service.'],
             images:[]
         },
         {
             project:'teleo',
-            sentences:[],
+            sentences:['Affichage des bornes d\'information voyageurs à Toulouse pour Teleo, le téléphérique.','Récupération de l\'état et des temps de passage en temps réel avec utilisation de WebSockets.','Affichage de la météo du jour grâce à une API dédiée.','Affichage dynamiques de messages pour les voyageurs, suivant leur priorité.','','Mise à jour de l\'état en temps réel.','Utilisation du Text-to-speech pour les personnes malvoyantes munies d\'un dispositif.'],
             images:[]
         },
         {
@@ -155,8 +155,11 @@ export default function Seipra() {
                 } else {
                     project.playedImages = [projectsFixArray[index].images[displayedImageIndex]];
                 }
-                projects.splice(index,1,project);
-                setProjectsArray([...projects]);
+                setProjectsArray(projectsArray => {
+                    const projects = [...projectsArray];
+                    projects.splice(index,1,project);
+                    return [...projects];
+                });
                 timeoutLoop(index,projects);
             }
         }, 5000);
@@ -190,7 +193,7 @@ export default function Seipra() {
         <a className="logo-seipra" href="https://www.seiprascore.com/" target="_blank" rel="noreferrer">
             <img src={seipra} alt="Seipra-Score" />
         </a>
-        <h1>Projets pour Seipra Score</h1>
+        <h1>Projets pour Seipra Score : HTML, CSS, JavaScript, SQL</h1>
         <section className="screenshots-container">
             <div className="screenshot left">
                 <div className="screenshot__img">
@@ -208,10 +211,10 @@ export default function Seipra() {
             </div>
             <div className="screenshot  long">
                 <div className="screenshot__img">
-                    <img src={projectsArray[2].image} alt="Teleo meteo" />
+                    <img src={projectsArray[2].image} alt="Teleo" />
                 </div>
                 <div className="screenshot__txt">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut dolorem sunt, quisquam quis, ex sint eius dignissimos sed saepe harum necessitatibus ea veritatis possimus quod.</p>
+                    <p>{projectsArray[2].sentence}</p>
                 </div>
             </div>
             <div className="screenshot">
