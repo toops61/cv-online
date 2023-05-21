@@ -114,18 +114,18 @@ const endGame = () => {
   return (
     <div className="typing-page">
       <main className="typing-main">
-        {alertVisible && <div className="alert-window">
+        {alertVisible ? <div className="alert-window">
           <div className="alert-container">
             <p className="end-game">{alertText}</p>
             <h4>Meilleurs scores</h4>
             <div className="best-timers">
-              {typingScoresArray.length && <DisplayScores />}
+              {typingScoresArray.length ? <DisplayScores /> : <></>}
             </div>
             <button className="close-button" onClick={closeAlert}>X</button>
           </div>
-        </div>}
-        {validButton === 'valid' && <div className="valid-button valid"></div>}
-        {validButton === 'invalid' && <div className="valid-button invalid"><p>X</p></div>}
+        </div> : <></>}
+        {validButton === 'valid' ? <div className="valid-button valid"></div> : <></>}
+        {validButton === 'invalid' ? <div className="valid-button invalid"><p>X</p></div> : <></>}
         <button className="reset-button" onClick={resetGame}>Reset</button>
         <section className="top">
           <h1>Petite frappe... <span>⌨️</span></h1>

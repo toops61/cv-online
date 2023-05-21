@@ -78,12 +78,12 @@ export default function WikiApp() {
 
   return (
     <main className="wiki-page">
-      {showLoader && <Loader />}
-      {showErrorWindow && <div className="error-window">
+      {showLoader ? <Loader /> : <></>}
+      {showErrorWindow ? <div className="error-window">
         <div className="error">
           <p>{errorMessage}</p>
         </div>
-      </div>}
+      </div> : <></>}
       <section>
         <div className="logo">
           <img src={wikiLogo} alt="wikipedia" />
@@ -106,7 +106,7 @@ export default function WikiApp() {
             value={numberOfSearch} 
           />
         </div>
-        {searchResults.length && <ResultContainer />}
+        {searchResults.length ? <ResultContainer /> : <></>}
       </section>
       <Link to="/Projects">
           <button className="previous-page"></button>

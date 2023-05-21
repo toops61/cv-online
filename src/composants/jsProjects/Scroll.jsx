@@ -106,7 +106,7 @@ useEffect(() => {
   const Cards = () => {
     return (
       <section className="photos-container">
-        {showLoader && <Loader />}
+        {showLoader ? <Loader /> : <></>}
         {arrayPhotos.length ? arrayPhotos.map((photo,index) => {
           return (
             <div className="photo-card" key={uuidv4()} ref={(page && index===24*page) ? observerCard : null}>
@@ -122,17 +122,17 @@ useEffect(() => {
     <div className="scroll-page">
       <main className="main-scroll">
         <form className="input-api" onSubmit={handleApiKey}>
-          {apiKey && <div className="check-input">
+          {apiKey ? <div className="check-input">
             <h2>Vous avez déjà une clé d'API</h2>
             <input type="checkbox" name="modify-key" id="modify-key" onChange={handleStored} />
             <label htmlFor="modify-key">Modifier</label>
-          </div>}
-          {(apiStored || !apiKey) && <div className="input-key">
+          </div> : <></>}
+          {(apiStored || !apiKey) ? <div className="input-key">
             <label htmlFor="api-access">Entrez votre cle d'API : </label>
             <input type="password" name="api-access" id="api-access" />
             <button className="valid-api"></button>
-          </div>}
-          {!apiKey && <p>Obtenez votre clé d'API <a href="https://unsplash.com/oauth/applications">ici</a></p>}
+          </div> : <></>}
+          {!apiKey ? <p>Obtenez votre clé d'API <a href="https://unsplash.com/oauth/applications">ici</a></p> : <></>}
         </form>
         <h1>Clone Unsplash</h1>
         <form className="search-bar" onSubmit={searchQuery}>
@@ -141,14 +141,14 @@ useEffect(() => {
             <input type="text" name="search" id="search" onChange={handleInput} value={searchInput} />
             <button className="search-button"></button>
           </div>
-          {searchError && <p className="error-message">{errorMessage}</p>}
+          {searchError ? <p className="error-message">{errorMessage}</p> : <></>}
         </form>
         <Cards />
       </main>
       <Link to="/Projects">
         <button className="previous-page"></button>
       </Link>
-      {showArrow && <div className="arrow" onClick={e => window.scrollTo(0,0)}></div>}
+      {showArrow ? <div className="arrow" onClick={e => window.scrollTo(0,0)}></div> : <></>}
     </div>
   )
 }

@@ -50,12 +50,12 @@ export default function Projects() {
         return (
             <li className="project">
                 <p onClick={handleImage}>{props.item.name}</p>
-                {imageVisible && 
+                {imageVisible ? 
                     <div className="screen-shot">
                         <Link to={props.item.link}>
                             <img src={props.item.image} alt="screenshot" />
                         </Link>
-                    </div>}
+                    </div> : <></>}
             </li>
         )
     }

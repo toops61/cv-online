@@ -171,7 +171,7 @@ export default function AppMeteo() {
     <div className="meteo-page">
       <main className={night ? "main-container night" : "main-container"}>
         <div className="meteo-container">
-          {showLoader && <Loader />}
+          {showLoader ? <Loader /> : <></>}
           <section className="up-part">
             <h1>
               <span>Application</span> météo
@@ -206,7 +206,7 @@ export default function AppMeteo() {
                 <input type="radio" name="position-choice" id="chosen" onChange={handlePositionChoice} />
                 <label htmlFor="position-choice">Choisir une autre position</label>
               </div>
-                {!positionActual && <form onSubmit={submitNewCoord} className="position-fields">
+                {!positionActual ? <form onSubmit={submitNewCoord} className="position-fields">
                   <div className="coordinates-container">
                     <label htmlFor="chosen-latitude">Latitude</label>
                     <input type="number" name="chosen-latitude" id="chosen-latitude" />
@@ -216,7 +216,7 @@ export default function AppMeteo() {
                     <input type="number" name="chosen-latitude" id="chosen-longitude" />
                   </div>
                   <button type="submit"></button>
-                </form>}
+                </form> : <></>}
             </div>
           <div className="apikey-container">
             <input

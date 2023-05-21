@@ -96,17 +96,17 @@ export default function Password() {
 
   return (
     <div className="password-generator-page">
-      {alertVisible && <div className="alert-window ">
+      {alertVisible ? <div className="alert-window ">
         <div className="alert-box">
           <h2>{alertMessage}</h2>
         </div>
-      </div>}
+      </div> : <></>}
     <main className="password-main">
       <h1>Votre mot de passe</h1>
       <div className="result">
         <p>{password}</p>
         <div className="copy-icon" onClick={copyPassword}></div>
-        {clipboardVisible && <div className="clipboard"><p>mot de passe copié</p></div>}
+        {clipboardVisible ? <div className="clipboard"><p>mot de passe copié</p></div> : <></>}
       </div>
       <form>
         <label htmlFor="length"><p>Taille du mot de passe : <span>{passwordParams.length}</span></p></label>

@@ -81,14 +81,14 @@ export default function PrimeNumbers() {
             </form>
             {numberToCheck ? <div className="result">
                 <h2>Le nombre {numberToCheck} {numberPrime ? 'est' : 'n\'est pas'} un nombre premier{numberPrime ? '.' : (', il est divisible par ' + diviseur)}</h2>
-            </div> : null}
+            </div> : <></>}
             {showList && numberToCheck ? <div className="list-container">
-                {numberToCheck > 1000 ? <h3>Il y en a trop, je ne peux pas vous donner la liste complète !!</h3> : null}
+                {numberToCheck > 1000 ? <h3>Il y en a trop, je ne peux pas vous donner la liste complète !!</h3> : <></>}
                 {arrayPrimes.length ? <>
                     <h3>Voici les nombres premiers jusqu'à {numberToCheck} :</h3>
                     <p>{arrayPrimes.map((e,index) => index > 0 ? `, ${e}` : e)}</p>
-                </> : null}
-            </div> : null}
+                </> : <></>}
+            </div> : <></>}
         </main>
         <Link to="/Projects">
             <button className="previous-page"></button>

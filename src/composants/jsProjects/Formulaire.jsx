@@ -114,12 +114,12 @@ export default function Formulaire() {
   return (
     <div className="valid-form-page">
       <div className="main-formulaire">
-        {alertVisible && <div className="alert-window">
+        {alertVisible ? <div className="alert-window">
           <div className={alertObject.type === 1 ? "alert-container alert" : "alert-container"}>
             <h2>{alertObject.message1}</h2>
             <p>{alertObject.message2}</p>
           </div>
-        </div>}
+        </div> : <></>}
         <section className="form-container">
         <form onSubmit={checkAllValid}>
           <h1>Inscrivez-vous</h1>
@@ -143,11 +143,11 @@ export default function Formulaire() {
             <div className="attention"><p>!</p></div>
             <div className="check"></div>
             <p className="input-infos">Au moins un symbole, un chiffre, une majuscule et 6 caractères minimum</p>
-            {passwordLevel > 0 && <div className="password-level">
+            {passwordLevel > 0 ? <div className="password-level">
               <div className="level"><p>faible</p></div>
-              {passwordLevel > 1 && <div className="level"><p>moyen</p></div>}
-              {passwordLevel > 2 && <div className="level"><p>fort</p></div>}
-            </div>}
+              {passwordLevel > 1 ? <div className="level"><p>moyen</p></div> : <></>}
+              {passwordLevel > 2 ? <div className="level"><p>fort</p></div> : <></>}
+            </div> : <></>}
           </div>
           <div className="input-container">
             <label htmlFor="confirm-password">confirmez le mot de passe</label>

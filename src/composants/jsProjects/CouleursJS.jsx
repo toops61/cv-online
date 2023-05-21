@@ -67,11 +67,11 @@ export default function CouleursJS() {
 
   return (
     <div className="colors-page">
-      {alertPage && <div className="alert-window">
+      {alertPage ? <div className="alert-window">
         <div className="alert-container">
           <h2>Couleurs copiées dans le presse-papiers</h2>
         </div>
-      </div>}
+      </div> : <></>}
       <main className="main-colors" style={{background: 'linear-gradient('+objectColor.orientation+'deg,'+objectColor.color_one+','+objectColor.color_two+')'}}>
       <div className="color-container">
             <label htmlFor="color_one" className="color-label" style={{backgroundColor:objectColor.color_one}}>

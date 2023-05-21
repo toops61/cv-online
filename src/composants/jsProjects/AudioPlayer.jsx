@@ -253,7 +253,7 @@ const getDuration = () => {
           <button className="volume" onClick={e => volume < 1 && setVolume(Math.ceil((volume*10)+1)/10)}></button>
           <button className="volume" onClick={e => volume > 0 && setVolume(Math.ceil(volume*10-1)/10)}></button>
         </div>
-        {songSelected.url && <audio src={songSelected.url} className="song" ref={audioRef} onDurationChange={getDuration}></audio>}
+        {songSelected.url ? <audio src={songSelected.url} className="song" ref={audioRef} onDurationChange={getDuration}></audio> : <></>}
         <section className="screen-container">
           {songSelected.pictureURL ? <img src={songSelected.pictureURL} alt="cover" /> : <div className="no-picture"></div>}
         </section>
@@ -283,7 +283,7 @@ const getDuration = () => {
           </button>
           <button className="forward" onClick={handleNext}></button>
           <div className={repeat ? "repeat selected" : "repeat"} onClick={handleRepeat}>
-            {repeat === 'one' && <p>1</p>}
+            {repeat === 'one' ? <p>1</p> : <></>}
           </div>
         </section>
       </main>

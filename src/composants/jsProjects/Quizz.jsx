@@ -149,7 +149,7 @@ export default function Quizz() {
         <button type="submit" onClick={checkResponses}><p>VALIDER</p></button>
         <footer>
           <p>{resultResponse}</p>
-          {total !== '' && <p>Score : <span>{total}/5</span></p>}
+          {total !== '' ? <p>Score : <span>{total}/5</span></p> : <></>}
           <p>{(total && total < 5) ? 'Vous pouvez retenter votre chance' : ''}</p>
         </footer>
       </div>

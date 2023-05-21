@@ -38,14 +38,14 @@ export default function Memory() {
   const BestTimers = () => {
     return (
       <div className="best-timers">
-        {arrayTimers.length && arrayTimers.map(el => {
+        {arrayTimers.length ? arrayTimers.map(el => {
           return <div  className="timer-classment" key={uuidv4()}>
-            {el.date === finished.date && <div className="present-timer"></div>}
+            {el.date === finished.date ? <div className="present-timer"></div> : <></>}
             <p>Date: {el.date}</p>
             <p>Nombre de coups: {el.coups}</p>
             <p>Temps: {el.time}</p>
           </div>
-        })}
+        }) : <></>}
       </div>
     )
   }
@@ -223,18 +223,18 @@ const resetAllScores = () => {
 
   return (
     <div className="memory-page">
-      {showAlert && <div className="alert-window">
+      {showAlert ? <div className="alert-window">
         <div className="alert-container">
           <h2>{finishMessage}</h2>
-          {arrayTimers.length && 
+          {arrayTimers.length ? 
           <>
             <h4>Meilleurs temps</h4>
             <BestTimers />
-          </>}
+          </> : <></>}
           <button className="close" onClick={e => setShowAlert(false)}>X</button>
           <button className="reset-all" onClick={resetAllScores}>reset all scores</button>
         </div>
-      </div>}
+      </div> : <></>}
       <main className="memory-main">
         <h1>Jeu des <span>cartes mémoires</span></h1>
         <h2>Tentez le meilleur temps.</h2>

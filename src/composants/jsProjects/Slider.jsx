@@ -80,7 +80,7 @@ export default function Slider() {
 
     return (
     <section className="top-section">
-      {picturesObjectsArray.length && <>
+      {picturesObjectsArray.length ? <>
         <div className="picture-container">
           <div className="picture-box">
             <img src={picturesObjectsArray[0].url} alt="cat" />
@@ -102,21 +102,21 @@ export default function Slider() {
           <h3>slide{centerIndex < 3 ? centerIndex+1 : 1}</h3>
           <p>{picturesObjectsArray[2].name}</p>
         </div>
-      </>}
+      </> : <></>}
     </section>)
   }
 
   return (
     <div className="slider-page">
-      {alertVisible && <div className="alert-window">
+      {alertVisible ? <div className="alert-window">
         <div className="alert-box">
           <h1>{alertText}</h1>
         </div>
-      </div>}
+      </div> : <></>}
       <main className="main-slider">
         <button className="arrow left" onClick={toTheLeft}></button>
         <button className="arrow right" onClick={toTheRight}></button>
-        {imagesArray.length && <PictureSection />}
+        {imagesArray.length ? <PictureSection /> : <></>}
         <button className="button-change" onClick={getImages}>Changer d'image</button>
       </main>
       <Link to="/Projects">

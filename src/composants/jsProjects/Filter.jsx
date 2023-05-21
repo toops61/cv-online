@@ -106,21 +106,21 @@ export default function Filter() {
               <td>
                 <p>{user.email}</p>
               </td>
-              {(searchBy === 'name' || searchBy === 'email') && <td>
+              {(searchBy === 'name' || searchBy === 'email') ? <td>
                 <p>{user.phone}</p>
-              </td>}
-              {searchBy === 'username' && <td>
+              </td> : <></>}
+              {searchBy === 'username' ? <td>
                 <p>{user.login.username}</p>
-              </td>}
-              {searchBy === 'city' && <td>
+              </td> : <></>}
+              {searchBy === 'city' ? <td>
                 <p>{user.location.city}</p>
-              </td>}
-              {searchBy === 'state' && <td>
+              </td> : <></>}
+              {searchBy === 'state' ? <td>
                 <p>{user.location.state}</p>
-              </td>}
-              {searchBy === 'country' && <td>
+              </td> : <></>}
+              {searchBy === 'country' ? <td>
                 <p>{user.location.country}</p>
-              </td>}
+              </td> : <></>}
             </tr>
           )
         })
@@ -346,11 +346,11 @@ export default function Filter() {
               <tr>
                 <th className="selected rotate" onClick={e => handleSort(0)}><h3>Nom</h3><div className="order"></div></th>
                 <th className="" onClick={e => handleSort(1)}><h3>Email</h3><div className="order"></div></th>
-                {(searchBy === 'name' || searchBy === 'email') && <th className="" onClick={e => handleSort(2)}><h3>Téléphone</h3><div className="order"></div></th>}
-                {(searchBy === 'username') && <th className="" onClick={e => handleSort(3)}><h3>Pseudo</h3><div className="order"></div></th>}
-                {(searchBy === 'city') && <th className="" onClick={e => handleSort(4)}><h3>Ville</h3><div className="order"></div></th>}
-                {(searchBy === 'state') && <th className="" onClick={e => handleSort(5)}><h3>Département</h3><div className="order"></div></th>}
-                {(searchBy === 'country') && <th className="" onClick={e => handleSort(6)}><h3>Pays</h3><div className="order"></div></th>}
+                {(searchBy === 'name' || searchBy === 'email') ? <th className="" onClick={e => handleSort(2)}><h3>Téléphone</h3><div className="order"></div></th> : <></>}
+                {(searchBy === 'username') ? <th className="" onClick={e => handleSort(3)}><h3>Pseudo</h3><div className="order"></div></th> : <></>}
+                {(searchBy === 'city') ? <th className="" onClick={e => handleSort(4)}><h3>Ville</h3><div className="order"></div></th> : <></>}
+                {(searchBy === 'state') ? <th className="" onClick={e => handleSort(5)}><h3>Département</h3><div className="order"></div></th> : <></>}
+                {(searchBy === 'country') ? <th className="" onClick={e => handleSort(6)}><h3>Pays</h3><div className="order"></div></th> : <></>}
               </tr>
             </thead>
             <tbody>

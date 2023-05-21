@@ -104,13 +104,13 @@ export default function Cookies() {
   return (
     <div className="cookies-page">
       <main className="main-cookies">
-        {showErrorWindow && (
+        {showErrorWindow ? (
           <div className="alert-container">
             <div className="alert-window">
               <p>{errorMessage}</p>
             </div>
           </div>
-        )}
+        ) : <></>}
         <h1>
           <span>Création de</span> Cookies 🍪
         </h1>
@@ -152,7 +152,7 @@ export default function Cookies() {
             {cookiesVisibles ? "Masquer" : "Afficher"}
           </button>
         </div>
-        {cookiesVisibles && (
+        {cookiesVisibles ? (
           <div className="cookie-container">
             {cookiesArray.length ? (
               cookiesArray.map((cookie, index) => (
@@ -162,7 +162,7 @@ export default function Cookies() {
               <p>Pas de cookies pour le moment</p>
             )}
           </div>
-        )}
+        ) : <></>}
       </main>
       <Link to="/Projects">
         <button className="previous-page"></button>

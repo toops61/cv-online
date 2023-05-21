@@ -96,18 +96,18 @@ export default function SoundEngineer() {
 
   return (
     <main className="sound-engineer">
-      {albumsArray.length < 0 && <div className="image-background">
+      {albumsArray.length < 0 ? <div className="image-background">
         <img src={albumsArray[selected].cover} alt="background" />
-      </div>}
+      </div> : <></>}
       <section className="carousel">
         <div className="albums">
           {arrayAlbums}
-          {albumsArray.length > 0 && <div className="album-infos">
+          {albumsArray.length > 0 ? <div className="album-infos">
             <h1>{albumSelected.artist}</h1>
             <h2>"{albumSelected.name}"</h2>
             <p>({albumSelected.year})</p>
             <p>{albumSelected.content}</p>
-          </div>}
+          </div> : <></>}
         </div>
       </section>
     </main>

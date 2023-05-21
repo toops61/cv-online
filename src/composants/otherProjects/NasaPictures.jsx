@@ -108,7 +108,7 @@ export default function NasaPictures() {
   return (
     <div className="nasa-page">
         <main className="nasa-main">
-            {showLoader ? <Loader /> : null}
+            {showLoader ? <Loader /> : <></>}
             <form ref={formRef}>
                 <label htmlFor="search-image">rechercher une image</label>
                 <input type="text" name="search-image" id="search-image" onChange={e => setInput(e.target.value)} value={input} />
@@ -130,7 +130,7 @@ export default function NasaPictures() {
                             </p>
                         )
                     })}
-                </div> : null}
+                </div> : <></>}
                 <div className="picture-imported">
                     {(imageUrl.includes('mp4') || imageUrl.includes('webm')) ? 
                     <video controls>
