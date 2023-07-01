@@ -1,0 +1,62 @@
+.books-page {
+    width: 100%;
+    min-height: 100%;
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: url('/src/assets/perso_proj/books_landscape.jpg') no-repeat;
+    background-size: cover;
+    h1 {
+        font-size: 4em;
+        margin: .5em 0;
+        padding: 0 .5em;
+        color: black;
+        background-color: #fff;
+        border-radius: .5em;
+    }
+    h2 {
+        font-size: 2em;
+        text-align: center;
+    }
+    form {
+        margin: 1em 0;
+        border: solid .1em white;
+        background-color: black;
+        padding: 1em 2em;
+        border-radius: 1em;
+    }
+    .infos-container {
+        position: relative;
+        @extend form;
+        min-width: 80%;
+        min-height: 10em;
+        overflow: hidden;
+        span {
+            color:rgb(145, 255, 255);
+        }
+    }
+    label {
+        font-size: 1.5em;
+    }
+    input {
+        margin: 0 .5em;
+        color: black;
+    }
+    button {
+        color: black;
+        padding: .15em .3em;
+        border-radius: .5em;
+    }
+    @media (orientation: portrait) {
+        background: url('/src/assets/perso_proj/books_portrait.jpg') no-repeat;
+        background-size: cover;
+        padding-top: 2em;
+    }
+    .loader {
+        @include loader-style;
+        position: absolute;
+        background-color: black;
+    }
+}

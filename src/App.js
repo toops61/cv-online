@@ -30,9 +30,13 @@ import NasaPictures from "./composants/otherProjects/NasaPictures";
 import Converter from "./composants/otherProjects/Converter";
 import Seipra from "./composants/Seipra";
 import { useEffect } from "react";
+import CountryFlags from "./composants/otherProjects/CountryFlags";
+
+import BooksSearch from "./composants/otherProjects/BooksSearch";
 
 export default function App() {
   const dark = useSelector(state => state.generalParams.darkMode);
+
   const dispatch = useDispatch();
 
   const switchMode = () => {
@@ -49,42 +53,44 @@ export default function App() {
   }, []);
 
   return (
-    <div className={dark ? "App dark" : "App"}>
-      <Link className="back" to="/"></Link>
-      <div className="button-container">
-        <button className="switch-button" onClick={switchMode}></button>
+      <div className={dark ? "App dark" : "App"}>
+        <Link className="back" to="/"></Link>
+        <div className="button-container">
+          <button className="switch-button" onClick={switchMode}></button>
+        </div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/soundEngineer" element={<SoundEngineer />} />
+          <Route path="/radioEngineer" element={<RadioEngineer />} />
+          <Route path="/seipra" element={<Seipra />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/Imc" element={<Imc />} />
+          <Route path="/Quizz" element={<Quizz />} />
+          <Route path="/WikiApp" element={<WikiApp />} />
+          <Route path="/Cookies" element={<Cookies />} />
+          <Route path="/AppMeteo" element={<AppMeteo />} />
+          <Route path="/CouleursJS" element={<CouleursJS />} />
+          <Route path="/Pomodoro" element={<Pomodoro />} />
+          <Route path="/Formulaire" element={<Formulaire />} />
+          <Route path="/Memory" element={<Memory />} />
+          <Route path="/Scroll" element={<Scroll />} />
+          <Route path="/Slider" element={<Slider />} />
+          <Route path="/Password" element={<Password />} />
+          <Route path="/Filter" element={<Filter />} />
+          <Route path="/VideoPlayer" element={<VideoPlayer />} />
+          <Route path="/Morpion" element={<Morpion />} />
+          <Route path="/Particules" element={<Particules />} />
+          <Route path="/Animate" element={<Animate />} />
+          <Route path="/Typing" element={<Typing />} />
+          <Route path="/Calculator" element={<Calculator />} />
+          <Route path="/AudioPlayer" element={<AudioPlayer />} />
+          <Route path="/Prime" element={<PrimeNumbers />} />
+          <Route path="/Nasa" element={<NasaPictures />} />
+          <Route path="/Converter" element={<Converter />} />
+          <Route path="/CountryFlags" element={<CountryFlags />} />
+          <Route path="/BooksSearch" element={<BooksSearch />} />
+        </Routes>
       </div>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/soundEngineer" element={<SoundEngineer />} />
-        <Route path="/radioEngineer" element={<RadioEngineer />} />
-        <Route path="/seipra" element={<Seipra />} />
-        <Route path="/projects" element={<Projects />} />
-        <Route path="/Imc" element={<Imc />} />
-        <Route path="/Quizz" element={<Quizz />} />
-        <Route path="/WikiApp" element={<WikiApp />} />
-        <Route path="/Cookies" element={<Cookies />} />
-        <Route path="/AppMeteo" element={<AppMeteo />} />
-        <Route path="/CouleursJS" element={<CouleursJS />} />
-        <Route path="/Pomodoro" element={<Pomodoro />} />
-        <Route path="/Formulaire" element={<Formulaire />} />
-        <Route path="/Memory" element={<Memory />} />
-        <Route path="/Scroll" element={<Scroll />} />
-        <Route path="/Slider" element={<Slider />} />
-        <Route path="/Password" element={<Password />} />
-        <Route path="/Filter" element={<Filter />} />
-        <Route path="/VideoPlayer" element={<VideoPlayer />} />
-        <Route path="/Morpion" element={<Morpion />} />
-        <Route path="/Particules" element={<Particules />} />
-        <Route path="/Animate" element={<Animate />} />
-        <Route path="/Typing" element={<Typing />} />
-        <Route path="/Calculator" element={<Calculator />} />
-        <Route path="/AudioPlayer" element={<AudioPlayer />} />
-        <Route path="/Prime" element={<PrimeNumbers />} />
-        <Route path="/Nasa" element={<NasaPictures />} />
-        <Route path="/Converter" element={<Converter />} />
-      </Routes>
-    </div>
   );
 }
 

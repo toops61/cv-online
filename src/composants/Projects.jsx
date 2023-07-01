@@ -24,6 +24,8 @@ import audioPicture from '../assets/perso_proj/audio_screenshot.png';
 import primePicture from '../assets/perso_proj/primes_numbers.png';
 import nasaPicture from '../assets/perso_proj/nasa_screenshot.png';
 import converterPicture from '../assets/perso_proj/converter_screenshot.png';
+import flagsPicture from '../assets/perso_proj/flags_screenshot.png';
+import booksPicture from '../assets/perso_proj/books_screenshot.png';
 
 import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
@@ -81,11 +83,11 @@ export default function Projects() {
             image:cookiesPicture,
             link:"/Cookies"
         },
-        {
+        /* {
             name:"AppMeteo",
             image:meteoPicture,
             link:"/AppMeteo"
-        },
+        }, */
         {
             name:"CouleursJS",
             image:colorsPicture,
@@ -106,11 +108,11 @@ export default function Projects() {
             image:memoryPicture,
             link:"/Memory"
         },
-        {
+        /* {
             name:"Scroll infini",
             image:scrollPicture,
             link:"/Scroll"
-        },
+        }, */
         {
             name:"Slider",
             image:sliderPicture,
@@ -177,6 +179,16 @@ export default function Projects() {
             name:"Convertisseurs",
             image:converterPicture,
             link:"/Converter"
+        },
+        {
+            name:"Drapeaux de pays",
+            image:flagsPicture,
+            link:"/CountryFlags"
+        },
+        {
+            name:"Recherche de livres",
+            image:booksPicture,
+            link:"/BooksSearch"
         }
     ]
   return (

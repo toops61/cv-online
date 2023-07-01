@@ -1,0 +1,46 @@
+.flags-page {
+    width: 100%;
+    min-height: 100%;
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    form {
+        margin: 1em 0;
+    }
+    label {
+        font-size: 1.5em;
+    }
+    input {
+        margin: 0 .5em;
+        color: black;
+    }
+    button {
+        color: black;
+        padding: .15em .3em;
+        border-radius: .5em;
+    }
+    .flag-container {
+        width: 45%;
+        @include mobile-version {
+            width: 95%;
+        }
+        flex: 1;
+        @include flexCenter;
+        padding-bottom: 10vh;
+    }
+    .flag-image {
+        width: 100%;
+        height: fit-content;
+        border: solid .1em white;
+        @include flexCenter;
+        img {
+            @include imageFit;
+        }
+
+    }
+    h2 {
+        font-size: 2em;
+    }
+}
