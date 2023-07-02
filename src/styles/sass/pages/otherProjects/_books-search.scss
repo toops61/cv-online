@@ -21,11 +21,14 @@
         text-align: center;
     }
     form {
-        margin: 1em 0;
+        margin-bottom: 1em;
         border: solid .1em white;
         background-color: black;
         padding: 1em 2em;
         border-radius: 1em;
+    }
+    .infos-text p {
+        margin: .3em 0;
     }
     .infos-container {
         position: relative;
@@ -33,6 +36,9 @@
         min-width: 80%;
         min-height: 10em;
         overflow: hidden;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
         span {
             color:rgb(145, 255, 255);
         }
@@ -43,20 +49,63 @@
     input {
         margin: 0 .5em;
         color: black;
+        background-color: #ffb9b9;
     }
+    .valid {
+        background-color: rgb(202, 255, 176);
+    }
+
     button {
         color: black;
         padding: .15em .3em;
         border-radius: .5em;
     }
-    @media (orientation: portrait) {
-        background: url('/src/assets/perso_proj/books_portrait.jpg') no-repeat;
-        background-size: cover;
-        padding-top: 2em;
-    }
     .loader {
         @include loader-style;
         position: absolute;
         background-color: black;
+    }
+    .fullscreen-image {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        @include flexColumn;
+        justify-content: center;
+    }
+    .large-cover {
+        width: 40%;
+        position: relative;
+        max-height: 80%;
+        img {
+            @include imageFit;
+        }
+    }
+    .close {
+        border: solid .2em #fff;
+        border-radius: 50%;
+        position: absolute;
+        z-index: 50;
+        top: -1em;
+        right: -1em;
+        background-color: #fff;
+        @include flexCenter;
+        &::before {
+            @include icon('\f057',2em);
+            color: #000;
+        }
+    }
+    @media (orientation: portrait) {
+        background: url('/src/assets/perso_proj/books_portrait.jpg') no-repeat;
+        background-size: cover;
+        padding-top: 2em;
+        .infos-container {
+            flex-direction: column;
+        }
+        .large-cover {
+            width: 90%;
+        }
     }
 }
