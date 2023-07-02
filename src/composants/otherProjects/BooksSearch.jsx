@@ -42,9 +42,9 @@ export default function BooksSearch() {
         return tempObject;
     }
 
-    const { data,isLoading,error,refetch } = useQuery(['ISBN',searchIsbn],
+    const { data,isLoading,error } = useQuery(['ISBN',searchIsbn],
         queryDynamic,{
-        enabled: false,
+        enabled: !!searchIsbn,
         select: data => handleData(data),
         cacheTime: 1800000
         /*queryKey: ['ISBN:',searchIsbn],
@@ -71,12 +71,7 @@ export default function BooksSearch() {
     useEffect(() => {
         dispatch(updateGeneralParams({darkMode:true}));
         console.log(isbnArray);
-    }, [])
-
-    useEffect(() => {
-      searchIsbn && refetch();
-    }, [searchIsbn])
-    
+    }, [])    
 
   return (
     <main className="books-page">

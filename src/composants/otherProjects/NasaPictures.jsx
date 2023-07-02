@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Loader from "../../components/Loader";
 import { updateGeneralParams } from "../../redux";
 import { useQuery } from "react-query";
+import logoNasa from '../../assets/perso_proj/NASA_logo.png';
 
 export default function NasaPictures() {
   document.querySelector('.button-container')?.classList.add('hide');
@@ -12,7 +13,6 @@ export default function NasaPictures() {
   const [input, setInput] = useState('juno europa');
   const [searchSubmit, setSearchSubmit] = useState('juno europa');
   const [selectedImage, setSelectedImage] = useState('');
-  //const [title, setTitle] = useState('JunoCam Image of Europa From Flyby');
   const [moreInfos, setMoreInfos] = useState(false);
 
   const dispatch = useDispatch();
@@ -38,11 +38,11 @@ export default function NasaPictures() {
   }
 
   //get json from search query
-  const { data:searchResult,isLoading:loadingSearch,error:errorSearch,refetch:refetchSearch } = useQuery(
+  const { data:searchResult,isLoading:loadingSearch,error:errorSearch } = useQuery(
     [searchSubmit],
     inputSearchQuery,
     {
-      enabled: false,
+      enabled: !!searchSubmit,
       select: data => handleDataCollection(data),
       cacheTime: 1800000
     }
@@ -72,11 +72,11 @@ export default function NasaPictures() {
   }
 
   //get image URL to be displayed
-  const { data:imageUrlResult,isLoading:loadingMetadata,error:errorMetadata,refetch:refetchMetadata } = useQuery(
+  const { data:imageUrlResult,isLoading:loadingMetadata,error:errorMetadata } = useQuery(
     [selectedImage.selectUrl],
     metadataQuery,
     {
-      enabled: false,
+      enabled: !!selectedImage,
       select: data => handleMetadata(data),
       cacheTime: 1800000
     }
@@ -91,19 +91,14 @@ export default function NasaPictures() {
     dispatch(updateGeneralParams({darkMode:true}));
 }, []);
 
-  useEffect(() => {
-    searchSubmit && refetchSearch();
-  }, [searchSubmit]);
-
-  useEffect(() => {
-    selectedImage?.selectUrl && refetchMetadata();
-  }, [selectedImage]);
-  
-
   return (
     <div className="nasa-page">
         <main className="nasa-main">
+          <a href="https://www.nasa.gov/" target="_blank" rel="noreferrer"  className="logo-nasa">
+            <img src={logoNasa} alt="Nasa" />
+          </a>
             {loadingSearch || loadingMetadata ? <Loader /> : <></>}
+            <h1>Images de la NASA</h1>
             <form ref={formRef} onSubmit={searchImage}>
                 <label htmlFor="search-image">rechercher une image</label>
                 <input type="text" name="search-image" id="search-image" onChange={e => setInput(e.target.value)} value={input} />
@@ -121,9 +116,10 @@ export default function NasaPictures() {
                                 selectUrl:item.href,
                                 id:index
                               });
+                              setMoreInfos(false);
                               backToTop();
                             }}
-                            className="result">
+                            className={"result" + (item.href.includes('video') ? " video" : "")}>
                                 {index} {item.data[0].title}
                             </p>
                         )
@@ -138,11 +134,16 @@ export default function NasaPictures() {
                     <img src={imageUrlResult ? imageUrlResult : 'http://images-assets.nasa.gov/image/PIA25334/PIA25334~small.jpg'} alt="Nasa" />}
                     {searchResult?.length ? <div className="legend">
                       <h4>{searchResult[selectedImage.id]?.data[0].title}</h4>
-                      <p>{searchResult[selectedImage.id]?.data[0][moreInfos ? 'description' : 'description_508']}</p>
-                      <p className="more-infos" onClick={() => setMoreInfos(!moreInfos)}>{!moreInfos ? 'plus d\'infos' : 'réduire'}</p>
+                      {searchResult[selectedImage.id]?.data[0].description !== searchResult[selectedImage.id]?.data[0].title ?
+                      <>
+                        <p>{searchResult[selectedImage.id]?.data[0][moreInfos ? 'description' : 'description_508']}</p>
+                        <p className="more-infos" onClick={() => setMoreInfos(!moreInfos)}>{!moreInfos ? 'plus d\'infos' : 'réduire'}</p>
+                      </>
+                       : <></>}
                     </div> : <h4>JunoCam Image of Europa From Flyby</h4>}
                 </div>
             </div>
+            <p className="video bottom">documents vidéo</p>
         </main>
         <Link to="/Projects">
             <button className="previous-page"></button>

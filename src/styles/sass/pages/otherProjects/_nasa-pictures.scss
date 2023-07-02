@@ -1,67 +1,98 @@
 .nasa-page {
     min-height: 100vh;
     background-color: black;
+    padding-bottom: 4em;
+    .logo-nasa {
+        position: absolute;
+        top: .5em;
+        right: 0;
+        width: 8em;
+        height: 8em;
+        img {
+            @include imageFit;
+        }
+    }
+    h1 {
+        text-align: center;
+        margin-top: .5em;
+        font-size: 2em;
+    }
     .nasa-main {
         position: relative;
-        .loader {
-            @include loader-style;
-            background-color: black;
+    }
+    .loader {
+        @include loader-style;
+        background-color: black;
+    }
+    @include flexColumn;
+    form {
+        display: flex;
+        align-items: center;
+        margin: 2em 0 1.5em;
+    }
+    input {
+        margin-left: 1em;
+        color: black;
+    }
+    .valid-search {
+        background-color: #fff;
+        &::before {
+            @include icon('\f08e',1em);
+            color: black;
+            margin: .4em .2em;
         }
-        @include flexColumn;
-        form {
-            display: flex;
-            align-items: center;
-            margin: 4em 0 1.5em;
-            input {
-                margin-left: 1em;
-                color: black;
-            }
-            .valid-search {
-                background-color: #fff;
-                &::before {
-                    @include icon('\f08e',1em);
-                    color: black;
-                    margin: .4em .2em;
-                }
-            }
+    }
+    .results-image {
+        display: flex;
+    }
+    .results-list {
+        width: 45vw;
+        background-color: black;
+        padding: .5em;
+        h3 {
+            text-align: center;
+            margin-bottom: 1em;
         }
-        .results-image {
-            display: flex;
-            .results-list {
-                width: 45vw;
-                background-color: black;
-                padding: .5em;
-                h3 {
-                    text-align: center;
-                    margin-bottom: 1em;
-                }
-                .result {
-                    cursor: pointer;
-                }
-            }
-            .picture-imported {
-                height: fit-content;
-                width: 45vw;
-                img {
-                    @include imageFit;
-                }
-                video {
-                    @include imageFit;
-                }
-                h4 {
-                    margin: 1em;
-                }
-            }
-            @include tablette-version {
-                flex-direction: column-reverse;
-                align-items: center;
-                .results-list {
-                    width: 100%;
-                }
-                .picture-imported {
-                    width: 97%;
-                }
-            }
+        .result {
+            cursor: pointer;
+        }
+    }
+    .video {
+        position: relative;
+        &::before {
+            position: absolute;
+            top: .25em;
+            left: -2vw;
+            @include icon('\f03d',.7em);
+        }
+        &.bottom {
+            position: absolute;
+            font-style: italic;
+            bottom: -3em;
+            left: 6vw;
+        }
+    }
+    .picture-imported {
+        height: fit-content;
+        width: 45vw;
+        img {
+            @include imageFit;
+        }
+        video {
+            @include imageFit;
+        }
+        h4 {
+            margin: 1em;
+        }
+    }
+    @include tablette-version {
+        flex-direction: column-reverse;
+        align-items: center;
+        .results-list {
+            width: 100%;
+        }
+        .picture-imported {
+            width: 97%;
         }
     }
     .legend {
