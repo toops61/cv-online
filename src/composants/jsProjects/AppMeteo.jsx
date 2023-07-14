@@ -2,15 +2,17 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 import Loader from "../../components/Loader";
+import { useQuery } from "react-query";
 
 export default function AppMeteo() {
   document.querySelector('.button-container')?.classList.add('hide');
   
   const [showLoader, setShowLoader] = useState(false);
   const [apiKey, setApiKey] = useState("");
-  const [jsonResult, setJsonResult] = useState();
+  const [jsonResult, setJsonResult] = useState('');
+  const [searchSubmit, setSearchSubmit] = useState('');
   const [positionActual, setPositionActual] = useState(true)
-  const [jsonCoordinates, setJsonCoordinates] = useState();
+  const [jsonCoordinates, setJsonCoordinates] = useState('');
   const [night, setNight] = useState(false);
   const [infoToDisplay, setInfoToDisplay] = useState({
     temp:'',
@@ -23,7 +25,7 @@ export default function AppMeteo() {
   const [meteoDisplayed, setMeteoDisplayed] = useState('hours');
 
   //call meteo API
-  const meteoCall = async () => {
+  /* const meteoCall = async () => {
     setShowLoader(true);
     console.log('CALL API');
     try {
@@ -41,7 +43,39 @@ export default function AppMeteo() {
       setShowLoader(false);
       console.error(error);
     }
-  };
+  }; */
+
+  //fetch function
+  const inputSearchQuery = async () => {
+    const url = apiKey ? `https://api.openweathermap.org/data/3.0/onecall?lat=${jsonCoordinates.latitude}&lon=${jsonCoordinates.longitude}&exclude=minutely&appid=${apiKey}` : '';
+    const response = await fetch(url);
+    try {
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleData = result => {
+    if (JSON.stringify(jsonResult) !== JSON.stringify(result) && result.current) {
+      setJsonResult(result);
+      console.log(result);
+    }
+    return result;
+  }
+
+  //get json from search query
+  const { data,isLoading,error } = useQuery(
+    'meteo',
+    inputSearchQuery,
+    {
+      enabled: !!jsonCoordinates,
+      select: data => handleData(data),
+      cacheTime: 1800000,
+      staleTime:1800000
+    }
+  )
 
   const convertDt = dateTime => new Date(dateTime * 1000).getHours() + "h";
 
@@ -71,9 +105,10 @@ export default function AppMeteo() {
 
   const fillInfos = () => {
     const tempObject = {...infoToDisplay};
-    tempObject.icon =  jsonResult.current.weather[0].icon;
-    setNight(tempObject.icon.includes('n') ? true : false);
-    tempObject.imageURL = `./ressourcesMeteo/${tempObject.icon.includes('d') ? 'jour' : 'nuit'}/${tempObject.icon}.svg`;
+    const icon =  jsonResult.current.weather[0].icon;
+    tempObject.imageURL =  `https://openweathermap.org/img/wn/${icon}@2x.png`;
+    setNight(icon.includes('n') ? true : false);
+    //tempObject.imageURL = `./ressourcesMeteo/${icon.includes('d') ? 'jour' : 'nuit'}/${icon}.svg`;
     tempObject.temp = Math.round(jsonResult.current.temp - 273.15) + '°';
     tempObject.arrayHours = fillHoursTemp();
     tempObject.arrayDays = fillDaysTemp();
@@ -114,17 +149,15 @@ export default function AppMeteo() {
   }, [positionActual])
   
 
-  useEffect(() => {
+  /* useEffect(() => {
     let result = '';
     sessionStorage.apiResult && (result = JSON.parse(sessionStorage.getItem("apiResult")));
     if(apiKey && jsonCoordinates) {
       if (result && (new Date(result.current.dt*1000).getDate() === new Date().getDate()) && (new Date(result.current.dt*1000).getHours() === new Date().getHours()) && (result.lat == jsonCoordinates.latitude) && (result.lon == jsonCoordinates.longitude)) {
         setJsonResult({...result});
-      } else {
-        meteoCall();
       }
     }
-  }, [apiKey,jsonCoordinates]);
+  }, [apiKey,jsonCoordinates]); */
 
   const validateKey = () => {
     apiKey && localStorage.setItem("meteoApiKey", JSON.stringify(apiKey));

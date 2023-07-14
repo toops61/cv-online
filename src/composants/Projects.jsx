@@ -83,11 +83,11 @@ export default function Projects() {
             image:cookiesPicture,
             link:"/Cookies"
         },
-        /* {
+        {
             name:"AppMeteo",
             image:meteoPicture,
             link:"/AppMeteo"
-        }, */
+        },
         {
             name:"CouleursJS",
             image:colorsPicture,
@@ -108,11 +108,11 @@ export default function Projects() {
             image:memoryPicture,
             link:"/Memory"
         },
-        /* {
+        {
             name:"Scroll infini",
             image:scrollPicture,
             link:"/Scroll"
-        }, */
+        },
         {
             name:"Slider",
             image:sliderPicture,
