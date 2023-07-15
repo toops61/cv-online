@@ -7,13 +7,12 @@ import { useQuery } from "react-query";
 export default function AppMeteo() {
   document.querySelector('.button-container')?.classList.add('hide');
   
-  const [showLoader, setShowLoader] = useState(false);
-  const [apiKey, setApiKey] = useState("");
+  const [apiKey, setApiKey] = useState('');
   const [jsonResult, setJsonResult] = useState('');
-  const [searchSubmit, setSearchSubmit] = useState('');
-  const [positionActual, setPositionActual] = useState(true)
+  const [positionActual, setPositionActual] = useState(true);
   const [jsonCoordinates, setJsonCoordinates] = useState('');
   const [night, setNight] = useState(false);
+  const [callData, setCallData] = useState(false);
   const [infoToDisplay, setInfoToDisplay] = useState({
     temp:'',
     icon:'',
@@ -22,28 +21,15 @@ export default function AppMeteo() {
     arrayHours:[],
     arrayDays:[]
   })
+  const [extraInfos, setExtraInfos] = useState({
+    sun_up:'',
+    sun_down:'',
+    temp_feel:'',
+    humidity:'',
+    wind_speed:''
+  })
   const [meteoDisplayed, setMeteoDisplayed] = useState('hours');
-
-  //call meteo API
-  /* const meteoCall = async () => {
-    setShowLoader(true);
-    console.log('CALL API');
-    try {
-      const response = await fetch(
-        `https://api.openweathermap.org/data/3.0/onecall?lat=${jsonCoordinates.latitude}&lon=${jsonCoordinates.longitude}&exclude=minutely&appid=${apiKey}`
-      );
-      if (!response.ok) {
-        throw new Error(`Erreur HTTP : ${response.status}`);
-      }
-      const json = await response.json();
-      sessionStorage.setItem("apiResult", JSON.stringify(json));
-      setJsonResult({...json});
-      setShowLoader(false);
-    } catch (error) {
-      setShowLoader(false);
-      console.error(error);
-    }
-  }; */
+  const [moreInfos, setMoreInfos] = useState(false);
 
   //fetch function
   const inputSearchQuery = async () => {
@@ -60,17 +46,18 @@ export default function AppMeteo() {
   const handleData = result => {
     if (JSON.stringify(jsonResult) !== JSON.stringify(result) && result.current) {
       setJsonResult(result);
-      console.log(result);
+      sessionStorage.setItem('meteoData',JSON.stringify(result));
+      setCallData(false);
     }
     return result;
   }
 
   //get json from search query
-  const { data,isLoading,error } = useQuery(
+  const { isLoading,error } = useQuery(
     'meteo',
     inputSearchQuery,
     {
-      enabled: !!jsonCoordinates,
+      enabled: !!callData,
       select: data => handleData(data),
       cacheTime: 1800000,
       staleTime:1800000
@@ -103,17 +90,38 @@ export default function AppMeteo() {
     return arrayTemp;
   }
 
+  const fillExtraObject = () => {
+    const extraObject = {...extraInfos};
+    const resultInfos = jsonResult.current;
+
+    const sunSecondsUp = resultInfos.sunrise;
+    const sunSecondsDown = resultInfos.sunset;
+    const sunTimeUp = new Date(sunSecondsUp*1000).toLocaleTimeString();
+    const sunTimeDown = new Date(sunSecondsDown*1000).toLocaleTimeString();
+    extraObject.sun_up = sunTimeUp.substring(0,(sunTimeUp.length-3));
+    extraObject.sun_down = sunTimeDown.substring(0,(sunTimeDown.length-3));
+
+    extraObject.temp_feel = (Math.round((resultInfos.feels_like - 273.15)*10))/10;
+
+    extraObject.humidity = resultInfos.humidity;
+
+    extraObject.wind_speed = resultInfos.wind_speed*3.6;
+
+    setExtraInfos(extraObject);
+  }
+
+  //get fetched data infos and fill fields
   const fillInfos = () => {
     const tempObject = {...infoToDisplay};
     const icon =  jsonResult.current.weather[0].icon;
     tempObject.imageURL =  `https://openweathermap.org/img/wn/${icon}@2x.png`;
     setNight(icon.includes('n') ? true : false);
-    //tempObject.imageURL = `./ressourcesMeteo/${icon.includes('d') ? 'jour' : 'nuit'}/${icon}.svg`;
     tempObject.temp = Math.round(jsonResult.current.temp - 273.15) + '°';
     tempObject.arrayHours = fillHoursTemp();
     tempObject.arrayDays = fillDaysTemp();
     tempObject.timezone = jsonResult.timezone;
     setInfoToDisplay({...tempObject});
+    fillExtraObject();
   }
 
   useEffect(() => {
@@ -121,8 +129,8 @@ export default function AppMeteo() {
   }, [jsonResult])
 
   const saveCoordinates = (latitude,longitude) => {
-    const lat = Math.round(latitude * 10000) / 10000;
-    const lon = Math.round(longitude * 10000) / 10000;
+    const lat = Math.round(latitude * 1000) / 1000;
+    const lon = Math.round(longitude * 1000) / 1000;
     const tempObject = {
       latitude:lat,
       longitude:lon
@@ -138,6 +146,21 @@ export default function AppMeteo() {
       //"On ne peut vous donner la météo sans votre localisation. Autorisez la svp."
     }
   }
+
+  const checksOldData = () => {
+    const actualDateTime = new Date().getTime();
+    if (sessionStorage.meteoData) {
+      const storedData = JSON.parse(sessionStorage.getItem('meteoData'));
+      const storedDt = storedData.current.dt*1000;
+      const difference = actualDateTime - storedDt;
+      let recall = false;
+      difference < 7200000 ? setJsonResult(storedData) : (recall = true);
+      if (jsonCoordinates && (jsonCoordinates.latitude !== storedData.lat || jsonCoordinates.longitude !== storedData.lon)) recall = true;
+      if (recall && jsonCoordinates?.longitude && apiKey) setCallData(true);
+    } else {
+      if (jsonCoordinates?.longitude && apiKey) setCallData(true);
+    }
+  }
   
   //get location coordinates
   useEffect(() => {
@@ -145,20 +168,14 @@ export default function AppMeteo() {
   }, []);
   
   useEffect(() => {
+    checksOldData();
+  }, [jsonCoordinates,apiKey])
+  
+  
+  useEffect(() => {
     positionActual && getCoordinates();
   }, [positionActual])
   
-
-  /* useEffect(() => {
-    let result = '';
-    sessionStorage.apiResult && (result = JSON.parse(sessionStorage.getItem("apiResult")));
-    if(apiKey && jsonCoordinates) {
-      if (result && (new Date(result.current.dt*1000).getDate() === new Date().getDate()) && (new Date(result.current.dt*1000).getHours() === new Date().getHours()) && (result.lat == jsonCoordinates.latitude) && (result.lon == jsonCoordinates.longitude)) {
-        setJsonResult({...result});
-      }
-    }
-  }, [apiKey,jsonCoordinates]); */
-
   const validateKey = () => {
     apiKey && localStorage.setItem("meteoApiKey", JSON.stringify(apiKey));
   };
@@ -197,15 +214,20 @@ export default function AppMeteo() {
 
   const submitNewCoord = e => {
     e.preventDefault();
-    saveCoordinates(e.target[0].value,e.target[1].value);
+    
+    const newLat = Math.round(e.target[0].value * 1000) / 1000;
+    const newLon = Math.round(e.target[1].value * 1000) / 1000;
+
+    saveCoordinates(newLat,newLon);
   }
 
   return (
     <div className="meteo-page">
       <main className={night ? "main-container night" : "main-container"}>
-        <div className="meteo-container">
-          {showLoader ? <Loader /> : <></>}
+        <div className={"meteo-container" + (moreInfos ? " more" : "")}>
+          {isLoading ? <Loader /> : <></>}
           <section className="up-part">
+            <button className="more-arrow" onClick={() => setMoreInfos(!moreInfos)}></button>
             <h1>
               <span>Application</span> météo
             </h1>
@@ -214,6 +236,14 @@ export default function AppMeteo() {
             </div>
             <h2 className="temp">{infoToDisplay.temp}</h2>
             <p className="place">{infoToDisplay.timezone}</p>
+          </section>
+          <section className="more-infos-part">
+            <h4>Soleil</h4>
+            <p><span>Lever : </span>{extraInfos.sun_up}</p>
+            <p><span>Coucher : </span>{extraInfos.sun_down}</p>
+            <p className="category"><span>Temp. ressentie : </span>{extraInfos.temp_feel}</p>
+            <p className="category"><span>Humidité : </span>{extraInfos.humidity}%</p>
+            <p className="category"><span>Vent : </span>{extraInfos.wind_speed} km/h</p>
           </section>
           <section className="down-part">
             <div className="tabs-section">

@@ -6,7 +6,7 @@ import { store } from './redux';
 import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools} from 'react-query/devtools';
+//import { ReactQueryDevtools} from 'react-query/devtools';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -14,7 +14,7 @@ root.render(
   <Provider store = {store}>
     <HashRouter>
       <App />
-      <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
+      {/* <ReactQueryDevtools initialIsOpen={false} position='bottom-right' /> */}
     </HashRouter>
   </Provider>
   </QueryClientProvider>
