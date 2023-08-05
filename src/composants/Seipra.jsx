@@ -186,6 +186,15 @@ export default function Seipra() {
             screenshotArray.map(e => observer.observe(e));
         }
     }, [projectsFixArray])
+
+    //cleanup function
+    useEffect(() => {    
+      return () => {
+        observer && observer.disconnect();
+        //delete observer;
+      }
+    })
+    
     
 
   return (

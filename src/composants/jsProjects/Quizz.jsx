@@ -134,6 +134,13 @@ export default function Quizz() {
         setClassesArray([...array]);
       }
     }
+
+  //cleanup function
+  useEffect(() => {
+    return () => {
+      window.removeEventListener("load", e => {document.querySelector('.button-container').classList.add('hide')});
+    }
+  })
     
   return (
     <main className="quizz-page">

@@ -3,15 +3,16 @@ import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import wikiLogo from '../../assets/perso_proj/wiki-logo.png';
 import Loader from '../../components/Loader';
+import { useQuery } from 'react-query';
 
 export default function WikiApp() {
   document.querySelector('.button-container')?.classList.remove('hide');
-  const [showLoader, setShowLoader] = useState(false);
   const [searchInput, setSearchInput] = useState('');
   const [numberOfSearch, setNumberOfSearch] = useState(1);
-  const [searchResults, setSearchResults] = useState({});
   const [showErrorWindow, setShowErrorWindow] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  const [searchSubmit, setSearchSubmit] = useState('');
 
   const fillSearchInput = e => {
     setSearchInput(e.target.value);
@@ -23,7 +24,7 @@ export default function WikiApp() {
   };
 
   const ResultContainer = () => {
-    const array = [...searchResults];
+    const array = [...data];
     return (
       <div className="result-container">
         {array.map(result => {
@@ -38,29 +39,35 @@ export default function WikiApp() {
         })}
       </div>
     )
-  }
+  };
 
-  const searchQuery = async () => {
-      setShowLoader(true);
-      try {
-          const response = await fetch(`https://fr.wikipedia.org/w/api.php?action=query&list=search&format=json&origin=*&srlimit=${numberOfSearch}&srsearch=${searchInput}`);
-          if (!response.ok) {
-              throw new Error(`Erreur HTTP : ${response.status}`);
-          }
-          const json = await response.json();
-          setSearchResults(json.query.search);
-          setShowLoader(false);
-        }
-        catch(error) {
-          setShowLoader(false);
-          console.error(error);
-          handleErrorWindow('Pas de résultat');
-      }
-  }
+  //fetch function
+  const inputSearchQuery = async () => {
+    console.log('fetch');
+    const result = await fetch(`https://fr.wikipedia.org/w/api.php?action=query&list=search&format=json&origin=*&srlimit=${numberOfSearch}&srsearch=${searchSubmit}`);
+    return result.json();
+  };
+
+  const handleData = responseQuery => {
+    const result = responseQuery.query.search;
+    return result;
+  };
+
+  //get json from search query
+  const { data,isLoading } = useQuery(
+    ['wikiSearch: '+searchSubmit],
+    inputSearchQuery,
+    {
+      enabled: !!searchSubmit,
+      select: data => handleData(data),
+      cacheTime: 1800000,
+      slatetime: 1800000
+    }
+  );
 
   const searchWord = () => {
     if (searchInput && numberOfSearch > 0 && numberOfSearch <= 50) {
-      searchQuery()
+      setSearchSubmit(searchInput);
     } else if (!searchInput) {
        handleErrorWindow('Attention, remplissez la barre de recherche');
     } else {
@@ -74,11 +81,16 @@ export default function WikiApp() {
     setTimeout(() => {
       handleErrorWindow();
     }, 3000);
-  }, [showErrorWindow])
+  }, [showErrorWindow]);
+
+  useEffect(() => {
+    setSearchSubmit('');
+  }, [numberOfSearch])
+  
 
   return (
     <main className="wiki-page">
-      {showLoader ? <Loader /> : <></>}
+      {isLoading ? <Loader /> : <></>}
       {showErrorWindow ? <div className="error-window">
         <div className="error">
           <p>{errorMessage}</p>
@@ -106,7 +118,7 @@ export default function WikiApp() {
             value={numberOfSearch} 
           />
         </div>
-        {searchResults.length ? <ResultContainer /> : <></>}
+        {Array.isArray(data) && data.length ? <ResultContainer /> : <h3 className="no-result">Pas de résultat</h3>}
       </section>
       <Link to="/Projects">
           <button className="previous-page"></button>

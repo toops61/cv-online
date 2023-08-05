@@ -3,7 +3,10 @@
     position: relative;
     font-family: Arial, Helvetica, sans-serif;
     padding: clamp(20px, 5vw, 50px) 20px 20px;
-    
+    .no-result {
+      font-size: 1.5em;
+      margin-top: 1em;
+    }
     .loader {
         @include loader-style;
         width: 100vw;

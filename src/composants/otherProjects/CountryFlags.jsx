@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux"
 import { updateGeneralParams } from "../../redux";
 import { useQuery } from "react-query";
+import { compareStrings } from "../../utils/utilsFuncs";
 
 export default function CountryFlags() {
     const [countryCodes, setCountryCodes] = useState([]);
@@ -38,18 +39,6 @@ export default function CountryFlags() {
         const country = countryCodes.find(e => compareStrings(word,e.name));
         country ? setFlagUrl(`https://flagcdn.com/w640/${country.short}.png`) : setTopMessage('Pas de pays trouvé');
     }
-
-    const transformString = e => {
-        let newString = e.toLowerCase();
-        newString = newString.replace(/[éèêë]/ig,'e');
-        newString = newString.replace(/[âáàåäã]/ig,'a');
-        newString = newString.replace(/[îìïí]/ig,'i');
-        newString = newString.replace(/[ôóòõøö]/ig,'o');
-        newString = newString.replace(/[-]/ig,' ');
-        return newString;
-    }
-
-    const compareStrings = (a,b) => transformString(a) === transformString(b) ? true : false;
 
     const handleInput = e => {
         flagUrl && setFlagUrl('');

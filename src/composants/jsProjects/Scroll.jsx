@@ -172,6 +172,15 @@ export default function Scroll() {
     )
   }
 
+  //cleanup function
+  useEffect(() => {    
+    return () => {
+      observer && observer.disconnect();
+      document.removeEventListener('scroll', checkScroll);
+      //delete observer;
+    }
+  })
+
   return (
     <div className="scroll-page">
       <main className="main-scroll">

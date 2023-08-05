@@ -111,6 +111,14 @@ export default function Animate() {
     }
   );
 
+  //cleanup function
+  useEffect(() => {    
+    return () => {
+      observer && observer.disconnect();
+      //delete observer;
+    }
+  })
+
   return (
     <div className="animation-page">
       <main className="main-anim">

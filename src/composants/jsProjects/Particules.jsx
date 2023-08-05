@@ -110,6 +110,12 @@ export default function Particules() {
     }
   }, [particulesArray])
   
+  //cleanup function
+  useEffect(() => {
+    return () => {
+      window.removeEventListener('resize',getDimensions);
+    }
+  })
 
   return (
     <main className="particules-page">

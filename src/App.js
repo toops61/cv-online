@@ -52,6 +52,13 @@ export default function App() {
     changeBodySize();
   }, []);
 
+  //cleanup function
+  useEffect(() => {
+    return () => {
+      window.removeEventListener('resize', changeBodySize);
+    }
+  })
+
   return (
       <div className={dark ? "App dark" : "App"}>
         <Link className="back" to="/"></Link>
